@@ -1,0 +1,19 @@
+ingredient_pattern,classification,default_quantity,default_unit,basis,confidence,notes
+salt,ZERO_CALORIE_QUALITATIVE,,,Table salt provides zero dietary calories,HIGH,Salt seasoning; zero caloric impact
+black salt,ZERO_CALORIE_QUALITATIVE,,,Mineral salt provides zero dietary calories,HIGH,Rock/mineral salt seasoning
+rock salt,ZERO_CALORIE_QUALITATIVE,,,Mineral salt provides zero dietary calories,HIGH,Rock/mineral salt seasoning
+water,ZERO_CALORIE_QUALITATIVE,,,Water provides zero dietary calories,HIGH,Water addition for cooking/kneading
+sunflower oil,ESTIMABLE_QUALITATIVE,1.0,tbsp,Conservative household tempering/cooking fat baseline (1 tbsp = 13.82g),MEDIUM,Standard culinary baseline for tempering/sautéing in 4-serving recipes
+oil,ESTIMABLE_QUALITATIVE,1.0,tbsp,Conservative household tempering/cooking fat baseline (1 tbsp = 13.82g),MEDIUM,Standard culinary baseline for tempering/sautéing
+ghee,ESTIMABLE_QUALITATIVE,1.0,tbsp,Conservative household tempering/cooking fat baseline (1 tbsp = 13.6g),MEDIUM,Standard culinary baseline for tempering/roasting
+butter,ESTIMABLE_QUALITATIVE,1.0,tbsp,Conservative household sautéing fat baseline (1 tbsp = 14.2g),MEDIUM,Standard culinary baseline for cooking/frying
+mustard oil,ESTIMABLE_QUALITATIVE,1.0,tbsp,Conservative household tempering/cooking fat baseline (1 tbsp = 13.82g),MEDIUM,Standard culinary baseline for regional Indian cooking
+sesame oil,ESTIMABLE_QUALITATIVE,1.0,tbsp,Conservative household tempering/cooking fat baseline (1 tbsp = 13.82g),MEDIUM,Standard culinary baseline for South Indian tempering
+olive oil,ESTIMABLE_QUALITATIVE,1.0,tbsp,Conservative household sautéing fat baseline (1 tbsp = 13.5g),MEDIUM,Standard culinary baseline for light sautéing
+sugar,UNAVAILABLE_QUALITATIVE,,,Highly variable; cannot establish defensible culinary default,HIGH,Withhold calculation; sugar varies widely by recipe type
+flour,UNAVAILABLE_QUALITATIVE,,,Highly variable; cannot establish defensible culinary default,HIGH,Withhold calculation; dusting/kneading flour varies widely
+maida,UNAVAILABLE_QUALITATIVE,,,Highly variable; cannot establish defensible culinary default,HIGH,Withhold calculation; dusting flour varies widely
+besan,UNAVAILABLE_QUALITATIVE,,,Highly variable; cannot establish defensible culinary default,HIGH,Withhold calculation; batter flour varies widely
+coriander,UNAVAILABLE_QUALITATIVE,,,Garnish herb; negligible macro contribution,HIGH,Herb garnish; withhold mass estimate
+mint,UNAVAILABLE_QUALITATIVE,,,Garnish herb; negligible macro contribution,HIGH,Herb garnish; withhold mass estimate
+curry leaves,UNAVAILABLE_QUALITATIVE,,,Tempering herb; negligible macro contribution,HIGH,Tempering aromatics; withhold mass estimate

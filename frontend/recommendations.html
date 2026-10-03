@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Recommendations — KitchenPilot-V1</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <span>🍳 KitchenPilot</span>
+                <span class="brand-badge">V1</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="recommendations.html" class="active">Recommendations</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container" style="padding-top: 2rem; padding-bottom: 3rem;">
+        <div style="margin-bottom: 1.75rem;">
+            <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--secondary);">Find Recipes by Ingredients & Nutrition</h1>
+            <p style="color: var(--text-muted);">Configure your available pantry items, dietary restrictions, and nutritional goals for deterministic hybrid recommendations.</p>
+        </div>
+
+        <!-- Recommendation Form -->
+        <section class="card-filter" style="margin-bottom: 2.5rem;">
+            <form id="recommend-form">
+                <!-- Section A: Available Ingredients -->
+                <div style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem;">
+                        <label for="ingredient-input" style="font-size: 0.95rem; font-weight: 700; color: var(--secondary);">
+                            🥕 Available Pantry Ingredients
+                        </label>
+                        <span style="font-size: 0.8rem; color: var(--text-light);">Press Enter, comma, or click Add</span>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
+                        <input type="text" id="ingredient-input" class="form-control" placeholder="Type ingredient (e.g., rice, onion, tomato, cumin, turmeric)">
+                        <button type="button" id="btn-add-ingredient" class="btn btn-secondary">Add</button>
+                    </div>
+
+                    <!-- Interactive Tag Pills Container -->
+                    <div id="ingredient-tags" class="tag-container">
+                        <!-- Populated dynamically by JS -->
+                    </div>
+
+                    <!-- Quick Pre-fill / Shortcut Buttons -->
+                    <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                        <span style="font-size: 0.8rem; color: var(--text-light);">Quick sample:</span>
+                        <button type="button" class="btn btn-secondary btn-sm" id="btn-sample-pantry" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">
+                            Rice, Onion, Tomato, Cumin, Turmeric
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" id="btn-clear-ingredients" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Section B: Dietary Preferences (Hard Filters) -->
+                <div style="padding-top: 1rem; border-top: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+                    <label style="font-size: 0.95rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.4rem; display: block;">
+                        🌿 Dietary Restrictions (Strict Hard Filters)
+                    </label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="pref-veg">
+                            <span>Vegetarian</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="pref-vegan">
+                            <span>Vegan</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="pref-jain">
+                            <span>Jain</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="pref-satvik">
+                            <span>Satvik</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Section C: Optional Regional Filters -->
+                <div style="padding-top: 1rem; border-top: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+                    <label style="font-size: 0.95rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.75rem; display: block;">
+                        📍 Regional & Categorical Preferences (Optional)
+                    </label>
+                    <div class="filter-grid">
+                        <div class="form-group">
+                            <label for="pref-cuisine">Cuisine</label>
+                            <input type="text" id="pref-cuisine" class="form-control" placeholder="e.g. South Indian, North Indian">
+                        </div>
+                        <div class="form-group">
+                            <label for="pref-region">Region</label>
+                            <input type="text" id="pref-region" class="form-control" placeholder="e.g. Tamil Nadu, Punjab">
+                        </div>
+                        <div class="form-group">
+                            <label for="pref-meal-type">Meal Type</label>
+                            <input type="text" id="pref-meal-type" class="form-control" placeholder="e.g. Lunch, Breakfast, Dinner">
+                        </div>
+                        <div class="form-group">
+                            <label for="pref-category">Category</label>
+                            <input type="text" id="pref-category" class="form-control" placeholder="e.g. Main Course, Curry">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section D: Optional Nutrition Targets -->
+                <div style="padding-top: 1rem; border-top: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+                    <label style="font-size: 0.95rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.75rem; display: block;">
+                        ⚖️ Nutritional Targets (Optional Goals)
+                    </label>
+                    <div class="filter-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                        <div class="form-group">
+                            <label for="nut-max-cal">Max Calories (kcal)</label>
+                            <input type="number" id="nut-max-cal" class="form-control" min="0" step="10" placeholder="e.g. 500">
+                        </div>
+                        <div class="form-group">
+                            <label for="nut-min-prot">Min Protein (g)</label>
+                            <input type="number" id="nut-min-prot" class="form-control" min="0" step="1" placeholder="e.g. 15">
+                        </div>
+                        <div class="form-group">
+                            <label for="nut-max-fat">Max Fat (g)</label>
+                            <input type="number" id="nut-max-fat" class="form-control" min="0" step="1" placeholder="e.g. 20">
+                        </div>
+                        <div class="form-group">
+                            <label for="nut-max-carbs">Max Carbs (g)</label>
+                            <input type="number" id="nut-max-carbs" class="form-control" min="0" step="1" placeholder="e.g. 60">
+                        </div>
+                        <div class="form-group">
+                            <label for="nut-min-fiber">Min Fiber (g)</label>
+                            <input type="number" id="nut-min-fiber" class="form-control" min="0" step="1" placeholder="e.g. 5">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section E: Top K & Submit Button -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color);">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <label for="select-top-k" style="font-size: 0.9rem; font-weight: 600; color: var(--secondary);">Results to return:</label>
+                        <select id="select-top-k" class="form-control" style="width: auto;">
+                            <option value="5" selected>Top 5 Recipes</option>
+                            <option value="10">Top 10 Recipes</option>
+                            <option value="20">Top 20 Recipes</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2rem;">
+                            Generate Recommendations 🚀
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results-section">
+            <div id="results-header" style="display: none; margin-bottom: 1.5rem;">
+                <h2 style="font-size: 1.5rem; color: var(--secondary); margin-bottom: 0.25rem;">Recommendation Results</h2>
+                <p id="results-meta" style="color: var(--text-muted); font-size: 0.9rem;"></p>
+            </div>
+
+            <div id="recommendations-status"></div>
+            <div id="recommendations-grid" class="recipes-grid"></div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>KitchenPilot-V1 — Deterministic, Explainable Indian Recipe Recommendation Engine & Backend API.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/recommendations.js"></script>
+</body>
+</html>

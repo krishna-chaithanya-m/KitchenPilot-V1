@@ -1,0 +1,12 @@
+ingredient_id,canonical_name,item_form,default_mass_g,source,confidence,notes
+ING00002,almond,whole_nut,1.2,USDA FoodData Central FDC ID 170567 / CNF Food 2534,HIGH,Standard single whole dried almond kernel mass (1.2g)
+ING00021,cashew,whole_nut,1.5,USDA FoodData Central FDC ID 170162 / CNF Food 2548,HIGH,Standard single raw cashew nut kernel mass (1.5g)
+ING00125,walnut,kernel_half,3.0,USDA FoodData Central FDC ID 170187 / CNF Food 2590,HIGH,Standard single walnut half kernel mass (3.0g)
+ING00083,onion,whole_vegetable,110.0,CNF Food 2401 medium whole onion,HIGH,Medium whole raw onion edible portion mass (110g)
+ING00118,tomato,whole_vegetable,123.0,CNF Food 2460 medium whole tomato,HIGH,Medium whole red ripe tomato edible portion mass (123g)
+ING00070,lemon,whole_fruit,58.0,CNF Food 1587 medium raw lemon,HIGH,Medium whole lemon raw edible portion without peel (58g)
+ING00068,lime,whole_fruit,44.0,USDA FoodData Central FDC ID 168155,HIGH,Medium whole raw lime edible portion mass (44g)
+ING00052,egg,whole_egg,50.0,CNF Food 125 large chicken egg,HIGH,Single large whole fresh chicken egg mass (50g)
+ING00059,garlic,clove,3.0,CNF Food 2394 raw garlic clove,HIGH,Single raw garlic clove mass (3.0g)
+ING00010,black pepper,whole_peppercorn,0.05,USDA FoodData Central / ASTA Standards,HIGH,Standard single whole black peppercorn mass (0.05g)
+ING00011,peppercorn,whole_peppercorn,0.05,USDA FoodData Central / ASTA Standards,HIGH,Standard single whole black peppercorn mass (0.05g)

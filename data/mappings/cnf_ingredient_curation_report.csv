@@ -1,0 +1,129 @@
+﻿ingredient_id,canonical_name,ingredient_form,top_candidate,selected_candidate,curation_status,curation_reason,candidate_count
+ING00001,ajwain,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00002,almond,default,"[2539] Nuts, almonds, toasted, unblanched","[2534] Nuts, almonds, dried, unblanched, unroasted",APPROVED,"Plain whole unroasted dried almond record selected over roasted nuts, nut butter, and almond meal.",10
+ING00003,amchur,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00004,asafoetida,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00005,baking powder,default,"[4004] Leavening agent, baking powder, low sodium","[4003] Leavening agent, baking powder, double acting, phosphate",APPROVED,Standard double-acting leavening baking powder record selected.,3
+ING00006,baking soda,default,"[4005] Leavening agent, baking soda","[4005] Leavening agent, baking soda",APPROVED,Direct CNF leavening agent match for baking soda.,1
+ING00007,banana,default,"[1704] Banana, raw","[1704] Banana, raw",APPROVED,Direct CNF food identity match with compatible default raw fruit form.,2
+ING00008,basil,default,"[212] Spices, basil, fresh","[212] Spices, basil, fresh",APPROVED,Fresh culinary herb record selected for default culinary basil.,2
+ING00009,bay leaf,default,"[172] Spices, bay leaf","[172] Spices, bay leaf",APPROVED,Direct CNF spice leaf record match for culinary bay leaf.,1
+ING00010,black pepper,powder,"[198] Spices, pepper, black","[198] Spices, pepper, black",APPROVED,Standard black pepper spice record selected for black pepper powder.,1
+ING00011,black pepper,whole,"[198] Spices, pepper, black","[198] Spices, pepper, black",APPROVED,Standard black pepper spice record selected for whole black peppercorns.,1
+ING00012,brinjal,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00013,broccoli,default,"[2374] Broccoli, raw","[2374] Broccoli, raw",APPROVED,Standard raw whole vegetable record selected for default fresh broccoli.,10
+ING00014,brown sugar,default,"[6818] Sweetener, brown sugar substitute, granulated","[4317] Sweets, sugars, brown",APPROVED,Candidate set was insufficient (contained only artificial substitutes and pastries); genuine CNF brown sugar record selected.,10
+ING00015,butter,default,"[118] Butter, regular","[118] Butter, regular",APPROVED,Standard commercial regular butter record selected for generic culinary butter.,10
+ING00016,button mushroom,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00017,cabbage,default,"[7599] Cabbage, kimchi","[2361] Cabbage, raw",APPROVED,Standard raw fresh vegetable record selected over processed kimchi.,10
+ING00018,cardamom,pod,"[174] Spices, cardamom, ground","[174] Spices, cardamom, ground",NEEDS_REVIEW,"Canonical ingredient specifies whole cardamom pods, but CNF 2026 only provides ground cardamom; requires review to confirm proxying.",1
+ING00019,cardamom,powder,"[174] Spices, cardamom, ground","[174] Spices, cardamom, ground",APPROVED,Direct ground spice record match for cardamom powder.,1
+ING00020,carrot,default,"[2380] Carrot, raw","[2380] Carrot, raw",APPROVED,Standard raw whole vegetable record selected for default fresh carrot.,10
+ING00021,cashew,default,"[5709] Nuts, cashew nuts, raw","[5709] Nuts, cashew nuts, raw",APPROVED,Standard raw plain cashew nut record selected over nut butter and roasted nuts.,7
+ING00022,cauliflower,default,"[2385] Cauliflower, raw","[2385] Cauliflower, raw",APPROVED,Standard raw whole vegetable record selected for default fresh cauliflower.,10
+ING00023,chaat masala,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00024,chaat masala,powder,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00025,chana dal,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00026,cheese,default,"[7732] Cheese, asiago",,NEEDS_REVIEW,"Candidate set contains only specialized cheeses (asiago, blue, brie, etc.) with no defensible generic cheese choice; flagged for review.",10
+ING00027,chicken,default,"[5334] Chicken, feet, boiled","[565] Chicken, broiler, meat only, raw",APPROVED,Candidate review set contained only giblets/feet; standard raw whole broiler chicken meat record selected from CNF.,10
+ING00028,chickpea,kabuli,"[3389] Chickpeas (garbanzo beans, bengal gram), mature seeds, dry","[3389] Chickpeas (garbanzo beans, bengal gram), mature seeds, dry",APPROVED,"Canonical ingredient is whole kabuli chickpea; dry mature seed record selected over boiled, canned, and flour forms.",8
+ING00029,cinnamon,powder,"[178] Spices, cinnamon, ground","[178] Spices, cinnamon, ground",APPROVED,Direct ground spice record match for cinnamon powder.,2
+ING00030,cinnamon,stick,"[7088] Cinnamon bun, with icing (honey bun)","[178] Spices, cinnamon, ground",NEEDS_REVIEW,"Canonical ingredient is whole cinnamon stick, but CNF 2026 only provides ground cinnamon; requires review to confirm proxying.",2
+ING00031,cocoa,powder,"[7281] Coffee and cocoa (mocha) powder, with whitener and low calorie sweetener","[4223] Sweets, cocoa, powder, unsweetened",APPROVED,Candidate review set contained sweetened mocha mix; genuine unsweetened baking cocoa powder record selected from CNF.,1
+ING00032,coconut,default,"[2558] Coconut meat, raw","[2558] Coconut meat, raw",APPROVED,Standard raw coconut meat record selected for default fresh coconut.,10
+ING00033,coconut,desiccated,"[2602] Coconut meat, desiccated, creamed","[2559] Coconut meat, desiccated, unsweetened",APPROVED,Plain unsweetened desiccated coconut meat record selected.,10
+ING00034,coconut,fresh,[2566] Coconut water (liquid from coconut),"[2558] Coconut meat, raw",APPROVED,Standard raw fresh coconut meat record selected.,10
+ING00035,coconut,milk,"[2565] Coconut milk (liquid from grated meat and water), canned","[2565] Coconut milk (liquid from grated meat and water), canned",APPROVED,Standard culinary canned liquid coconut milk record selected.,10
+ING00036,coconut oil,default,"[420] Vegetable oil, coconut","[420] Vegetable oil, coconut",APPROVED,Direct CNF vegetable oil record match for coconut oil.,1
+ING00037,cooking oil,default,"[6465] Vegetable oil, cooking spray","[451] Vegetable oil, canola",APPROVED,Standard neutral commercial cooking vegetable oil (canola) record selected from candidate set.,10
+ING00038,coriander,leaf,"[2067] Coriander (cilantro), raw","[2067] Coriander (cilantro), raw",APPROVED,Raw fresh cilantro/coriander leaf record selected for fresh culinary coriander leaves.,3
+ING00039,coriander,powder,"[2067] Coriander (cilantro), raw","[181] Spices, coriander seed (cilantro)",NEEDS_REVIEW,"Canonical ingredient is coriander powder, but CNF 2026 lacks a ground coriander powder record; seed record flagged for review.",3
+ING00040,coriander,seed,"[181] Spices, coriander seed (cilantro)","[181] Spices, coriander seed (cilantro)",APPROVED,Direct seed spice record match for coriander seeds.,3
+ING00041,corn,flour,"[6676] Grains, corn flour, blue, whole grain","[4417] Grains, corn flour, yellow, whole grain",APPROVED,Standard yellow whole grain corn flour record selected.,10
+ING00042,cream,fresh,"[5299] Cream, sour, light","[136] Cream, table (coffee), 18% M.F.",APPROVED,Standard fluid table/cooking sweet cream (18% M.F.) selected over cultured sour cream.,10
+ING00043,cucumber,default,"[2363] Cucumber, raw","[2363] Cucumber, raw",APPROVED,Standard raw whole vegetable record selected for default cucumber.,3
+ING00044,cumin,default,"[182] Spices, cumin seed","[182] Spices, cumin seed",APPROVED,Direct spice seed record match for default culinary cumin.,1
+ING00045,cumin,powder,"[182] Spices, cumin seed","[182] Spices, cumin seed",NEEDS_REVIEW,"Canonical ingredient specifies cumin powder, but CNF 2026 only contains cumin seed; requires review to confirm proxying.",1
+ING00046,cumin,seed,"[182] Spices, cumin seed","[182] Spices, cumin seed",APPROVED,Direct spice seed record match for cumin seeds.,1
+ING00047,curd,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00048,curd,hung,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00049,curry leaf,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00050,date,default,"[5401] Date, medjool","[1710] Date, domestic, natural and dry",APPROVED,Standard domestic natural dry date record selected for generic dates.,4
+ING00051,dry red chilli,default,"[3312] Peas, pigeon (red gram), mature seeds, dry","[2355] Pepper, hot chili, red, sun-dried",APPROVED,Candidate review set contained an invalid pulse match; genuine sun-dried red chili record selected from CNF.,1
+ING00052,egg,default,[6717] Egg Benedict,"[125] Egg, chicken, whole, fresh or frozen, raw",APPROVED,Standard raw whole chicken egg record selected over composite egg dishes.,10
+ING00053,fennel,default,"[2350] Fennel, bulb, raw","[186] Spices, fennel seed",APPROVED,Culinary spice seed record selected for default culinary fennel.,2
+ING00054,fennel,seed,"[186] Spices, fennel seed","[186] Spices, fennel seed",APPROVED,Direct spice seed record match for fennel seeds.,2
+ING00055,fenugreek,seed,"[187] Spices, fenugreek seed","[187] Spices, fenugreek seed",APPROVED,Direct spice seed record match for fenugreek seeds.,1
+ING00056,fenugreek leaves,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00057,fenugreek leaves,fresh,"[1984] Amaranth leaves, fresh",,NO_MATCH,"Candidate review file suggested unrelated amaranth leaves; CNF 2026 lacks fenugreek leaves, retained as NO_MATCH.",1
+ING00058,garam masala,powder,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00059,garlic,default,"[2394] Garlic, raw","[2394] Garlic, raw",APPROVED,Standard raw whole vegetable record selected over garlic powder.,2
+ING00060,ghee,default,"[7829] Butter, Clarified butter (ghee)","[7829] Butter, Clarified butter (ghee)",APPROVED,Direct CNF clarified butter (ghee) record match.,1
+ING00061,ginger,default,"[2091] Ginger root, raw","[2091] Ginger root, raw",APPROVED,Standard raw root vegetable record selected over ground ginger and pickled ginger.,3
+ING00062,ginger garlic,paste,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00063,green beans,default,"[2279] Winged beans (goa bean), green, raw","[2370] Beans, snap (Italian, green or yellow), raw",APPROVED,Candidate review file offered winged beans; genuine raw snap green bean record selected from CNF.,6
+ING00064,green bell pepper,default,"[2413] Pepper, sweet, green, raw","[2413] Pepper, sweet, green, raw",APPROVED,Standard raw whole sweet green pepper record selected.,10
+ING00065,green chilli,default,"[2322] Pepper, hot chili, red or green, raw","[2322] Pepper, hot chili, red or green, raw",APPROVED,Standard raw fresh hot green chili record selected over canned chili.,3
+ING00066,green peas,fresh,"[2409] Peas, green, raw","[2409] Peas, green, raw",APPROVED,Standard fresh raw green pea record selected over boiled and canned peas.,10
+ING00067,honey,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00068,jaggery,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00069,kashmiri red chilli,powder,"[2322] Pepper, hot chili, red or green, raw","[177] Spices, chili powder",NEEDS_REVIEW,Kashmiri red chilli is a mild red chili powder; mapped to generic chili powder pending review of spice potency.,3
+ING00070,lemon,default,"[1592] Lemon peel, raw","[1587] Lemon, raw, without peel",APPROVED,"Standard raw whole fruit record selected over peel, juice, and composite dishes.",7
+ING00071,lemon juice,default,"[1591] Lemon juice, frozen","[1589] Lemon juice, raw",APPROVED,Standard fresh raw lemon juice record selected over canned and frozen juice.,3
+ING00072,mango,default,"[1603] Mango, raw","[1603] Mango, raw",APPROVED,Direct CNF raw fruit match for fresh mango.,3
+ING00073,milk,default,"[63] Milk, fluid, partly skimmed, 1% M.F.","[61] Milk, fluid, partly skimmed, 2% M.F.",NEEDS_REVIEW,Generic milk requires decision between standard whole fluid milk and partly skimmed 2% milk from candidate set; flagged for review.,10
+ING00074,mint leaf,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00075,moong dal,default,"[3297] Beans, legumes, mung (green gram), mature seeds, dry","[3297] Beans, legumes, mung (green gram), mature seeds, dry",APPROVED,Dry mature mung seed record selected over boiled seeds and bean sprouts.,8
+ING00076,mozzarella,default,"[5512] Cheese, mozzarella, fat free","[110] Cheese, mozzarella/pizza mozzarella (25% M.F.)",APPROVED,Standard commercial mozzarella cheese record (25% M.F.) selected.,10
+ING00077,mustard,default,"[2126] Mustard greens, raw","[192] Spices, mustard seed, yellow",APPROVED,Mustard spice seed record selected over leafy mustard green vegetable records.,10
+ING00078,mustard,oil,"[452] Vegetable oil, mustard","[452] Vegetable oil, mustard",APPROVED,Direct vegetable oil record match for mustard oil.,10
+ING00079,mustard,seed,"[192] Spices, mustard seed, yellow","[192] Spices, mustard seed, yellow",APPROVED,Direct spice seed record match for mustard seeds.,10
+ING00080,mutton,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00081,oats,default,"[4421] Grains, oats, dry","[4421] Grains, oats, dry",APPROVED,Standard dry whole oats grain record selected.,1
+ING00082,olive oil,default,"[422] Vegetable oil, olive","[422] Vegetable oil, olive",APPROVED,Direct vegetable oil record match for 100% pure olive oil.,2
+ING00083,onion,default,"[2401] Onion, raw","[2401] Onion, raw",APPROVED,Standard raw whole vegetable record selected for default fresh onion.,10
+ING00084,oregano,default,"[195] Spices, oregano, ground","[195] Spices, oregano, ground",APPROVED,Standard dried culinary oregano spice record selected.,1
+ING00085,paneer,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00086,paprika,powder,"[196] Spices, paprika","[196] Spices, paprika",APPROVED,Direct spice record match for paprika powder.,1
+ING00087,parmesan,default,"[40] Cheese, parmesan, hard","[40] Cheese, parmesan, hard",APPROVED,Standard hard block parmesan cheese record selected.,7
+ING00088,parsley,default,"[2405] Parsley, fresh","[2405] Parsley, fresh",APPROVED,Fresh culinary herb record selected for default fresh parsley.,3
+ING00089,peanut,default,"[3303] Peanuts, Spanish, raw","[3396] Peanuts, all types, raw",APPROVED,"Standard generic raw peanut record selected over specific cultivars, roasted nuts, and peanut butter.",10
+ING00090,pistachio,default,"[2644] Nuts, pistachio nuts, raw","[2644] Nuts, pistachio nuts, raw",APPROVED,Standard raw plain pistachio nut record selected over roasted nuts.,3
+ING00091,poppy,seed,"[201] Spices, poppy seed","[201] Spices, poppy seed",APPROVED,Direct spice seed record match for poppy seeds.,1
+ING00092,potato,default,"[6509] Potato, au gratin, homemade, with margarine","[2505] Potato, flesh and skin, raw",APPROVED,Canonical ingredient is default form vegetable; raw potato record selected over boiled/prepared candidate rows.,10
+ING00093,pumpkin,default,"[2441] Pumpkin, raw","[2441] Pumpkin, raw",APPROVED,Standard raw whole vegetable record selected over boiled pumpkin and pumpkin flowers.,10
+ING00094,raisin,default,"[1744] Raisin, golden seedless","[1745] Raisin, seedless (sultana)",APPROVED,Standard seedless brown raisin (sultana / kishmish) record selected.,3
+ING00095,red bell pepper,default,"[2484] Pepper, sweet, red, raw","[2484] Pepper, sweet, red, raw",APPROVED,Standard raw whole sweet red pepper record selected.,10
+ING00096,red chilli,dried,"[3312] Peas, pigeon (red gram), mature seeds, dry","[2355] Pepper, hot chili, red, sun-dried",APPROVED,Canonical ingredient is dry red chili; genuine sun-dried red chili record selected over invalid pulse match.,1
+ING00097,red chilli,flakes,"[2322] Pepper, hot chili, red or green, raw","[2355] Pepper, hot chili, red, sun-dried",NEEDS_REVIEW,Canonical ingredient is red chili flakes; mapped to sun-dried whole red chili pending review of flake preparation form.,3
+ING00098,red chilli,powder,"[177] Spices, chili powder","[177] Spices, chili powder",APPROVED,Standard chili powder spice record selected for red chili powder.,1
+ING00099,rice,basmati,"[4471] Grains, rice, white, long-grain, regular, dry","[4471] Grains, rice, white, long-grain, regular, dry",APPROVED,Standard dry white long-grain rice record selected to represent dry Basmati long-grain rice.,10
+ING00100,rice,default,"[4471] Grains, rice, white, long-grain, regular, dry","[4471] Grains, rice, white, long-grain, regular, dry",APPROVED,Standard dry regular long-grain white rice record selected for default culinary rice.,10
+ING00101,rice,flour,"[4451] Grains, rice flour, brown","[4429] Grains, rice flour, white",APPROVED,Standard white rice flour record selected for culinary rice flour.,10
+ING00102,saffron,strand,"[205] Spices, saffron","[205] Spices, saffron",APPROVED,Direct culinary spice record match for saffron strands.,1
+ING00103,salt,default,"[214] Salt, table","[214] Salt, table",APPROVED,Direct table salt seasoning record match.,1
+ING00104,sambar powder,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00105,semolina,default,"[4478] Grains, semolina","[4478] Grains, semolina",APPROVED,Direct grain record match for semolina (sooji/rava).,1
+ING00106,sesame,oil,"[424] Vegetable oil, sesame","[424] Vegetable oil, sesame",APPROVED,Direct vegetable oil record match for sesame oil.,10
+ING00107,sesame,seed,"[2522] Seeds, sesame seed kernels, toasted, shelled","[2521] Seeds, sesame seeds, whole, roasted and toasted",APPROVED,Whole sesame seeds record selected for culinary sesame seeds.,10
+ING00108,soy sauce,default,"[3329] Soy sauce (made from soy), tamari","[3403] Soy sauce (made with soy and wheat), shoyu, regular",APPROVED,Standard regular brewed soy sauce (shoyu) record selected.,5
+ING00109,spinach,default,"[2213] Spinach, raw","[2213] Spinach, raw",APPROVED,Standard raw fresh vegetable record selected for default fresh spinach.,10
+ING00110,star anise,default,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00111,sugar,caster,"[1688] Sugar-apple, raw","[4318] Sweets, sugars, granulated (white)",APPROVED,Candidate review file suggested sugar-apple fruit; genuine white refined sugar record selected for caster sugar.,1
+ING00112,sugar,default,"[1688] Sugar-apple, raw","[4318] Sweets, sugars, granulated (white)",APPROVED,Candidate review file suggested sugar-apple fruit; genuine white granulated sugar record selected for table sugar.,1
+ING00113,sunflower oil,default,"[7191] Vegetable oil, sunflower, mid-oleic","[7191] Vegetable oil, sunflower, mid-oleic",APPROVED,Standard refined mid-oleic cooking vegetable oil record selected for sunflower oil.,4
+ING00114,sweet corn,default,"[2393] Corn, sweet, frozen, kernels on the cob, unprepared","[2388] Corn, sweet, yellow, raw",APPROVED,Standard raw fresh yellow sweet corn record selected.,10
+ING00115,tamarind,default,"[1689] Tamarind, raw","[1689] Tamarind, raw",APPROVED,Direct raw fruit/pulp record match for default tamarind.,1
+ING00116,tamarind,paste,"[1689] Tamarind, raw","[1689] Tamarind, raw",NEEDS_REVIEW,"Canonical ingredient is tamarind paste, but CNF 2026 only provides raw tamarind; requires review to confirm proxying.",1
+ING00117,tofu,default,"[6577] Tofu, fried","[4913] Tofu, silken, light, firm",APPROVED,Plain firm refrigerated tofu record selected over fried and composite tofu dishes.,10
+ING00118,tomato,default,"[2461] Tomato, red, ripe, boiled","[2460] Tomato, red, ripe, raw, year round average",APPROVED,Standard raw fresh tomato record selected over boiled and canned tomato forms.,10
+ING00119,tomato,puree,"[6580] Tomato products, canned, puree","[6580] Tomato products, canned, puree",APPROVED,Direct canned tomato puree product match for tomato puree.,10
+ING00120,toor dal,default,"[3312] Peas, pigeon (red gram), mature seeds, dry","[3312] Peas, pigeon (red gram), mature seeds, dry",APPROVED,Validated alias maps to pigeon peas; dry mature-seed form selected over boiled records.,3
+ING00121,turmeric,powder,"[211] Spices, turmeric, ground","[211] Spices, turmeric, ground",APPROVED,Direct ground spice record match for turmeric powder.,1
+ING00122,urad dal,white,,,NO_MATCH,No suitable CNF 2026 record found; retained as NO_MATCH rather than forcing an unrelated food.,0
+ING00123,vanilla,default,[216] Vanilla extract,[216] Vanilla extract,APPROVED,Direct culinary vanilla extract record match.,3
+ING00124,vinegar,default,"[6196] Vinegar, balsamic","[14] Vinegar, distilled (white)",APPROVED,Standard plain distilled white vinegar record selected for generic culinary vinegar.,4
+ING00125,walnut,default,"[7221] Nuts, walnuts, glazed","[2590] Nuts, walnuts, English or Persian",APPROVED,Standard unglazed English/Persian walnut record selected over glazed and roasted walnuts.,5
+ING00126,water,default,"[2933] Water, municipal","[2933] Water, municipal",APPROVED,Standard municipal tap water liquid record selected.,10
+ING00127,yeast,active dry,[5605] Yeast extract spread,"[4008] Leavening agent, yeast, baker's, active, dry",APPROVED,Genuine active dry baker's yeast leavening record selected over yeast extract spread.,1
+ING00128,yellow bell pepper,default,"[2344] Pepper, sweet, yellow, raw","[2344] Pepper, sweet, yellow, raw",APPROVED,Direct raw fresh sweet yellow pepper record match.,1

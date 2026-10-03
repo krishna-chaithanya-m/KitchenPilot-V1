@@ -1,0 +1,25 @@
+{
+  "id": "dal-tadka",
+  "name_en": "Dal Tadka",
+  "name_hi": "दाल तड़का",
+  "region": "north",
+  "category": "main-dal",
+  "serving_unit": "katori",
+  "serving_grams_default": 150,
+  "macros_per_100g": {
+    "kcal": 116,
+    "protein_g": 6.8,
+    "carbs_g": 18.2,
+    "fat_g": 1.4,
+    "fiber_g": 4.1
+  },
+  "ingredients_summary": "Toor dal, ghee or oil, onion, tomato, garlic, ginger, cumin, turmeric, salt",
+  "veg": true,
+  "jain": false,
+  "satvik": false,
+  "contains": ["dairy", "onion", "garlic"],
+  "sources": ["IFCT 2017 toor dal cooked", "household average tadka oil 1 tsp per serving"],
+  "confidence": 8,
+  "last_verified": "2026-05-20",
+  "notes": "Assumes 1 tsp tempering fat per medium katori. Adjust fat upward by ~3g for ghee-heavy preparations."
+}

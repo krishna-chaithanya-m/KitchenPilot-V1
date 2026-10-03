@@ -1,0 +1,2 @@
+recipe_id,recipe_name,metric,value,severity,cause,quality_status
+R01075,Rajasthani Hare Chana Halwa Recipe - Rajasthani Hare Chane Ka Halwa (Recipe in Hindi),ingredient_mass_kg,10.0,HIGH,Quantity specifies 10.0 kg for 4 servings,SANITY_REVIEW

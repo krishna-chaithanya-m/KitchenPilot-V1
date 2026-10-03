@@ -1,0 +1,32 @@
+canonical_name,source_state,target_state,conversion_factor,source,confidence,notes
+rice,cooked,raw,0.38,USDA Table of Cooking Yields / FAO,HIGH,Cooked white rice mass to raw dry grain equivalent (yield 2.63x)
+rice,boiled,raw,0.38,USDA Table of Cooking Yields / FAO,HIGH,Boiled white rice mass to raw dry grain equivalent (yield 2.63x)
+rice,steamed,raw,0.38,USDA Table of Cooking Yields / FAO,HIGH,Steamed white rice mass to raw dry grain equivalent (yield 2.63x)
+rice,soaked,raw,0.77,USDA Cooking and Soaking Factors,MEDIUM,Soaked rice mass to dry grain equivalent (moisture uptake ~30%)
+moong dal,cooked,raw,0.385,USDA Table of Cooking Yields / FAO,HIGH,Cooked/boiled mung dal mass to dry legume equivalent (yield 2.60x)
+moong dal,boiled,raw,0.385,USDA Table of Cooking Yields / FAO,HIGH,Boiled mung dal mass to dry legume equivalent (yield 2.60x)
+moong dal,steamed,raw,0.385,USDA Table of Cooking Yields / FAO,HIGH,Steamed mung dal mass to dry legume equivalent (yield 2.60x)
+moong dal,soaked,raw,0.55,USDA Legume Soaking Factors,MEDIUM,Soaked mung dal mass to dry legume equivalent (moisture uptake ~80%)
+toor dal,cooked,raw,0.385,USDA Table of Cooking Yields / FAO,HIGH,Cooked pigeon pea dal to dry legume equivalent (yield 2.60x)
+toor dal,boiled,raw,0.385,USDA Table of Cooking Yields / FAO,HIGH,Boiled pigeon pea dal to dry legume equivalent (yield 2.60x)
+toor dal,steamed,raw,0.385,USDA Table of Cooking Yields / FAO,HIGH,Steamed pigeon pea dal to dry legume equivalent (yield 2.60x)
+toor dal,soaked,raw,0.55,USDA Legume Soaking Factors,MEDIUM,Soaked pigeon pea dal to dry legume equivalent (moisture uptake ~80%)
+chickpea,cooked,raw,0.42,USDA Table of Cooking Yields / FAO,HIGH,Cooked/boiled chickpeas mass to dry legume equivalent (yield 2.38x)
+chickpea,boiled,raw,0.42,USDA Table of Cooking Yields / FAO,HIGH,Boiled chickpeas mass to dry legume equivalent (yield 2.38x)
+chickpea,soaked,raw,0.52,USDA Legume Soaking Factors,MEDIUM,Soaked chickpeas mass to dry legume equivalent (moisture uptake ~90%)
+potato,boiled,raw,1.00,USDA Table of Cooking Yields,HIGH,Boiled whole potato mass to raw potato equivalent (yield 0.99-1.00x)
+potato,cooked,raw,1.00,USDA Table of Cooking Yields,HIGH,Cooked potato mass to raw potato equivalent (yield 1.00x)
+potato,steamed,raw,1.00,USDA Table of Cooking Yields,HIGH,Steamed potato mass to raw potato equivalent (yield 1.00x)
+green peas,boiled,raw,1.00,USDA Table of Cooking Yields,HIGH,Boiled green peas mass to raw green peas equivalent (yield 0.98-1.00x)
+green peas,steamed,raw,1.00,USDA Table of Cooking Yields,HIGH,Steamed green peas mass to raw green peas equivalent (yield 0.98-1.00x)
+green peas,cooked,raw,1.00,USDA Table of Cooking Yields,HIGH,Cooked green peas mass to raw green peas equivalent (yield 0.98-1.00x)
+tamarind,soaked,raw,,Project Culinary Review,LOW,STATE_REVIEW_REQUIRED: Soaking yields for tamarind pulp extraction vary widely by water dilution
+cashew,soaked,raw,,Project Culinary Review,LOW,STATE_REVIEW_REQUIRED: Moisture absorption for soaked cashews not standardized in CNF
+peanut,soaked,raw,,Project Culinary Review,LOW,STATE_REVIEW_REQUIRED: Soaking factor requires empirical calibration
+date,soaked,raw,,Project Culinary Review,LOW,STATE_REVIEW_REQUIRED: Rehydration factor unestablished
+oats,soaked,raw,,Project Culinary Review,LOW,STATE_REVIEW_REQUIRED: Cold-soaking liquid retention unstandardized
+cabbage,soaked,raw,,Project Culinary Review,LOW,STATE_REVIEW_REQUIRED: Vegetable soaking in brine unstandardized
+green chilli,soaked,raw,,Project Culinary Review,LOW,STATE_REVIEW_REQUIRED: Soaked chilli yield unstandardized
+lemon juice,soaked,raw,,Project Culinary Review,LOW,STATE_REVIEW_REQUIRED: Liquid soaking artifact
+onion,soaked,raw,,Project Culinary Review,LOW,STATE_REVIEW_REQUIRED: Pickled/soaked allium yield unstandardized
+yeast,soaked,raw,,Project Culinary Review,LOW,STATE_REVIEW_REQUIRED: Activated yeast slurry unstandardized

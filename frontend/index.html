@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitchenPilot-V1 — Personalized Indian Recipe Recommendation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <span>🍳 KitchenPilot</span>
+                <span class="brand-badge">V1</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="recommendations.html">Recommendations</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Personalized Indian Recipe<br><span>Recommendation Engine</span></h1>
+                <p>Discover traditional and regional Indian dishes tailored to your available pantry ingredients, dietary lifestyle, and validated nutritional targets.</p>
+                <div class="cta-group">
+                    <a href="recommendations.html" class="btn btn-primary">Find Recipes Now</a>
+                    <a href="recipes.html" class="btn btn-secondary">Explore Recipe Catalog</a>
+                </div>
+
+                <!-- Backend Health Badge -->
+                <div id="backend-status" style="margin-top: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; padding: 0.35rem 0.85rem; border-radius: var(--radius-full); background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-light);">
+                    <span id="status-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #9ca3af; display: inline-block;"></span>
+                    <span id="status-text">Checking backend status...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Explanation / Pillars Section -->
+        <section class="features-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Deterministic & Explainable Recommendation</h2>
+                    <p>Transparent recommendation signals derived from verified culinary data and food science</p>
+                </div>
+
+                <div class="pillars-grid">
+                    <!-- Pillar 1: Ingredient Matching -->
+                    <div class="pillar-card">
+                        <div class="pillar-icon" style="background-color: var(--accent-emerald-light); color: var(--accent-emerald);">
+                            🥕
+                        </div>
+                        <h3>Canonical Ingredient Matching</h3>
+                        <p>Matches recipes using canonical ingredients and culinary aliases. Prioritizes dishes where you have the highest ingredient coverage to minimize food waste.</p>
+                    </div>
+
+                    <!-- Pillar 2: Personal Preferences -->
+                    <div class="pillar-card">
+                        <div class="pillar-icon" style="background-color: var(--accent-amber-light); color: var(--accent-amber);">
+                            🌿
+                        </div>
+                        <h3>Strict Dietary Filtering</h3>
+                        <p>Applies hard filters before ranking to guarantee compliance with Vegetarian, Vegan, Jain, and Satvik traditions, strictly honoring excluded ingredients.</p>
+                    </div>
+
+                    <!-- Pillar 3: Nutrition-Aware Ranking -->
+                    <div class="pillar-card">
+                        <div class="pillar-icon" style="background-color: var(--accent-indigo-light); color: var(--accent-indigo);">
+                            ⚖️
+                        </div>
+                        <h3>Nutrition-Aware Scoring</h3>
+                        <p>Evaluates recipe macro-nutrients against your target goals (calories, protein, fiber) using frozen, verified Canadian Nutrient File (CNF) profiles.</p>
+                    </div>
+
+                    <!-- Pillar 4: Explainability -->
+                    <div class="pillar-card">
+                        <div class="pillar-icon" style="background-color: var(--primary-light); color: var(--primary);">
+                            💡
+                        </div>
+                        <h3>Transparent Explainability</h3>
+                        <p>Every recommendation provides a clear, deterministic explanation detailing why it was chosen based on ingredient overlap, dietary fit, and flavor similarity.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>KitchenPilot-V1 — Deterministic, Explainable Indian Recipe Recommendation Engine & Backend API.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

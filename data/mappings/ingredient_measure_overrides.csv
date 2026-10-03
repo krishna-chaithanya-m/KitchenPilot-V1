@@ -1,0 +1,22 @@
+ingredient_id,canonical_ingredient,canonical_name,unit,grams_per_unit,source,confidence,reason,enabled
+ING00060,ghee,ghee,tbsp,12.8,USDA FoodData Central FDC ID 171304 (Butter oil/ghee),HIGH,Authoritative USDA mass for 1 tbsp clarified butter / ghee (density 0.853 g/ml at 20C),True
+ING00060,ghee,ghee,tablespoon,12.8,USDA FoodData Central FDC ID 171304 (Butter oil/ghee),HIGH,Authoritative USDA mass for 1 tbsp clarified butter / ghee (density 0.853 g/ml at 20C),True
+ING00060,ghee,ghee,tsp,4.27,USDA FoodData Central FDC ID 171304 (Butter oil/ghee),HIGH,Authoritative USDA mass for 1 tsp clarified butter / ghee,True
+ING00060,ghee,ghee,teaspoon,4.27,USDA FoodData Central FDC ID 171304 (Butter oil/ghee),HIGH,Authoritative USDA mass for 1 tsp clarified butter / ghee,True
+ING00060,ghee,ghee,cup,205.0,USDA FoodData Central FDC ID 171304 (Butter oil/ghee),HIGH,Authoritative USDA mass for 1 cup clarified butter / ghee,True
+ING00060,ghee,ghee,ml,0.905,USDA FoodData Central / Physical density,HIGH,Liquid density of clarified butter at room temperature,True
+ING00060,ghee,ghee,liter,905.0,USDA FoodData Central / Physical density,HIGH,Liquid density of clarified butter,True
+ING00015,butter,butter,tbsp,14.2,USDA FoodData Central FDC ID 173410 / CNF Food 134,HIGH,Standard culinary solid butter (1 tbsp = 14.2g),True
+ING00015,butter,butter,tablespoon,14.2,USDA FoodData Central FDC ID 173410 / CNF Food 134,HIGH,Standard culinary solid butter (1 tbsp = 14.2g),True
+ING00015,butter,butter,tsp,4.73,USDA FoodData Central FDC ID 173410 / CNF Food 134,HIGH,Standard culinary solid butter (1 tsp = 4.73g),True
+ING00015,butter,butter,teaspoon,4.73,USDA FoodData Central FDC ID 173410 / CNF Food 134,HIGH,Standard culinary solid butter (1 tsp = 4.73g),True
+ING00081,oil,oil,tbsp,13.82,CNF Food 7191 Vegetable oil 15 ml,HIGH,Authoritative CNF measure for vegetable oil,True
+ING00081,oil,oil,tablespoon,13.82,CNF Food 7191 Vegetable oil 15 ml,HIGH,Authoritative CNF measure for vegetable oil,True
+ING00081,oil,oil,tsp,4.607,CNF Food 7191 Vegetable oil 5 ml,HIGH,Authoritative CNF measure for vegetable oil,True
+ING00081,oil,oil,teaspoon,4.607,CNF Food 7191 Vegetable oil 5 ml,HIGH,Authoritative CNF measure for vegetable oil,True
+ING00042,cream,cream,tbsp,15.22,CNF Food 136 Cream 15 ml,HIGH,Authoritative CNF measure for table cream,True
+ING00042,cream,cream,tablespoon,15.22,CNF Food 136 Cream 15 ml,HIGH,Authoritative CNF measure for table cream,True
+ING00042,cream,cream,tsp,5.07,CNF Food 136 Cream 5 ml,HIGH,Authoritative CNF measure for table cream,True
+ING00042,cream,cream,teaspoon,5.07,CNF Food 136 Cream 5 ml,HIGH,Authoritative CNF measure for table cream,True
+ING00061,ginger,ginger,inch,5.0,USDA FoodData Central / Culinary Reference,MEDIUM,Standard 1-inch fresh ginger knob mass (~5.0g),True
+ING00029,cinnamon,cinnamon,inch,1.3,USDA FoodData Central Spices Cinnamon,MEDIUM,Standard 1-inch segment of cinnamon stick quill (~1.3g),True

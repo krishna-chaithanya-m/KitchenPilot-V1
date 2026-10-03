@@ -1,0 +1,58 @@
+# KitchenPilot-V1 Git Ignore Configuration
+
+# Environment configuration & secrets
+.env
+.env.*
+!.env.example
+.env.local
+.env.*.local
+
+# Python virtual environment
+.venv/
+venv/
+ENV/
+env/
+
+# Python bytecode & caching
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Testing & code quality caches
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.mypy_cache/
+.ruff_cache/
+
+# IDE & OS-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Logs & temporary files
+*.log
+logs/
+temp_sangat/
+scratch/
+
+# Large intermediate CNF dataset
+data/processed/cnf_2026_nutrition.csv
+
+# Nutrition backup
+data/backup_nutrition_stage0/
+
+# Runtime-generated/cache outputs
+data/processed/recommendation_results.csv
+
+# Intermediate processing datasets
+data/processed/recipe_ingredient_nutrition.csv
+data/processed/recipe_ingredients_quality_checked.csv
+data/processed/recipe_ingredients.csv

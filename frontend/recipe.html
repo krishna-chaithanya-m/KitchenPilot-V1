@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Details — KitchenPilot-V1</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <span>🍳 KitchenPilot</span>
+                <span class="brand-badge">V1</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="recommendations.html">Recommendations</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container" style="padding-top: 2rem; padding-bottom: 3rem;">
+        <!-- Breadcrumb / Back Link -->
+        <div style="margin-bottom: 1.5rem;">
+            <a href="recipes.html" style="font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem;">
+                &larr; Back to Recipe Catalog
+            </a>
+        </div>
+
+        <div id="recipe-status"></div>
+
+        <!-- Recipe Content (injected by recipe.js) -->
+        <div id="recipe-content" style="display: none;">
+            <!-- Header Card -->
+            <section class="detail-header">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h1 id="recipe-title" class="detail-title"></h1>
+                        <div id="recipe-local-name" class="detail-local-name"></div>
+                        <div id="recipe-badges" class="detail-badges"></div>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <button id="btn-similar-recipes" class="btn btn-primary btn-sm">Find Similar Recipes 🔍</button>
+                        <button id="btn-refresh-nutrition" class="btn btn-secondary btn-sm">Verify Nutrition ⚖️</button>
+                    </div>
+                </div>
+
+                <div class="detail-stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-label">Prep Time</div>
+                        <div id="stat-prep" class="stat-value">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Cook Time</div>
+                        <div id="stat-cook" class="stat-value">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Total Time</div>
+                        <div id="stat-total" class="stat-value">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Servings</div>
+                        <div id="stat-servings" class="stat-value">-</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Calories / Serving</div>
+                        <div id="stat-calories" class="stat-value">-</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ingredients & Instructions Grid -->
+            <div class="detail-grid">
+                <!-- Ingredients Section -->
+                <section class="detail-section">
+                    <h2>🥕 Ingredients</h2>
+                    <ul id="ingredients-list" class="ingredients-list"></ul>
+                </section>
+
+                <!-- Instructions Section -->
+                <section class="detail-section">
+                    <h2>📝 Instructions</h2>
+                    <div id="instructions-container" class="instructions-text"></div>
+                </section>
+            </div>
+
+            <!-- Verified Nutrition Details Panel -->
+            <section class="detail-section" style="margin-bottom: 2.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <h2>⚖️ Nutritional Profile (Per Serving)</h2>
+                    <span id="nutrition-confidence-badge" style="font-size: 0.8rem; font-weight: 600; padding: 0.25rem 0.65rem; border-radius: var(--radius-full); background: var(--bg-subtle); color: var(--text-muted);">
+                        Quality: Verified
+                    </span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 1rem;">
+                    Macro and micro nutrients calculated and frozen against Canadian Nutrient File (CNF) references.
+                </p>
+
+                <div class="nutrition-grid">
+                    <div class="nut-cell">
+                        <div class="nut-label">Calories</div>
+                        <div id="nut-cal" class="nut-value">-</div>
+                    </div>
+                    <div class="nut-cell">
+                        <div class="nut-label">Protein</div>
+                        <div id="nut-protein" class="nut-value">-</div>
+                    </div>
+                    <div class="nut-cell">
+                        <div class="nut-label">Fat</div>
+                        <div id="nut-fat" class="nut-value">-</div>
+                    </div>
+                    <div class="nut-cell">
+                        <div class="nut-label">Carbohydrates</div>
+                        <div id="nut-carbs" class="nut-value">-</div>
+                    </div>
+                    <div class="nut-cell">
+                        <div class="nut-label">Dietary Fiber</div>
+                        <div id="nut-fiber" class="nut-value">-</div>
+                    </div>
+                    <div class="nut-cell">
+                        <div class="nut-label">Sugar</div>
+                        <div id="nut-sugar" class="nut-value">-</div>
+                    </div>
+                    <div class="nut-cell">
+                        <div class="nut-label">Sodium</div>
+                        <div id="nut-sodium" class="nut-value">-</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Similar Recipes Section (Populated dynamically) -->
+            <section id="similar-section" class="detail-section" style="display: none; margin-bottom: 2.5rem;">
+                <div style="margin-bottom: 1.5rem;">
+                    <h2>🍲 Similar Regional Recipes</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">
+                        Top matching recipes computed using TF-IDF text features and cosine similarity.
+                    </p>
+                </div>
+                <div id="similar-status"></div>
+                <div id="similar-grid" class="recipes-grid"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>KitchenPilot-V1 — Deterministic, Explainable Indian Recipe Recommendation Engine & Backend API.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/recipe.js"></script>
+</body>
+</html>

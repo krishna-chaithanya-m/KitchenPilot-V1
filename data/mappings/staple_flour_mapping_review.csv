@@ -1,0 +1,11 @@
+canonical_name,recipe_rows,candidate_cnf_food_code,candidate_cnf_food_name,decision,reason,confidence
+Whole Wheat Flour,827,4500,Grains wheat flour whole wheat,RECOMMENDED_FOR_CURATION,Exact biological and nutritional match for Indian atta / whole wheat meal,HIGH
+All Purpose Flour (Maida),605,4484,Grains wheat flour white all purpose enriched,RECOMMENDED_FOR_CURATION,Standard refined wheat flour equivalent for Indian maida,HIGH
+Gram Flour (Besan),380,4886,Chickpea flour (besan),RECOMMENDED_FOR_CURATION,Identical match in CNF 2026 database (explicitly titled Chickpea flour besan),HIGH
+Rice Flour,204,4429,Grains rice flour white,ACCEPTED,Already active in curated mapping under canonical ingredient rice (ING00101),HIGH
+Corn Flour,250,4417,Corn flour masa coarse,RECOMMENDED_FOR_CURATION,Milled corn grain flour for thickening and dough preparation,HIGH
+Ragi Flour (Finger Millet),72,6186,Grains millet flour,RECOMMENDED_PROXY,Botanical proxy (millet flour) pending authoritative IFCT Finger Millet entry,MEDIUM
+Jowar Flour (Sorghum),47,6190,Grains sorghum flour,RECOMMENDED_FOR_CURATION,Exact botanical match in CNF 2026 for Sorghum bicolor flour,HIGH
+Bajra Flour (Pearl Millet),43,6186,Grains millet flour,RECOMMENDED_PROXY,Direct millet family match in CNF 2026 for Pennisetum glaucum,HIGH
+Oats Flour,21,4421,Grains oats dry,RECOMMENDED_PROXY,Milled whole grain oat equivalent,HIGH
+Buckwheat Flour (Kuttu),16,4488,Grains buckwheat flour whole-groat,RECOMMENDED_FOR_CURATION,Exact botanical and milling match in CNF 2026 for Fagopyrum esculentum,HIGH

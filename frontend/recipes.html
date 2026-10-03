@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Catalog — KitchenPilot-V1</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <span>🍳 KitchenPilot</span>
+                <span class="brand-badge">V1</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html" class="active">Recipes</a></li>
+                    <li><a href="recommendations.html">Recommendations</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container" style="padding-top: 2rem; padding-bottom: 3rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; color: var(--secondary);">Recipe Catalog</h1>
+                <p style="color: var(--text-muted);">Browse over 6,800 regional Indian recipes with verified culinary metadata</p>
+            </div>
+            <a href="recommendations.html" class="btn btn-primary btn-sm">Find by Ingredients ✨</a>
+        </div>
+
+        <!-- Filter Controls -->
+        <section class="card-filter">
+            <form id="recipes-filter-form">
+                <div class="filter-grid">
+                    <div class="form-group">
+                        <label for="filter-cuisine">Cuisine</label>
+                        <input type="text" id="filter-cuisine" class="form-control" placeholder="e.g. South Indian, Bengali">
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-meal-type">Meal Type</label>
+                        <input type="text" id="filter-meal-type" class="form-control" placeholder="e.g. Lunch, Side Dish, Snack">
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-category">Category</label>
+                        <input type="text" id="filter-category" class="form-control" placeholder="e.g. Curry, Rice, Dessert">
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-page-size">Items per Page</label>
+                        <select id="filter-page-size" class="form-control">
+                            <option value="12">12 per page</option>
+                            <option value="24" selected>24 per page</option>
+                            <option value="48">48 per page</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Dietary Checkboxes -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color);">
+                    <div class="checkbox-group" style="margin-top: 0;">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="filter-veg">
+                            <span>Vegetarian</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="filter-vegan">
+                            <span>Vegan</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="filter-jain">
+                            <span>Jain</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="filter-satvik">
+                            <span>Satvik</span>
+                        </label>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button type="submit" class="btn btn-primary btn-sm">Apply Filters</button>
+                        <button type="button" id="btn-reset-filters" class="btn btn-secondary btn-sm">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Dynamic Container for Recipes or States -->
+        <div id="status-container"></div>
+        <div id="recipes-grid" class="recipes-grid"></div>
+
+        <!-- Pagination Controls -->
+        <div id="pagination" class="pagination" style="display: none;">
+            <button id="btn-prev-page" class="btn btn-secondary btn-sm" disabled>&larr; Previous</button>
+            <span id="page-indicator" class="page-info">Page 1 of 1</span>
+            <button id="btn-next-page" class="btn btn-secondary btn-sm" disabled>Next &rarr;</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>KitchenPilot-V1 — Deterministic, Explainable Indian Recipe Recommendation Engine & Backend API.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/recipes.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+canonical_name,recipe_rows,affected_recipes,priority,reason,recommended_action
+curd,789,774,CRITICAL,Core dairy staple supplying significant protein and fat across gravies and marinades,Source authoritative profile from Indian Food Composition Tables (IFCT Code D002 / Whole milk curd)
+paneer,255,255,CRITICAL,Primary vegetarian protein source in Indian culinary corpus; absent from CNF,Source authoritative profile from IFCT (Code D005 / Indian cottage cheese - paneer)
+urad dal,609,569,CRITICAL,Essential legume for dals idli and dosa batters; high protein and fiber density,Source authoritative profile from IFCT (Code B015 / Black gram dal dehulled)
+chana dal,327,317,CRITICAL,Major pulse in Indian cooking; high protein carbohydrate and dietary fiber content,Source authoritative profile from IFCT (Code B005 / Bengal gram split)
+jaggery,465,460,HIGH,Unrefined cane sugar contributing substantial caloric and carbohydrate load,Source authoritative profile from IFCT (Code S003 / Sugarcane jaggery) or USDA FDC
+cashew,357,343,HIGH,High-fat caloric nut frequently used in gravies and traditional sweets,Source authoritative raw cashew nut profile from USDA FDC ID 170162
+tamarind,545,534,HIGH,Ubiquitous souring pulp in South Indian rasam sambar and chutneys,Source authoritative tamarind pulp profile from IFCT (Code F031) or USDA FDC
+mutton,87,84,HIGH,Primary animal meat protein in traditional non-vegetarian curries and biryanis,Source authoritative profile from IFCT (Code M001 / Goat meat lean)
+curry leaf,1358,1287,MEDIUM,Pervasive tempering aromatic; low caloric mass but high regional frequency,Source botanical profile from IFCT (Code C011 / Murraya koenigii fresh)
+garam masala,988,955,MEDIUM,Universal ground spice blend; small quantities (1-2 tsp) per recipe,Create composite blend profile from curated ground spices (coriander cumin clove cinnamon)
+mint leaf,373,361,MEDIUM,Fresh herb used in chutneys and garnishes; low caloric density,Source profile from USDA FDC (Spearmint/Peppermint fresh) or IFCT (Code C025)
+fenugreek leaves,254,247,MEDIUM,Leafy green vegetable (methi) used in curries and flatbreads,Source profile from IFCT (Code C014 / Trigonella foenum-graecum fresh leaves)
+button mushroom,201,198,MEDIUM,Edible fresh fungus used in curries and stir-fries,Source profile from USDA FDC (Agaricus bisporus white mushroom raw)
+brinjal,142,142,MEDIUM,Common vegetable (eggplant/aubergine) in Indian curries and sambar,Source profile from IFCT (Code V006 / Eggplant raw) or USDA FDC
+ajwain,244,240,LOW,Carom seed spice used in small pinch/fractional teaspoon amounts,Source profile from IFCT (Code SP002 / Trachyspermum ammi seeds)
+amchur,216,216,LOW,Sun-dried green mango powder seasoning used in small quantities,Source profile from IFCT (Dehydrated raw mango powder)

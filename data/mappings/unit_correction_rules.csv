@@ -1,0 +1,4 @@
+pattern,ingredient_pattern,original_unit,corrected_unit,confidence,reason,source,enabled
+750\s*kg\b,chicken,kg,g,HIGH,Unit prefix typo (kg instead of g) for household chicken curry (recipe R05587),CULINARY_VALIDATION,True
+200\s*(?:liter|l)\b,coconut milk,liter,ml,HIGH,Unit prefix typo (liter instead of ml) for coconut milk curry (recipe R07106),CULINARY_VALIDATION,True
+250\s*kg\b,watermelon,kg,g,HIGH,Unit prefix typo (kg instead of g) for mocktail beverage (recipe R10172),CULINARY_VALIDATION,True

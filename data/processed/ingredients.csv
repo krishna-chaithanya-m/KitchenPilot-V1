@@ -1,0 +1,129 @@
+ingredient_id,canonical_name,display_name,ingredient_form,category,recipe_occurrence_count,candidate_variant_count,source,mapping_status
+ING00001,ajwain,Ajwain,default,spice,244,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00002,almond,Almond,default,nut,254,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00003,amchur,Amchur,default,spice,211,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00004,asafoetida,Asafoetida,default,spice,1149,8,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00005,baking powder,Baking Powder,default,baking,271,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00006,baking soda,Baking Soda,default,baking,163,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00007,banana,Banana,default,fruit,112,3,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00008,basil,Basil,default,herb,168,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00009,bay leaf,Bay Leaf,default,other,493,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00010,black pepper,Black Pepper Powder,powder,spice,907,5,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00011,black pepper,Whole Black Peppercorns,whole,spice,521,5,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00012,brinjal,Brinjal,default,vegetable,103,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00013,broccoli,Broccoli,default,vegetable,133,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00014,brown sugar,Brown Sugar,default,sweetener,143,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00015,butter,Butter,default,dairy,766,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00016,button mushroom,Button Mushroom,default,other,195,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00017,cabbage,Cabbage,default,vegetable,153,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00018,cardamom,Cardamom Pods,pod,spice,436,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00019,cardamom,Cardamom Powder,powder,spice,326,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00020,carrot,Carrot,default,vegetable,608,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00021,cashew,Cashew,default,nut,332,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00022,cauliflower,Cauliflower,default,vegetable,128,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00023,chaat masala,Chaat Masala,default,spice,229,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00024,chaat masala,Chaat Masala Powder,powder,spice,3,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00025,chana dal,Chana Dal,default,pulse,323,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00026,cheese,Cheese,default,dairy,95,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00027,chicken,Chicken,default,meat,265,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00028,chickpea,Chickpea (Kabuli),kabuli,pulse,85,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00029,cinnamon,Cinnamon Powder,powder,spice,202,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00030,cinnamon,Cinnamon Stick,stick,spice,596,5,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00031,cocoa,Cocoa (Powder),powder,baking,103,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00032,coconut,Coconut,default,fruit,81,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00033,coconut,Desiccated Coconut,desiccated,fruit,79,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00034,coconut,Fresh Coconut,fresh,fruit,692,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00035,coconut,Coconut Milk,milk,dairy,216,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00036,coconut oil,Coconut Oil,default,oil,188,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00037,cooking oil,Cooking Oil,default,oil,566,4,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00038,coriander,Coriander Leaves,leaf,herb,1792,6,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00039,coriander,Coriander Powder,powder,spice,1012,6,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00040,coriander,Coriander Seeds,seed,spice,350,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00041,corn,Corn Flour,flour,flour,210,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00042,cream,Fresh Cream,fresh,dairy,250,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00043,cucumber,Cucumber,default,vegetable,126,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00044,cumin,Cumin,default,spice,276,5,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00045,cumin,Cumin Powder,powder,spice,833,5,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00046,cumin,Cumin Seeds,seed,spice,1561,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00047,curd,Curd,default,dairy,613,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00048,curd,Curd (Hung),hung,dairy,163,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00049,curry leaf,Curry Leaf,default,herb,1350,4,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00050,date,Date,default,fruit,79,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00051,dry red chilli,Dry Red Chilli,default,other,688,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00052,egg,Egg,default,egg,487,4,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00053,fennel,Fennel,default,spice,66,3,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00054,fennel,Fennel Seeds,seed,spice,350,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00055,fenugreek,Fenugreek Seeds,seed,spice,353,5,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00056,fenugreek leaves,Fenugreek Leaves,default,herb,149,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00057,fenugreek leaves,Fenugreek Leaves (Fresh),fresh,herb,103,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00058,garam masala,Garam Masala Powder,powder,spice,977,5,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00059,garlic,Garlic,default,vegetable,2045,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00060,ghee,Ghee,default,dairy,1048,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00061,ginger,Ginger,default,root,1624,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00062,ginger garlic,Ginger Garlic Paste,paste,paste,348,4,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00063,green beans,Green Beans,default,vegetable,191,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00064,green bell pepper,Green Bell Pepper,default,vegetable,314,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00065,green chilli,Green Chilli,default,other,2256,3,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00066,green peas,Fresh Green Peas,fresh,vegetable,280,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00067,honey,Honey,default,sweetener,313,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00068,jaggery,Jaggery,default,sweetener,452,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00069,kashmiri red chilli,Kashmiri Red Chilli Powder,powder,spice,172,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00070,lemon,Lemon,default,fruit,174,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00071,lemon juice,Lemon Juice,default,fruit,867,5,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00072,mango,Mango,default,fruit,166,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00073,milk,Milk,default,dairy,685,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00074,mint leaf,Mint Leaf,default,herb,373,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00075,moong dal,Moong Dal,default,pulse,145,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00076,mozzarella,Mozzarella,default,dairy,132,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00077,mustard,Mustard,default,spice,123,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00078,mustard,Mustard Oil,oil,oil,272,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00079,mustard,Mustard Seeds,seed,spice,1249,4,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00080,mutton,Mutton,default,meat,78,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00081,oats,Oats,default,other,134,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00082,olive oil,Olive Oil,default,oil,751,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00083,onion,Onion,default,vegetable,2717,3,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00084,oregano,Oregano,default,herb,229,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00085,paneer,Paneer,default,dairy,250,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00086,paprika,Paprika (Powder),powder,spice,102,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00087,parmesan,Parmesan,default,dairy,98,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00088,parsley,Parsley,default,herb,136,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00089,peanut,Peanut,default,nut,292,4,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00090,pistachio,Pistachio,default,nut,149,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00091,poppy,Poppy (Seed),seed,seed,150,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00092,potato,Potato,default,vegetable,573,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00093,pumpkin,Pumpkin,default,vegetable,83,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00094,raisin,Raisin,default,dried fruit,166,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00095,red bell pepper,Red Bell Pepper,default,vegetable,222,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00096,red chilli,Dry Red Chilli,dried,spice,284,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00097,red chilli,Red Chilli Flakes,flakes,spice,293,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00098,red chilli,Red Chilli Powder,powder,spice,2030,6,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00099,rice,Rice (Basmati),basmati,grain,120,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00100,rice,Rice,default,grain,298,3,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00101,rice,Rice Flour,flour,flour,196,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00102,saffron,Saffron Strands,strand,spice,183,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00103,salt,Salt,default,seasoning,6008,3,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00104,sambar powder,Sambar Powder,default,spice,97,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00105,semolina,Semolina,default,grain,155,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00106,sesame,Sesame Oil,oil,oil,196,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00107,sesame,Sesame Seeds,seed,seed,237,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00108,soy sauce,Soy Sauce,default,condiment,214,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00109,spinach,Spinach,default,vegetable,268,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00110,star anise,Star Anise,default,spice,93,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00111,sugar,Sugar (Caster),caster,sweetener,171,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00112,sugar,Sugar,default,sweetener,1188,5,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00113,sunflower oil,Sunflower Oil,default,oil,2462,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00114,sweet corn,Sweet Corn,default,other,167,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00115,tamarind,Tamarind,default,condiment,198,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00116,tamarind,Tamarind (Paste),paste,condiment,137,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00117,tofu,Tofu,default,soy,88,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00118,tomato,Tomato,default,vegetable,1439,3,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00119,tomato,Tomato Puree,puree,vegetable,222,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00120,toor dal,Toor Dal,default,pulse,187,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00121,turmeric,Turmeric Powder,powder,spice,2554,6,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00122,urad dal,White Urad Dal,white,pulse,517,4,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00123,vanilla,Vanilla,default,flavoring,299,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00124,vinegar,Vinegar,default,condiment,96,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00125,walnut,Walnut,default,nut,122,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00126,water,Water,default,liquid,1204,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00127,yeast,Yeast (Active Dry),active dry,baking,99,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00128,yellow bell pepper,Yellow Bell Pepper,default,vegetable,82,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
