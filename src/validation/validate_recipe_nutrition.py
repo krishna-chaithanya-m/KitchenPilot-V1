@@ -20,14 +20,13 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-# Protected input file baselines
+# Protected input file baselines (LF-normalized SHA-256 for deterministic cross-platform verification)
 BASELINE_HASHES = {
-    PROJECT_ROOT / "data/processed/recipes.csv": "008d75ae96cc580c96d2244a73b06017fc09c36192f34a265b0c520e3a0ae64d",
-    PROJECT_ROOT / "data/processed/recipe_ingredients_linked.csv": "edc9ced314a1724330cef4c896b314d9f9614640ca5de39780192c69a89efb6c",
-    PROJECT_ROOT / "data/mappings/cnf_ingredient_mapping_curated.csv": "3e5d55f30d8b4fee2f38bf88567ac1d8e2238d413457153fd5f2aecd86c1e958",
-    PROJECT_ROOT / "data/processed/cnf_2026_nutrition.csv": "50fa55fd30801aa42cb06102fecf9ac6969f0486bf95fee5dbae698ed8b1a70b",
-    PROJECT_ROOT / "data/raw/nutrition/cnf_2026/measure_weight_conversion.csv": "9d41fac4ba1471fddd25ea7e51a8352aec66de4f3c88802b0a2e02a85ebc3e6f",
-    PROJECT_ROOT / "data/raw/nutrition/cnf_2026/measure_name.csv": "429cf2e8d4bbd2b732a6e9acf35427ce6d3b4e9447aabaf86b427c48833b112f",
+    PROJECT_ROOT / "data/processed/recipes.csv": "87c1c8424a005a3b31d9a0fa9c7dfa6785a6c487aa9d3aee6763335f764e8833",
+    PROJECT_ROOT / "data/processed/recipe_ingredients_linked.csv": "2db8eff5947eaa0dd6069117d962f36fcda783652f45f48effeabb3327dfbab2",
+    PROJECT_ROOT / "data/mappings/cnf_ingredient_mapping_curated.csv": "2297dd1c27412cac27c1864b8a7782b6d00a596c9bfe20f5e48f9872d5d166dd",
+    PROJECT_ROOT / "data/raw/nutrition/cnf_2026/measure_weight_conversion.csv": "0b920b918bd789b9a6d56ac73eb973cc50a71b56397e00e18efe37d102e8a01a",
+    PROJECT_ROOT / "data/raw/nutrition/cnf_2026/measure_name.csv": "f98cdaf345f877db3b88002c7c2c4819d14594ab95d826b39258fd15d14dd16e",
 }
 
 INGREDIENT_OUTPUT_PATH = PROJECT_ROOT / "data/processed/recipe_ingredient_nutrition.csv"
@@ -107,9 +106,14 @@ NUTRIENT_FIELDS = [
 
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
-    with path.open("rb") as f:
-        for block in iter(lambda: f.read(1024 * 1024), b""):
-            digest.update(block)
+    # Normalize CRLF to LF for text files to ensure deterministic cross-platform verification
+    if path.suffix.lower() in [".csv", ".txt", ".json", ".md"]:
+        content = path.read_bytes().replace(b"\r\n", b"\n")
+        digest.update(content)
+    else:
+        with path.open("rb") as f:
+            for block in iter(lambda: f.read(1024 * 1024), b""):
+                digest.update(block)
     return digest.hexdigest()
 
 

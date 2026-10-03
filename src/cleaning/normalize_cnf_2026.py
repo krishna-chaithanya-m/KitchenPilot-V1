@@ -1,4 +1,10 @@
-"""Normalize the official Health Canada CNF 2026 relational CSV files."""
+"""Normalize the official Health Canada CNF 2026 relational CSV files.
+
+NOTE: This script is an offline-only developer utility. The generated
+data/processed/cnf_2026_nutrition.csv (~297 MB) is an intermediate artifact
+that is intentionally excluded from Git. The runtime release and release test suite
+do not require this output file.
+"""
 
 import re
 from collections import Counter

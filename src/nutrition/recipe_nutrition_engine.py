@@ -106,6 +106,7 @@ class RecipeNutritionEngine:
         measure_name_path: Path | str = "data/raw/nutrition/cnf_2026/measure_name.csv",
         cooked_rules_path: Path | str = "data/mappings/cooked_state_conversion_rules.csv",
         quality_checked_path: Path | str = "data/processed/recipe_ingredients_quality_checked.csv",
+        raw_nutrient_path: Path | str = "data/raw/nutrition/cnf_2026/nutrient_amount.csv",
         enable_state_yield: bool = False,
         enable_qualitative_estimates: bool = False,
     ) -> None:
@@ -114,6 +115,7 @@ class RecipeNutritionEngine:
         self.curated_mapping_path = Path(curated_mapping_path)
         self.cooked_rules_path = Path(cooked_rules_path)
         self.quality_checked_path = Path(quality_checked_path)
+        self.raw_nutrient_path = Path(raw_nutrient_path)
         self.enable_state_yield = enable_state_yield
         self.enable_qualitative_estimates = enable_qualitative_estimates
 
@@ -144,6 +146,7 @@ class RecipeNutritionEngine:
         )
         self.lookup = NutrientLookup(
             cnf_nutrition_path=cnf_nutrition_path,
+            raw_nutrient_path=raw_nutrient_path,
             active_food_codes=active_codes,
         )
 

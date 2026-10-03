@@ -74,40 +74,63 @@ CORE_NUTRIENT_IDS = {
 
 
 class NutrientLookup:
-    """Fast, pre-indexed in-memory lookup table for core CNF nutrient profiles."""
+    """Fast, pre-indexed in-memory lookup table for core CNF nutrient profiles.
+
+    Architecture:
+    - Mode A (offline processing): If data/processed/cnf_2026_nutrition.csv exists locally,
+      it may be used for offline processing.
+    - Mode B (committed release-safe fallback): If the 297 MB processed file does not exist,
+      NutrientLookup automatically falls back to the committed Health Canada raw table
+      data/raw/nutrition/cnf_2026/nutrient_amount.csv.
+    """
 
     def __init__(
         self,
         cnf_nutrition_path: Path | str = "data/processed/cnf_2026_nutrition.csv",
+        raw_nutrient_path: Path | str = "data/raw/nutrition/cnf_2026/nutrient_amount.csv",
         active_food_codes: Optional[Set[int]] = None,
     ) -> None:
         self.cnf_nutrition_path = Path(cnf_nutrition_path)
+        self.raw_nutrient_path = Path(raw_nutrient_path)
         self._profiles_per_100g: Dict[int, NutrientProfile] = {}
         self._load_table(active_food_codes)
 
     def _load_table(self, active_food_codes: Optional[Set[int]]) -> None:
         """Read and index normalized CNF nutrition profiles on a 100g edible portion basis."""
-        if not self.cnf_nutrition_path.is_file():
-            raise FileNotFoundError(f"Missing CNF nutrition file: {self.cnf_nutrition_path}")
-
-        # Optimize load performance by reading only necessary columns as strings
-        usecols = ["source_food_id", "nutrient_id", "nutrient_value"]
-        df = pd.read_csv(self.cnf_nutrition_path, usecols=usecols, dtype=str)
+        if self.cnf_nutrition_path.is_file():
+            # Mode A: Load from processed CNF file (offline intermediate)
+            usecols = ["source_food_id", "nutrient_id", "nutrient_value"]
+            df = pd.read_csv(self.cnf_nutrition_path, usecols=usecols, dtype=str)
+            food_col = "source_food_id"
+            nutrient_col = "nutrient_id"
+            val_col = "nutrient_value"
+        elif self.raw_nutrient_path.is_file():
+            # Mode B: Load from raw committed CNF nutrient amount table
+            usecols = ["Food_Code", "Nutrient_Code", "Nutrient_Amount"]
+            df = pd.read_csv(self.raw_nutrient_path, usecols=usecols, dtype=str)
+            food_col = "Food_Code"
+            nutrient_col = "Nutrient_Code"
+            val_col = "Nutrient_Amount"
+        else:
+            raise FileNotFoundError(
+                f"Missing CNF nutrition file: neither {self.cnf_nutrition_path} "
+                f"nor {self.raw_nutrient_path} exists."
+            )
 
         # Filter strictly to core nutrients
-        df = df[df["nutrient_id"].isin(CORE_NUTRIENT_IDS.keys())]
+        df = df[df[nutrient_col].isin(CORE_NUTRIENT_IDS.keys())]
 
         if active_food_codes is not None:
             active_str_codes = {str(code) for code in active_food_codes}
-            df = df[df["source_food_id"].isin(active_str_codes)]
+            df = df[df[food_col].isin(active_str_codes)]
 
         # Group by food code and assemble profiles
         food_groups: Dict[int, Dict[str, float]] = {}
         for _, row in df.iterrows():
-            fc = int(row["source_food_id"])
-            nid = row["nutrient_id"]
+            fc = int(row[food_col])
+            nid = row[nutrient_col]
             field = CORE_NUTRIENT_IDS[nid]
-            val = float(row["nutrient_value"])
+            val = float(row[val_col])
 
             if fc not in food_groups:
                 food_groups[fc] = {}

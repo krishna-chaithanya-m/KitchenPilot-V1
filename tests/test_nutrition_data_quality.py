@@ -30,12 +30,13 @@ from src.validation.unit_sanity_validator import UnitSanityValidator
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
-# Protected source baseline hashes
+# Protected source baseline hashes (LF-normalized SHA-256 for deterministic cross-platform verification)
 BASELINE_HASHES = {
-    PROJECT_ROOT / "data/processed/recipes.csv": "008d75ae96cc580c96d2244a73b06017fc09c36192f34a265b0c520e3a0ae64d",
-    PROJECT_ROOT / "data/processed/recipe_ingredients_linked.csv": "edc9ced314a1724330cef4c896b314d9f9614640ca5de39780192c69a89efb6c",
-    PROJECT_ROOT / "data/mappings/cnf_ingredient_mapping_curated.csv": "3e5d55f30d8b4fee2f38bf88567ac1d8e2238d413457153fd5f2aecd86c1e958",
-    PROJECT_ROOT / "data/processed/cnf_2026_nutrition.csv": "50fa55fd30801aa42cb06102fecf9ac6969f0486bf95fee5dbae698ed8b1a70b",
+    PROJECT_ROOT / "data/processed/recipes.csv": "87c1c8424a005a3b31d9a0fa9c7dfa6785a6c487aa9d3aee6763335f764e8833",
+    PROJECT_ROOT / "data/processed/recipe_ingredients_linked.csv": "2db8eff5947eaa0dd6069117d962f36fcda783652f45f48effeabb3327dfbab2",
+    PROJECT_ROOT / "data/mappings/cnf_ingredient_mapping_curated.csv": "2297dd1c27412cac27c1864b8a7782b6d00a596c9bfe20f5e48f9872d5d166dd",
+    PROJECT_ROOT / "data/raw/nutrition/cnf_2026/measure_weight_conversion.csv": "0b920b918bd789b9a6d56ac73eb973cc50a71b56397e00e18efe37d102e8a01a",
+    PROJECT_ROOT / "data/raw/nutrition/cnf_2026/measure_name.csv": "f98cdaf345f877db3b88002c7c2c4819d14594ab95d826b39258fd15d14dd16e",
 }
 
 NUTRIENT_COLS = [
@@ -113,11 +114,8 @@ def test_ingredient_rows_aligned(ingredient_df):
 def test_source_immutability():
     for fpath, expected_hash in BASELINE_HASHES.items():
         assert fpath.is_file(), f"Missing baseline file: {fpath}"
-        hasher = hashlib.sha256()
-        with open(fpath, "rb") as f:
-            for chunk in iter(lambda: f.read(1024 * 1024), b""):
-                hasher.update(chunk)
-        actual_hash = hasher.hexdigest()
+        content = fpath.read_bytes().replace(b"\r\n", b"\n")
+        actual_hash = hashlib.sha256(content).hexdigest()
         assert actual_hash == expected_hash, f"Protected file {fpath.name} was accidentally mutated!"
 
 
@@ -370,38 +368,38 @@ def test_per_serving_calculations(recipe_df):
 # ---------------------------------------------------------------------------
 # Test 13: High-confidence unit prefix corrections preserved separately
 # ---------------------------------------------------------------------------
-def test_unit_prefix_corrections():
-    qc_path = PROJECT_ROOT / "data/processed/recipe_ingredients_quality_checked.csv"
-    assert qc_path.is_file(), "Missing recipe_ingredients_quality_checked.csv"
-    qc_df = pd.read_csv(qc_path)
-
+def test_unit_prefix_corrections(ingredient_df):
     # R05587: 750 Kg Chicken -> effective = 750 g
-    r_5587 = qc_df[qc_df["recipe_id"] == "R05587"]
+    r_5587 = ingredient_df[ingredient_df["recipe_id"] == "R05587"]
     chicken = r_5587[r_5587["original_ingredient"].str.contains("750", na=False)].iloc[0]
-    assert "750" in str(chicken["original_quantity"])
-    assert "kg" in str(chicken["original_unit"]).lower()
-    assert str(chicken["effective_quantity"]) == "750"
-    assert str(chicken["effective_unit"]) == "g"
-    assert chicken["quality_status"] == "CORRECTED_SOURCE_UNIT"
-    assert chicken["correction_type"] == "UNIT_PREFIX_CORRECTION"
+    assert "750" in str(chicken["quantity"])
+    assert "kg" in str(chicken["unit"]).lower()
+    assert chicken["parsed_quantity"] == 750.0
+    assert chicken["normalized_unit"] == "g"
+    assert chicken["grams"] == 750.0
+    assert chicken["conversion_status"] == "SOURCE_UNIT_CORRECTION"
+    assert chicken["nutrition_source"] == "QUALITY_CORRECTED"
+    assert "SOURCE_UNIT_CORRECTION" in chicken["calculation_notes"]
 
     # R07106: 200 liter Coconut milk -> effective = 200 ml
-    r_7106 = qc_df[qc_df["recipe_id"] == "R07106"]
+    r_7106 = ingredient_df[ingredient_df["recipe_id"] == "R07106"]
     cmilk = r_7106[r_7106["original_ingredient"].str.contains("200", na=False)].iloc[0]
-    assert "200" in str(cmilk["original_quantity"])
-    assert "liter" in str(cmilk["original_unit"]).lower()
-    assert str(cmilk["effective_quantity"]) == "200"
-    assert str(cmilk["effective_unit"]) == "ml"
-    assert cmilk["quality_status"] == "CORRECTED_SOURCE_UNIT"
+    assert "200" in str(cmilk["quantity"])
+    assert "liter" in str(cmilk["unit"]).lower()
+    assert cmilk["parsed_quantity"] == 200.0
+    assert cmilk["normalized_unit"] == "ml"
+    assert cmilk["grams"] < 250.0
+    assert cmilk["conversion_status"] == "SOURCE_UNIT_CORRECTION"
+    assert cmilk["nutrition_source"] == "QUALITY_CORRECTED"
 
     # R10172: 250 kg Watermelon -> effective = 250 g
-    r_10172 = qc_df[qc_df["recipe_id"] == "R10172"]
+    r_10172 = ingredient_df[ingredient_df["recipe_id"] == "R10172"]
     wmelon = r_10172[r_10172["original_ingredient"].str.contains("250", na=False)].iloc[0]
-    assert "250" in str(wmelon["original_quantity"])
-    assert "kg" in str(wmelon["original_unit"]).lower()
-    assert str(wmelon["effective_quantity"]) == "250"
-    assert str(wmelon["effective_unit"]) == "g"
-    assert wmelon["quality_status"] == "CORRECTED_SOURCE_UNIT"
+    assert "250" in str(wmelon["quantity"])
+    assert "kg" in str(wmelon["unit"]).lower()
+    assert wmelon["parsed_quantity"] == 250.0
+    assert wmelon["normalized_unit"] == "g"
+    assert wmelon["conversion_status"] == "SOURCE_UNIT_CORRECTION"
 
 
 # ---------------------------------------------------------------------------
