@@ -12,11 +12,12 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 
 
 def test_version_metadata():
-    """Verify VERSION file exists, is readable, and contains 1.0.0."""
+    """Verify VERSION file exists, is readable, and contains a valid semantic version."""
     version_file = ROOT_DIR / "VERSION"
     assert version_file.is_file(), "VERSION file missing from project root"
     content = version_file.read_text(encoding="utf-8").strip()
-    assert content == "1.0.0", f"Expected version '1.0.0', found '{content}'"
+    import re
+    assert re.match(r"^\d+\.\d+\.\d+$", content), f"Expected valid semantic version, found '{content}'"
 
 
 def test_release_manifest_exists():

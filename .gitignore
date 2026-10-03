@@ -53,6 +53,5 @@ data/backup_nutrition_stage0/
 data/processed/recommendation_results.csv
 
 # Intermediate processing datasets
-data/processed/recipe_ingredient_nutrition.csv
 data/processed/recipe_ingredients_quality_checked.csv
 data/processed/recipe_ingredients.csv

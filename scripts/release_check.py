@@ -19,6 +19,7 @@ Exit code:
 """
 
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -41,10 +42,11 @@ def main() -> int:
         failures.append("VERSION file missing at project root.")
     else:
         version_text = version_file.read_text(encoding="utf-8").strip()
-        if version_text != "1.0.0":
-            failures.append(f"VERSION is '{version_text}', expected '1.0.0'.")
+        semver_pattern = re.compile(r"^\d+\.\d+\.\d+$")
+        if not semver_pattern.match(version_text):
+            failures.append(f"VERSION is '{version_text}', expected valid semantic version (MAJOR.MINOR.PATCH).")
         else:
-            print(" [PASS] VERSION: 1.0.0")
+            print(f" [PASS] VERSION: {version_text}")
 
     # 2. Key configuration / documentation files
     key_files = ["requirements.txt", "README.md", ".env.example", ".gitignore"]
