@@ -1,0 +1,53 @@
+{
+  "manifest_name": "KitchenPilot Production Data Architecture Master Manifest",
+  "data_version": "0.1.0",
+  "application_version_compatibility": "1.0.2",
+  "stage": "Stage B \u2014 Production Data Architecture",
+  "generated_at": "2026-10-03T11:32:30Z",
+  "status": "PRODUCTION_READY",
+  "datasets": {
+    "recipes": {
+      "manifest": "data/manifests/recipe_dataset_manifest.json",
+      "file": "data/processed/recipes.csv",
+      "records": 6871,
+      "sha256": "008d75ae96cc580c96d2244a73b06017fc09c36192f34a265b0c520e3a0ae64d"
+    },
+    "recipe_nutrition": {
+      "manifest": "data/manifests/nutrition_dataset_manifest.json",
+      "file": "data/processed/recipe_nutrition.csv",
+      "records": 6871,
+      "sha256": "84a2fdb8dabb75aeb4296554110c572a198271f23bba7a06c30a1df9d4fc3ff1"
+    },
+    "recipe_ingredient_nutrition": {
+      "manifest": "data/manifests/nutrition_dataset_manifest.json",
+      "file": "data/processed/recipe_ingredient_nutrition.csv",
+      "records": 84246,
+      "sha256": "dbba6683d767d0e232b753dc8255cf05c5657242fb16693ec17e5bdb52c0b0bf"
+    },
+    "canonical_ingredients": {
+      "manifest": "data/manifests/ingredient_manifest.json",
+      "file": "data/processed/ingredients.csv",
+      "records": 128,
+      "sha256": "8d9d81a8ea9570709e4bde040d4d52bc1f3fcc4087e7dff6d60f76555f962fe8"
+    },
+    "recipe_ingredients_linked": {
+      "manifest": "data/manifests/ingredient_manifest.json",
+      "file": "data/processed/recipe_ingredients_linked.csv",
+      "records": 84246,
+      "sha256": "edc9ced314a1724330cef4c896b314d9f9614640ca5de39780192c69a89efb6c"
+    },
+    "ingredient_aliases": {
+      "manifest": "data/manifests/ingredient_manifest.json",
+      "file": "data/mappings/ingredients/ingredient_aliases.csv",
+      "records": 833,
+      "sha256": "79839b5163b137ffd4dc3f07292a4520ded1c3fdfbea4062842c414e0a3100a8"
+    }
+  },
+  "integrity_summary": {
+    "referential_integrity": "100% VALID",
+    "orphan_recipes": 0,
+    "orphan_nutrition": 0,
+    "orphan_ingredients": 0,
+    "orphan_aliases": 0
+  }
+}

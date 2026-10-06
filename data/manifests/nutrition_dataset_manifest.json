@@ -1,0 +1,97 @@
+{
+  "dataset_name": "recipe_nutrition",
+  "version": "0.1.0",
+  "dataset_type": "PROCESSED_RUNTIME",
+  "source": "Health Canada Canadian Nutrient File (CNF) 2026 Edition + Indian Culinary Calibrations",
+  "source_directory": "data/raw/nutrition/cnf_2026",
+  "source_files": [
+    "data/raw/nutrition/cnf_2026/nutrient_amount.csv",
+    "data/raw/nutrition/cnf_2026/food_name.csv",
+    "data/raw/nutrition/cnf_2026/measure_weight_conversion.csv"
+  ],
+  "intermediate_file": "data/processed/cnf_2026_nutrition.csv (offline artifact, 297 MB, git-ignored)",
+  "production_files": {
+    "recipe_nutrition": "data/processed/recipe_nutrition.csv",
+    "recipe_ingredient_nutrition": "data/processed/recipe_ingredient_nutrition.csv"
+  },
+  "license_status": "DOCUMENTED",
+  "license": "Open Government Licence - Canada 2.0",
+  "license_url": "https://open.canada.ca/en/open-government-licence-canada",
+  "row_counts": {
+    "recipe_nutrition": 6871,
+    "recipe_ingredient_nutrition": 84246
+  },
+  "column_counts": {
+    "recipe_nutrition": 26,
+    "recipe_ingredient_nutrition": 29
+  },
+  "schemas": {
+    "recipe_nutrition": {
+      "recipe_id": "object",
+      "recipe_name": "object",
+      "servings": "int64",
+      "total_calories_kcal": "float64",
+      "total_protein_g": "float64",
+      "total_fat_g": "float64",
+      "total_carbs_g": "float64",
+      "total_fiber_g": "float64",
+      "total_sugar_g": "float64",
+      "total_sodium_mg": "float64",
+      "per_serving_calories_kcal": "float64",
+      "per_serving_protein_g": "float64",
+      "per_serving_fat_g": "float64",
+      "per_serving_carbs_g": "float64",
+      "per_serving_fiber_g": "float64",
+      "per_serving_sugar_g": "float64",
+      "per_serving_sodium_mg": "float64",
+      "nutrition_quality": "object",
+      "ingredient_count": "int64",
+      "calculated_ingredient_count": "int64",
+      "unmapped_ingredient_count": "int64",
+      "no_match_ingredient_count": "int64",
+      "needs_review_ingredient_count": "int64",
+      "qualitative_quantity_count": "int64",
+      "conversion_failure_count": "int64",
+      "state_mismatch_count": "int64"
+    },
+    "recipe_ingredient_nutrition": {
+      "recipe_id": "object",
+      "original_ingredient": "object",
+      "ingredient": "object",
+      "quantity": "object",
+      "unit": "object",
+      "preparation": "object",
+      "ingredient_id": "object",
+      "canonical_ingredient": "object",
+      "mapping_status": "object",
+      "curation_status": "object",
+      "cnf_food_code": "float64",
+      "cnf_food_name": "object",
+      "parsed_quantity": "float64",
+      "quantity_parse_status": "object",
+      "normalized_unit": "object",
+      "grams": "float64",
+      "conversion_status": "object",
+      "state_status": "object",
+      "energy_kcal": "float64",
+      "protein_g": "float64",
+      "fat_g": "float64",
+      "carbs_g": "float64",
+      "fiber_g": "float64",
+      "sugar_g": "float64",
+      "sodium_mg": "float64",
+      "mapping_quality": "object",
+      "nutrition_quality": "object",
+      "nutrition_source": "object",
+      "calculation_notes": "object"
+    }
+  },
+  "generation_date": "2026-10-03T11:32:30Z",
+  "producer_script": "src/nutrition/recipe_nutrition_engine.py",
+  "checksums_sha256": {
+    "recipe_nutrition": "84a2fdb8dabb75aeb4296554110c572a198271f23bba7a06c30a1df9d4fc3ff1",
+    "recipe_ingredient_nutrition": "dbba6683d767d0e232b753dc8255cf05c5657242fb16693ec17e5bdb52c0b0bf"
+  },
+  "status": "PRODUCTION_VALIDATED",
+  "notes": "Frozen runtime nutrition artifacts compliant with dual-mode NutrientLookup fallback architecture."
+}

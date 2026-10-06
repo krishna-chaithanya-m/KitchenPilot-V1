@@ -1,0 +1,121 @@
+{
+  "manifest_version": "1.0.0",
+  "generated_at": "2026-10-04T00:30:00Z",
+  "dataset_version": "1.0.0",
+  "feature_schema_version": "1.0.0",
+  "artifacts": {
+    "tfidf_vectorizer": {
+      "path": "models/recommendation/tfidf_vectorizer.joblib",
+      "type": "joblib",
+      "version": "1.0.0",
+      "size_bytes": 438573,
+      "sha256": "17b27006a1712bb8edb5c29cf4e60152d2690d4d32c5761ebc202ad722758bbd",
+      "stage": "Stage A Baseline",
+      "required": true
+    },
+    "recipe_tfidf_matrix": {
+      "path": "models/recommendation/recipe_tfidf_matrix.npz",
+      "type": "npz",
+      "version": "1.0.0",
+      "size_bytes": 3107083,
+      "sha256": "c7ce7d50028c876fe2835453d85bc0686eb1bf8e8469652bdcf74a0a43794793",
+      "stage": "Stage A Baseline",
+      "required": true
+    },
+    "recipe_index": {
+      "path": "models/recommendation/recipe_index.csv",
+      "type": "csv",
+      "version": "1.0.0",
+      "size_bytes": 88234,
+      "sha256": "37eb891fc827635aca52de35cf2ed9fbe6ca40c3b9ef4af3db506badeb7b121b",
+      "stage": "Stage A Baseline",
+      "required": true
+    },
+    "semantic_embeddings": {
+      "path": "models/retrieval/semantic/recipe_embeddings.npy",
+      "type": "npy",
+      "version": "1.5",
+      "size_bytes": 10553984,
+      "sha256": "1423c5e233a5decdd7e6b90879c7b25166d158bcbf805336f0354f04f47ca382",
+      "stage": "Stage D Dense Semantic",
+      "required": false
+    },
+    "semantic_index": {
+      "path": "models/retrieval/semantic/recipe_index.csv",
+      "type": "csv",
+      "version": "1.5",
+      "size_bytes": 88234,
+      "sha256": "37eb891fc827635aca52de35cf2ed9fbe6ca40c3b9ef4af3db506badeb7b121b",
+      "stage": "Stage D Dense Semantic",
+      "required": false
+    },
+    "semantic_metadata": {
+      "path": "models/retrieval/semantic/metadata.json",
+      "type": "json",
+      "version": "1.5",
+      "size_bytes": 681,
+      "sha256": "de2b1a3ab2ce3e8337993ec9a35f940564f1447da3e5ce7e7f0167b8b57981cd",
+      "stage": "Stage D Dense Semantic",
+      "required": false
+    },
+    "xgboost_ranker": {
+      "path": "models/ranking/xgboost_ranker.json",
+      "type": "json",
+      "version": "xgb_ranker_v0.1.0",
+      "size_bytes": 98621,
+      "sha256": "8d00370fb80f81de6e889a1c6b75290063284a3964de85a2a9acc502b0d6677b",
+      "stage": "Stage F XGBoost Ranking",
+      "required": false
+    },
+    "xgboost_feature_schema": {
+      "path": "models/ranking/feature_schema.json",
+      "type": "json",
+      "version": "1.0.0",
+      "size_bytes": 1995,
+      "sha256": "8855eb4fff43ccd2601e875f60caebf8ef90d3ab02389d6bffc3a880fe8bf254",
+      "stage": "Stage F XGBoost Ranking",
+      "required": false
+    },
+    "xgboost_metadata": {
+      "path": "models/ranking/metadata.json",
+      "type": "json",
+      "version": "xgb_ranker_v0.1.0",
+      "size_bytes": 1626,
+      "sha256": "cc58a01231e3d12d7d569bb9391c0df279ab94e1f2649c181d1aa440173336ae",
+      "stage": "Stage F XGBoost Ranking",
+      "required": false
+    }
+  },
+  "datasets": {
+    "recipes": {
+      "path": "data/processed/recipes.csv",
+      "version": "1.0.0",
+      "size_bytes": 12219817,
+      "sha256": "008d75ae96cc580c96d2244a73b06017fc09c36192f34a265b0c520e3a0ae64d"
+    },
+    "recipe_nutrition": {
+      "path": "data/processed/recipe_nutrition.csv",
+      "version": "1.0.0",
+      "size_bytes": 1169541,
+      "sha256": "84a2fdb8dabb75aeb4296554110c572a198271f23bba7a06c30a1df9d4fc3ff1"
+    },
+    "recipe_corpus": {
+      "path": "data/processed/recipe_corpus.csv",
+      "version": "1.0.0",
+      "size_bytes": 3738511,
+      "sha256": "4d1203b9be7213497a62874d4609b895f011b1689cde4c0c322f9913a1cb4b9e"
+    },
+    "recipe_ingredients_linked": {
+      "path": "data/processed/recipe_ingredients_linked.csv",
+      "version": "1.0.0",
+      "size_bytes": 11326266,
+      "sha256": "edc9ced314a1724330cef4c896b314d9f9614640ca5de39780192c69a89efb6c"
+    },
+    "ingredients": {
+      "path": "data/processed/ingredients.csv",
+      "version": "1.0.0",
+      "size_bytes": 15820,
+      "sha256": "8d9d81a8ea9570709e4bde040d4d52bc1f3fcc4087e7dff6d60f76555f962fe8"
+    }
+  }
+}

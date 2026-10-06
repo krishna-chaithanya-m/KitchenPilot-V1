@@ -1,9 +1,21 @@
+import re
 import pandas as pd
 from pathlib import Path
 
 
 RAW_FILE = Path("data/raw/recipes/indian_recipes_raw.csv")
 OUTPUT_FILE = Path("data/processed/recipes.csv")
+
+CLEANING_PATTERNS = [
+    r'\s+(?:Using|In|Made Using|Made with)\s+(?:Preethi|Preeti)\s+Electric\s+Pressure\s+Cooker\b',
+    r'\s+-\s+Kids\s+Recipes\s+Made\s+With\s+Del\s+Monte\b',
+    r'\s+(?:Using|In|Made Using)\s+Electric\s+Pressure\s+Cooker\b',
+]
+
+_TITLE_CLEANING_REGEX = re.compile(
+    "|".join(f"(?:{p})" for p in CLEANING_PATTERNS),
+    flags=re.IGNORECASE,
+)
 
 
 def clean_text(value):
@@ -12,6 +24,22 @@ def clean_text(value):
         return ""
 
     return " ".join(str(value).split())
+
+
+def clean_recipe_title(value):
+    """Normalize recipe title by removing commercial sponsor and appliance clauses.
+
+    Preserves legitimate culinary vessels (Kadai, Tawa, Handi, Matka), ingredients
+    (Pigeon Peas), and culinary techniques (Pressure Cooker Cake).
+    """
+    cleaned = clean_text(value)
+    if not cleaned:
+        return ""
+    if _TITLE_CLEANING_REGEX.search(cleaned):
+        cleaned = _TITLE_CLEANING_REGEX.sub("", cleaned).strip()
+        cleaned = re.sub(r"\s+-\s*$", "", cleaned).strip()
+        return " ".join(cleaned.split())
+    return cleaned
 
 
 def normalize_diet(diet):
@@ -33,8 +61,8 @@ def normalize_recipe(row):
 
     return {
         "recipe_id": f"R{int(row['Srno']):05d}",
-        "recipe_name": clean_text(row["TranslatedRecipeName"]),
-        "name_local": clean_text(row["RecipeName"]),
+        "recipe_name": clean_recipe_title(row["TranslatedRecipeName"]),
+        "name_local": clean_recipe_title(row["RecipeName"]),
         "cuisine": clean_text(row["Cuisine"]),
         "region": "",
         "meal_type": clean_text(row["Course"]),

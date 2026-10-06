@@ -14,17 +14,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         const ready = await window.KitchenPilotApi.checkReadiness();
 
         if (health.status === "ok" && ready.status === "ready") {
-            statusDot.style.background = "#10b981"; // Emerald green
+            statusDot.style.background = "var(--accent-emerald)";
             statusText.textContent = "Backend API & Recommendation Engine Ready";
-            statusText.style.color = "#047857";
+            statusText.style.color = "var(--accent-emerald)";
         } else {
-            statusDot.style.background = "#f59e0b"; // Amber
+            statusDot.style.background = "var(--accent-amber)";
             statusText.textContent = "Backend Online (Model artifacts not ready)";
-            statusText.style.color = "#b45309";
+            statusText.style.color = "var(--accent-amber)";
         }
     } catch (err) {
-        statusDot.style.background = "#ef4444"; // Red
+        statusDot.style.background = "var(--danger)";
         statusText.textContent = "Backend Offline (FastAPI not reachable on port 8000)";
-        statusText.style.color = "#b91c1c";
+        statusText.style.color = "var(--danger)";
     }
 });

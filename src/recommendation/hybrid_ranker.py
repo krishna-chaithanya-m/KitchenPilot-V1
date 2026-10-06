@@ -29,6 +29,9 @@ class ScoredCandidate:
     per_serving_calories: Optional[float] = None
     per_serving_protein: Optional[float] = None
     explanation: str = ""
+    personalization_score: float = 0.0
+    personalization_applied: bool = False
+    final_score: float = 0.0
 
 
 class HybridRanker:

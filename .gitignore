@@ -55,3 +55,8 @@ data/processed/recommendation_results.csv
 # Intermediate processing datasets
 data/processed/recipe_ingredients_quality_checked.csv
 data/processed/recipe_ingredients.csv
+
+# Database & Docker development artifacts
+postgres_data/
+*.dump
+*.sql.gz

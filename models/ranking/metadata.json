@@ -1,0 +1,51 @@
+{
+  "model_name": "xgboost_ranker",
+  "model_version": "xgb_ranker_v0.1.0",
+  "feature_version": "1.0.0",
+  "dataset_version": "1.0.0",
+  "status": "trained",
+  "created_at": "2026-10-03T17:30:09.991107+00:00",
+  "xgboost_version": "3.4.1",
+  "objective": "rank:ndcg",
+  "hyperparameters": {
+    "n_estimators": 80,
+    "max_depth": 4,
+    "learning_rate": 0.08,
+    "subsample": 0.85,
+    "colsample_bytree": 0.85,
+    "random_seed": 42
+  },
+  "dataset_statistics": {
+    "total_queries": 120,
+    "total_rows": 4542,
+    "train_queries": 84,
+    "train_rows": 3205,
+    "val_queries": 18,
+    "val_rows": 690,
+    "test_queries": 18,
+    "test_rows": 647
+  },
+  "evaluation_metrics": {
+    "ndcg@5": 1.0,
+    "precision@5": 1.0,
+    "recall@5": 0.357,
+    "ndcg@10": 1.0,
+    "precision@10": 0.9333,
+    "recall@10": 0.6121,
+    "mrr@10": 1.0
+  },
+  "feature_importance_top10_gain": {
+    "retrieval_bge_score": 17.785444259643555,
+    "retrieval_bge_rr": 11.115981101989746,
+    "ingredient_coverage_ratio": 1.268223524093628,
+    "total_time_min": 1.2232776880264282,
+    "canonical_match_count": 0.5873914957046509,
+    "retrieval_tfidf_rr": 0.5620807409286499,
+    "retrieval_tfidf_score": 0.5437328219413757,
+    "per_serving_fiber_g": 0.4579687714576721,
+    "pantry_coverage_ratio": 0.3952312469482422,
+    "per_serving_protein_g": 0.3749730885028839
+  },
+  "label_type": "weak_supervision_multi_signal",
+  "label_disclaimer": "This model has not been trained on real user interaction data. Weak labels represent synthetic heuristics for infrastructure validation."
+}

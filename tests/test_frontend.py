@@ -48,6 +48,12 @@ def test_api_js_configuration():
     assert 'const API_BASE_URL = "http://127.0.0.1:8000/api/v1"' in api_js_content
     assert "KitchenPilotApi" in api_js_content
     assert "getRecommendationsByIngredients" in api_js_content
+    assert "updatePreferences" in api_js_content
+    assert "updateUserPreferences" in api_js_content
+    assert "updateNutritionTargets" in api_js_content
+    assert "updateUserNutritionTargets" in api_js_content
+    assert "syncUserPantry" in api_js_content
+    assert "syncPantry" in api_js_content
 
 
 def test_section_14_target_recommendation_contract():
@@ -68,3 +74,36 @@ def test_section_14_target_recommendation_contract():
         assert "hybrid_score" in top
         assert "explanation" in top
         assert len(top["explanation"]) > 0
+
+
+def test_authenticated_startup_and_pantry_sync_cannot_inject_sample_ingredients():
+    """Verify frontend runtime invariants:
+    1. DOMContentLoaded startup MUST NOT automatically inject sample ingredients into ingredientsList.
+    2. Sample ingredients ("cumin", "turmeric", etc.) must ONLY be triggered by explicit user action (#btn-sample-pantry).
+    3. api.js syncUserPantry performs bidirectional pruning (deleting unselected items via DELETE and adding missing ones).
+    4. recommendations.js input flushing ensures uncommitted text in #ingredient-input is flushed into ingredientsList.
+    5. loadUserPreferencesIntoForm and updatePilotUI properly synchronize authenticated state without sample corruption.
+    """
+    rec_js = (FRONTEND_DIR / "js" / "recommendations.js").read_text(encoding="utf-8")
+    api_js = (FRONTEND_DIR / "js" / "api.js").read_text(encoding="utf-8")
+
+    # Invariant 1: DOMContentLoaded must NOT call setIngredients with sample ingredients automatically
+    assert 'btnSample.addEventListener("click"' in rec_js
+    # Verify auto-injection on startup is completely eliminated
+    assert "Default sample on initial visit" not in rec_js
+
+    # Invariant 2: syncUserPantry reconciles by deleting items not in target and only adding missing items
+    assert "async function syncUserPantry" in api_js
+    assert "deletePantryItem" in api_js
+    assert "addPantryItem" in api_js
+    assert "targetSet.has" in api_js
+
+    # Invariant 3: Input flushing before save and recommend
+    assert "addIngredientFromInput" in rec_js
+    # btnSyncPrefs must flush pending input
+    sync_prefs_idx = rec_js.find("if (btnSyncPrefs)")
+    assert sync_prefs_idx != -1
+    sync_prefs_end = rec_js.find("if (btnPurgeData)", sync_prefs_idx)
+    sync_prefs_block = rec_js[sync_prefs_idx : sync_prefs_end if sync_prefs_end != -1 else sync_prefs_idx + 5000]
+    assert "addIngredientFromInput" in sync_prefs_block
+    assert "syncFn" in sync_prefs_block or "syncUserPantry" in sync_prefs_block

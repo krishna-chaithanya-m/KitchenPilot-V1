@@ -1,0 +1,286 @@
+alias_id,canonical_ingredient_id,alias,normalized_alias,source,confidence,review_status
+ALIAS00001,ING00001,ajwain,ajwain,canonical_database,1.0,VALIDATED
+ALIAS00002,ING00001,pinch Ajwain (Carom seeds),pinch ajwain,recipe_corpus,0.95,VALIDATED
+ALIAS00003,ING00001,Carom seeds,carom seed,parenthetical_synonym,0.9,VALIDATED
+ALIAS00004,ING00002,almond,almond,canonical_database,1.0,VALIDATED
+ALIAS00005,ING00002,Badam (Almond),badam,recipe_corpus,0.95,VALIDATED
+ALIAS00006,ING00003,amchur,amchur,canonical_database,1.0,VALIDATED
+ALIAS00007,ING00003,Dry Mango Powder,dry mango powder,parenthetical_synonym,0.9,VALIDATED
+ALIAS00008,ING00004,asafoetida,asafoetida,canonical_database,1.0,VALIDATED
+ALIAS00009,ING00004,Small teaspoon asafoetida,small teaspoon asafoetida,recipe_corpus,0.95,VALIDATED
+ALIAS00010,ING00004,pinch Asafoetida (hing),pinch asafoetida,recipe_corpus,0.95,VALIDATED
+ALIAS00011,ING00004,pinch हींग,pinch,recipe_corpus,0.95,VALIDATED
+ALIAS00012,ING00004,hing,hing,parenthetical_synonym,0.9,VALIDATED
+ALIAS00013,ING00005,baking powder,baking powder,canonical_database,1.0,VALIDATED
+ALIAS00014,ING00005,pinch Baking powder,pinch baking powder,recipe_corpus,0.95,VALIDATED
+ALIAS00015,ING00006,baking soda,baking soda,canonical_database,1.0,VALIDATED
+ALIAS00016,ING00006,pinch Baking soda,pinch baking soda,recipe_corpus,0.95,VALIDATED
+ALIAS00017,ING00007,banana,banana,canonical_database,1.0,VALIDATED
+ALIAS00018,ING00007,Ripe Bananas,ripe banana,recipe_corpus,0.95,VALIDATED
+ALIAS00019,ING00008,basil,basil,canonical_database,1.0,VALIDATED
+ALIAS00020,ING00008,Basil leaves,basil leaf,recipe_corpus,0.95,VALIDATED
+ALIAS00021,ING00009,bay leaf,bay leaf,canonical_database,1.0,VALIDATED
+ALIAS00022,ING00009,tej patta,tej patta,parenthetical_synonym,0.9,VALIDATED
+ALIAS00023,ING00010,Black Pepper Powder,black pepper powder,canonical_database,1.0,VALIDATED
+ALIAS00024,ING00010,black pepper,black pepper,canonical_database,1.0,VALIDATED
+ALIAS00025,ING00010,pinch Black pepper powder,pinch black pepper powder,recipe_corpus,0.95,VALIDATED
+ALIAS00026,ING00011,Whole Black Peppercorns,whole black peppercorn,canonical_database,1.0,VALIDATED
+ALIAS00027,ING00011,black pepper,black pepper,canonical_database,1.0,VALIDATED
+ALIAS00028,ING00011,pinch Whole Black Peppercorns,pinch whole black peppercorn,recipe_corpus,0.95,VALIDATED
+ALIAS00029,ING00012,brinjal,brinjal,canonical_database,1.0,VALIDATED
+ALIAS00030,ING00012,Baingan,baingan,parenthetical_synonym,0.9,VALIDATED
+ALIAS00031,ING00012,Eggplant,eggplant,parenthetical_synonym,0.9,VALIDATED
+ALIAS00032,ING00013,broccoli,broccoli,canonical_database,1.0,VALIDATED
+ALIAS00033,ING00014,brown sugar,brown sugar,canonical_database,1.0,VALIDATED
+ALIAS00034,ING00014,Demerara Sugar,demerara sugar,parenthetical_synonym,0.9,VALIDATED
+ALIAS00035,ING00015,butter,butter,canonical_database,1.0,VALIDATED
+ALIAS00036,ING00016,button mushroom,button mushroom,canonical_database,1.0,VALIDATED
+ALIAS00037,ING00017,cabbage,cabbage,canonical_database,1.0,VALIDATED
+ALIAS00038,ING00017,Muttaikose,muttaikose,parenthetical_synonym,0.9,VALIDATED
+ALIAS00039,ING00017,Patta Gobi,patta gobi,parenthetical_synonym,0.9,VALIDATED
+ALIAS00040,ING00018,Cardamom Pods,cardamom pod,canonical_database,1.0,VALIDATED
+ALIAS00041,ING00018,cardamom,cardamom,canonical_database,1.0,VALIDATED
+ALIAS00042,ING00018,Cardamom (Elaichi) Pods/Seeds,cardamom pods/seeds,recipe_corpus,0.95,VALIDATED
+ALIAS00043,ING00018,Elaichi,elaichi,parenthetical_synonym,0.9,VALIDATED
+ALIAS00044,ING00019,Cardamom Powder,cardamom powder,canonical_database,1.0,VALIDATED
+ALIAS00045,ING00019,cardamom,cardamom,canonical_database,1.0,VALIDATED
+ALIAS00046,ING00019,pinch Cardamom Powder (Elaichi),pinch cardamom powder,recipe_corpus,0.95,VALIDATED
+ALIAS00047,ING00019,Elaichi,elaichi,parenthetical_synonym,0.9,VALIDATED
+ALIAS00048,ING00020,carrot,carrot,canonical_database,1.0,VALIDATED
+ALIAS00049,ING00020,Gajar,gajar,parenthetical_synonym,0.9,VALIDATED
+ALIAS00050,ING00020,Gajjar,gajjar,parenthetical_synonym,0.9,VALIDATED
+ALIAS00051,ING00021,cashew,cashew,canonical_database,1.0,VALIDATED
+ALIAS00052,ING00021,Cashew nuts,cashew nuts,recipe_corpus,0.95,VALIDATED
+ALIAS00053,ING00022,cauliflower,cauliflower,canonical_database,1.0,VALIDATED
+ALIAS00054,ING00022,gobi,gobi,parenthetical_synonym,0.9,VALIDATED
+ALIAS00055,ING00023,chaat masala,chaat masala,canonical_database,1.0,VALIDATED
+ALIAS00056,ING00023,chaat masala powder,chaat masala powder,candidate_corpus,0.95,VALIDATED
+ALIAS00057,ING00024,Chaat Masala Powder,chaat masala powder,canonical_database,1.0,VALIDATED
+ALIAS00058,ING00024,chaat masala,chaat masala,canonical_database,1.0,VALIDATED
+ALIAS00059,ING00024,pinch Chaat Masala Powder,pinch chaat masala powder,recipe_corpus,0.95,VALIDATED
+ALIAS00060,ING00025,chana dal,chana dal,canonical_database,1.0,VALIDATED
+ALIAS00061,ING00025,roasted chana dal,roasted chana dal,recipe_corpus,0.95,VALIDATED
+ALIAS00062,ING00025,Bengal Gram Dal,bengal gram dal,parenthetical_synonym,0.9,VALIDATED
+ALIAS00063,ING00026,cheese,cheese,canonical_database,1.0,VALIDATED
+ALIAS00064,ING00027,chicken,chicken,canonical_database,1.0,VALIDATED
+ALIAS00065,ING00027,Chicken breasts,chicken breasts,recipe_corpus,0.95,VALIDATED
+ALIAS00066,ING00028,chickpea,chickpea,canonical_database,1.0,VALIDATED
+ALIAS00067,ING00028,Kabuli Chana (White Chickpeas),kabuli chana,recipe_corpus,0.95,VALIDATED
+ALIAS00068,ING00028,White Chickpeas,white chickpea,parenthetical_synonym,0.9,VALIDATED
+ALIAS00069,ING00029,Cinnamon Powder,cinnamon powder,canonical_database,1.0,VALIDATED
+ALIAS00070,ING00029,cinnamon,cinnamon,canonical_database,1.0,VALIDATED
+ALIAS00071,ING00029,pinch Cinnamon Powder (Dalchini),pinch cinnamon powder,recipe_corpus,0.95,VALIDATED
+ALIAS00072,ING00029,Dalchini,dalchini,parenthetical_synonym,0.9,VALIDATED
+ALIAS00073,ING00030,Cinnamon Stick,cinnamon stick,canonical_database,1.0,VALIDATED
+ALIAS00074,ING00030,cinnamon,cinnamon,canonical_database,1.0,VALIDATED
+ALIAS00075,ING00030,Dalchini,dalchini,parenthetical_synonym,0.9,VALIDATED
+ALIAS00076,ING00031,cocoa,cocoa,canonical_database,1.0,VALIDATED
+ALIAS00077,ING00031,Cocoa Powder,cocoa powder,recipe_corpus,0.95,VALIDATED
+ALIAS00078,ING00031,pinch Cocoa Powder,pinch cocoa powder,recipe_corpus,0.95,VALIDATED
+ALIAS00079,ING00032,coconut,coconut,canonical_database,1.0,VALIDATED
+ALIAS00080,ING00033,Desiccated Coconut,desiccated coconut,canonical_database,1.0,VALIDATED
+ALIAS00081,ING00033,coconut,coconut,canonical_database,1.0,VALIDATED
+ALIAS00082,ING00033,Dessicated Coconut,dessicated coconut,recipe_corpus,0.95,VALIDATED
+ALIAS00083,ING00034,Fresh Coconut,fresh coconut,canonical_database,1.0,VALIDATED
+ALIAS00084,ING00034,coconut,coconut,canonical_database,1.0,VALIDATED
+ALIAS00085,ING00035,Coconut Milk,coconut milk,canonical_database,1.0,VALIDATED
+ALIAS00086,ING00035,coconut,coconut,canonical_database,1.0,VALIDATED
+ALIAS00087,ING00036,coconut oil,coconut oil,canonical_database,1.0,VALIDATED
+ALIAS00088,ING00037,cooking oil,cooking oil,canonical_database,1.0,VALIDATED
+ALIAS00089,ING00037,oil,oil,recipe_corpus,0.95,VALIDATED
+ALIAS00090,ING00038,Coriander (Dhania) Leaves,coriander leaf,recipe_corpus,1.0,VALIDATED
+ALIAS00091,ING00038,Coriander Leaves,coriander leaves,canonical_database,1.0,VALIDATED
+ALIAS00092,ING00038,coriander,coriander,canonical_database,1.0,VALIDATED
+ALIAS00093,ING00038,green coriander,green coriander,recipe_corpus,0.95,VALIDATED
+ALIAS00094,ING00038,Dhania,dhania,parenthetical_synonym,0.9,VALIDATED
+ALIAS00095,ING00039,Coriander Powder,coriander powder,canonical_database,1.0,VALIDATED
+ALIAS00096,ING00039,coriander,coriander,canonical_database,1.0,VALIDATED
+ALIAS00097,ING00039,pinch Coriander Powder (Dhania),pinch coriander powder,recipe_corpus,0.95,VALIDATED
+ALIAS00098,ING00039,Dhania,dhania,parenthetical_synonym,0.9,VALIDATED
+ALIAS00099,ING00040,Coriander (Dhania) Seeds,coriander seed,recipe_corpus,1.0,VALIDATED
+ALIAS00100,ING00040,Coriander Seeds,coriander seeds,canonical_database,1.0,VALIDATED
+ALIAS00101,ING00040,coriander,coriander,canonical_database,1.0,VALIDATED
+ALIAS00102,ING00040,Dhania,dhania,parenthetical_synonym,0.9,VALIDATED
+ALIAS00103,ING00041,Corn Flour,corn flour,canonical_database,1.0,VALIDATED
+ALIAS00104,ING00041,corn,corn,canonical_database,1.0,VALIDATED
+ALIAS00105,ING00042,cream,cream,canonical_database,1.0,VALIDATED
+ALIAS00106,ING00043,cucumber,cucumber,canonical_database,1.0,VALIDATED
+ALIAS00107,ING00044,cumin,cumin,canonical_database,1.0,VALIDATED
+ALIAS00108,ING00044,small Teaspoon cumin,small teaspoon cumin,recipe_corpus,0.95,VALIDATED
+ALIAS00109,ING00045,Cumin Powder,cumin powder,canonical_database,1.0,VALIDATED
+ALIAS00110,ING00045,cumin,cumin,canonical_database,1.0,VALIDATED
+ALIAS00111,ING00045,pinch Cumin powder (Jeera),pinch cumin powder,recipe_corpus,0.95,VALIDATED
+ALIAS00112,ING00045,Jeera,jeera,parenthetical_synonym,0.9,VALIDATED
+ALIAS00113,ING00046,Cumin Seeds,cumin seeds,canonical_database,1.0,VALIDATED
+ALIAS00114,ING00046,Cumin seeds (Jeera),cumin seed,recipe_corpus,1.0,VALIDATED
+ALIAS00115,ING00046,cumin,cumin,canonical_database,1.0,VALIDATED
+ALIAS00116,ING00046,pinch Cumin seeds (Jeera),pinch cumin seed,recipe_corpus,0.95,VALIDATED
+ALIAS00117,ING00046,Jeera,jeera,parenthetical_synonym,0.9,VALIDATED
+ALIAS00118,ING00047,curd,curd,canonical_database,1.0,VALIDATED
+ALIAS00119,ING00047,Dahi,dahi,parenthetical_synonym,0.9,VALIDATED
+ALIAS00120,ING00047,Yogurt,yogurt,parenthetical_synonym,0.9,VALIDATED
+ALIAS00121,ING00048,curd,curd,canonical_database,1.0,VALIDATED
+ALIAS00122,ING00048,Hung Curd (Greek Yogurt),hung curd,recipe_corpus,0.95,VALIDATED
+ALIAS00123,ING00048,Greek Yogurt,greek yogurt,parenthetical_synonym,0.9,VALIDATED
+ALIAS00124,ING00049,curry leaf,curry leaf,canonical_database,1.0,VALIDATED
+ALIAS00125,ING00050,date,date,canonical_database,1.0,VALIDATED
+ALIAS00126,ING00050,Dates,dates,recipe_corpus,0.95,VALIDATED
+ALIAS00127,ING00051,dry red chilli,dry red chilli,canonical_database,1.0,VALIDATED
+ALIAS00128,ING00052,egg,egg,canonical_database,1.0,VALIDATED
+ALIAS00129,ING00052,Boiled egg,boiled egg,recipe_corpus,0.95,VALIDATED
+ALIAS00130,ING00052,Whole Egg,whole egg,recipe_corpus,0.95,VALIDATED
+ALIAS00131,ING00052,Whole Eggs,whole eggs,recipe_corpus,0.95,VALIDATED
+ALIAS00132,ING00053,fennel,fennel,canonical_database,1.0,VALIDATED
+ALIAS00133,ING00054,Fennel Seeds,fennel seed,canonical_database,1.0,VALIDATED
+ALIAS00134,ING00054,fennel,fennel,canonical_database,1.0,VALIDATED
+ALIAS00135,ING00054,Saunf,saunf,parenthetical_synonym,0.9,VALIDATED
+ALIAS00136,ING00055,Fenugreek Seeds,fenugreek seed,canonical_database,1.0,VALIDATED
+ALIAS00137,ING00055,fenugreek,fenugreek,canonical_database,1.0,VALIDATED
+ALIAS00138,ING00055,Methi Seeds (Fenugreek Seeds),methi seed,recipe_corpus,0.95,VALIDATED
+ALIAS00139,ING00056,fenugreek leaves,fenugreek leaf,canonical_database,1.0,VALIDATED
+ALIAS00140,ING00056,Kasuri Methi (Dried Fenugreek Leaves),kasuri methi,recipe_corpus,0.95,VALIDATED
+ALIAS00141,ING00056,Dried Fenugreek Leaves,dried fenugreek leaf,parenthetical_synonym,0.9,VALIDATED
+ALIAS00142,ING00057,fenugreek leaves,fenugreek leaf,canonical_database,1.0,VALIDATED
+ALIAS00143,ING00057,Methi Leaves (Fenugreek Leaves),methi leaf,recipe_corpus,0.95,VALIDATED
+ALIAS00144,ING00058,Garam Masala Powder,garam masala powder,canonical_database,1.0,VALIDATED
+ALIAS00145,ING00058,garam masala,garam masala,canonical_database,1.0,VALIDATED
+ALIAS00146,ING00058,pinch Garam masala powder,pinch garam masala powder,recipe_corpus,0.95,VALIDATED
+ALIAS00147,ING00059,garlic,garlic,canonical_database,1.0,VALIDATED
+ALIAS00148,ING00060,ghee,ghee,canonical_database,1.0,VALIDATED
+ALIAS00149,ING00061,ginger,ginger,canonical_database,1.0,VALIDATED
+ALIAS00150,ING00062,Ginger Garlic Paste,ginger garlic paste,canonical_database,1.0,VALIDATED
+ALIAS00151,ING00062,ginger garlic,ginger garlic,canonical_database,1.0,VALIDATED
+ALIAS00152,ING00063,green beans,green bean,canonical_database,1.0,VALIDATED
+ALIAS00153,ING00063,French Beans,french bean,parenthetical_synonym,0.9,VALIDATED
+ALIAS00154,ING00064,green bell pepper,green bell pepper,canonical_database,1.0,VALIDATED
+ALIAS00155,ING00064,Capsicum,capsicum,parenthetical_synonym,0.9,VALIDATED
+ALIAS00156,ING00065,green chilli,green chilli,canonical_database,1.0,VALIDATED
+ALIAS00157,ING00066,green peas,green pea,canonical_database,1.0,VALIDATED
+ALIAS00158,ING00066,Matar,matar,parenthetical_synonym,0.9,VALIDATED
+ALIAS00159,ING00067,honey,honey,canonical_database,1.0,VALIDATED
+ALIAS00160,ING00068,jaggery,jaggery,canonical_database,1.0,VALIDATED
+ALIAS00161,ING00068,pinch Jaggery,pinch jaggery,recipe_corpus,0.95,VALIDATED
+ALIAS00162,ING00069,Kashmiri Red Chilli Powder,kashmiri red chilli powder,canonical_database,1.0,VALIDATED
+ALIAS00163,ING00069,kashmiri red chilli,kashmiri red chilli,canonical_database,1.0,VALIDATED
+ALIAS00164,ING00069,pinch Kashmiri Red Chilli Powder,pinch kashmiri red chilli powder,recipe_corpus,0.95,VALIDATED
+ALIAS00165,ING00070,lemon,lemon,canonical_database,1.0,VALIDATED
+ALIAS00166,ING00071,lemon juice,lemon juice,canonical_database,1.0,VALIDATED
+ALIAS00167,ING00071,pinch Lemon juice,pinch lemon juice,recipe_corpus,0.95,VALIDATED
+ALIAS00168,ING00072,mango,mango,canonical_database,1.0,VALIDATED
+ALIAS00169,ING00073,milk,milk,canonical_database,1.0,VALIDATED
+ALIAS00170,ING00074,mint leaf,mint leaf,canonical_database,1.0,VALIDATED
+ALIAS00171,ING00074,Pudina,pudina,parenthetical_synonym,0.9,VALIDATED
+ALIAS00172,ING00075,moong dal,moong dal,canonical_database,1.0,VALIDATED
+ALIAS00173,ING00075,Yellow Moong Dal (Split),yellow moong dal,recipe_corpus,0.95,VALIDATED
+ALIAS00174,ING00076,mozzarella,mozzarella,canonical_database,1.0,VALIDATED
+ALIAS00175,ING00076,Mozzarella cheese,mozzarella cheese,recipe_corpus,0.95,VALIDATED
+ALIAS00176,ING00077,mustard,mustard,canonical_database,1.0,VALIDATED
+ALIAS00177,ING00078,Mustard Oil,mustard oil,canonical_database,1.0,VALIDATED
+ALIAS00178,ING00078,mustard,mustard,canonical_database,1.0,VALIDATED
+ALIAS00179,ING00079,Mustard Seeds,mustard seeds,canonical_database,1.0,VALIDATED
+ALIAS00180,ING00079,mustard,mustard,canonical_database,1.0,VALIDATED
+ALIAS00181,ING00080,mutton,mutton,canonical_database,1.0,VALIDATED
+ALIAS00182,ING00081,oats,oats,canonical_database,1.0,VALIDATED
+ALIAS00183,ING00081,Instant Oats (Oatmeal),instant oats,recipe_corpus,0.95,VALIDATED
+ALIAS00184,ING00081,Oatmeal,oatmeal,parenthetical_synonym,0.9,VALIDATED
+ALIAS00185,ING00082,olive oil,olive oil,canonical_database,1.0,VALIDATED
+ALIAS00186,ING00082,Extra Virgin Olive Oil,extra virgin olive oil,recipe_corpus,0.95,VALIDATED
+ALIAS00187,ING00083,onion,onion,canonical_database,1.0,VALIDATED
+ALIAS00188,ING00084,oregano,oregano,canonical_database,1.0,VALIDATED
+ALIAS00189,ING00084,Dried oregano,dried oregano,recipe_corpus,0.95,VALIDATED
+ALIAS00190,ING00085,paneer,paneer,canonical_database,1.0,VALIDATED
+ALIAS00191,ING00085,Homemade Cottage Cheese,homemade cottage cheese,parenthetical_synonym,0.9,VALIDATED
+ALIAS00192,ING00086,paprika,paprika,canonical_database,1.0,VALIDATED
+ALIAS00193,ING00086,Paprika powder,paprika powder,recipe_corpus,0.95,VALIDATED
+ALIAS00194,ING00087,parmesan,parmesan,canonical_database,1.0,VALIDATED
+ALIAS00195,ING00087,Parmesan cheese,parmesan cheese,recipe_corpus,0.95,VALIDATED
+ALIAS00196,ING00088,parsley,parsley,canonical_database,1.0,VALIDATED
+ALIAS00197,ING00088,Parsley leaves,parsley leaf,recipe_corpus,0.95,VALIDATED
+ALIAS00198,ING00089,peanut,peanut,canonical_database,1.0,VALIDATED
+ALIAS00199,ING00089,Boiled Peanuts,boiled peanut,recipe_corpus,0.95,VALIDATED
+ALIAS00200,ING00089,Roasted Peanuts (Moongphali),roasted peanut,recipe_corpus,0.95,VALIDATED
+ALIAS00201,ING00089,Moongphali,moongphali,parenthetical_synonym,0.9,VALIDATED
+ALIAS00202,ING00090,pistachio,pistachio,canonical_database,1.0,VALIDATED
+ALIAS00203,ING00091,poppy,poppy,canonical_database,1.0,VALIDATED
+ALIAS00204,ING00091,Poppy seeds,poppy seed,recipe_corpus,0.95,VALIDATED
+ALIAS00205,ING00092,potato,potato,canonical_database,1.0,VALIDATED
+ALIAS00206,ING00092,Aloo,aloo,parenthetical_synonym,0.9,VALIDATED
+ALIAS00207,ING00093,pumpkin,pumpkin,canonical_database,1.0,VALIDATED
+ALIAS00208,ING00093,Kaddu (Parangikai/ Pumpkin),kaddu,recipe_corpus,0.95,VALIDATED
+ALIAS00209,ING00093,Parangikai,parangikai,parenthetical_synonym,0.9,VALIDATED
+ALIAS00210,ING00094,raisin,raisin,canonical_database,1.0,VALIDATED
+ALIAS00211,ING00095,red bell pepper,red bell pepper,canonical_database,1.0,VALIDATED
+ALIAS00212,ING00095,Capsicum,capsicum,parenthetical_synonym,0.9,VALIDATED
+ALIAS00213,ING00096,Dry Red Chilli,dry red chilli,canonical_database,1.0,VALIDATED
+ALIAS00214,ING00096,red chilli,red chilli,canonical_database,1.0,VALIDATED
+ALIAS00215,ING00097,Red Chilli Flakes,red chilli flakes,canonical_database,1.0,VALIDATED
+ALIAS00216,ING00097,red chilli,red chilli,canonical_database,1.0,VALIDATED
+ALIAS00217,ING00097,pinch Red Chilli flakes,pinch red chilli flakes,recipe_corpus,0.95,VALIDATED
+ALIAS00218,ING00098,Red Chilli Powder,red chilli powder,canonical_database,1.0,VALIDATED
+ALIAS00219,ING00098,red chilli,red chilli,canonical_database,1.0,VALIDATED
+ALIAS00220,ING00098,pinch Red Chilli powder,pinch red chilli powder,recipe_corpus,0.95,VALIDATED
+ALIAS00221,ING00098,red chili powder,red chili powder,recipe_corpus,0.95,VALIDATED
+ALIAS00222,ING00099,rice,rice,canonical_database,1.0,VALIDATED
+ALIAS00223,ING00099,Basmati rice,basmati rice,recipe_corpus,0.95,VALIDATED
+ALIAS00224,ING00100,rice,rice,canonical_database,1.0,VALIDATED
+ALIAS00225,ING00100,Cooked rice,cooked rice,recipe_corpus,0.95,VALIDATED
+ALIAS00226,ING00101,Rice Flour,rice flour,canonical_database,1.0,VALIDATED
+ALIAS00227,ING00101,rice,rice,canonical_database,1.0,VALIDATED
+ALIAS00228,ING00102,Saffron Strands,saffron strands,canonical_database,1.0,VALIDATED
+ALIAS00229,ING00102,saffron,saffron,canonical_database,1.0,VALIDATED
+ALIAS00230,ING00102,pinch Saffron strands,pinch saffron strands,recipe_corpus,0.95,VALIDATED
+ALIAS00231,ING00103,salt,salt,canonical_database,1.0,VALIDATED
+ALIAS00232,ING00103,pinch Salt,pinch salt,recipe_corpus,0.95,VALIDATED
+ALIAS00233,ING00104,sambar powder,sambar powder,canonical_database,1.0,VALIDATED
+ALIAS00234,ING00105,semolina,semolina,canonical_database,1.0,VALIDATED
+ALIAS00235,ING00105,Sooji (Semolina/ Rava),sooji,recipe_corpus,0.95,VALIDATED
+ALIAS00236,ING00105,Rava,rava,parenthetical_synonym,0.9,VALIDATED
+ALIAS00237,ING00106,Sesame Oil,sesame oil,canonical_database,1.0,VALIDATED
+ALIAS00238,ING00106,sesame,sesame,canonical_database,1.0,VALIDATED
+ALIAS00239,ING00106,Gingelly,gingelly,parenthetical_synonym,0.9,VALIDATED
+ALIAS00240,ING00107,Sesame Seeds,sesame seed,canonical_database,1.0,VALIDATED
+ALIAS00241,ING00107,sesame,sesame,canonical_database,1.0,VALIDATED
+ALIAS00242,ING00107,Til seeds,til seed,parenthetical_synonym,0.9,VALIDATED
+ALIAS00243,ING00108,soy sauce,soy sauce,canonical_database,1.0,VALIDATED
+ALIAS00244,ING00109,spinach,spinach,canonical_database,1.0,VALIDATED
+ALIAS00245,ING00109,Spinach Leaves (Palak),spinach leaf,recipe_corpus,0.95,VALIDATED
+ALIAS00246,ING00109,Palak,palak,parenthetical_synonym,0.9,VALIDATED
+ALIAS00247,ING00110,star anise,star anise,canonical_database,1.0,VALIDATED
+ALIAS00248,ING00111,sugar,sugar,canonical_database,1.0,VALIDATED
+ALIAS00249,ING00111,Caster Sugar,caster sugar,recipe_corpus,0.95,VALIDATED
+ALIAS00250,ING00112,sugar,sugar,canonical_database,1.0,VALIDATED
+ALIAS00251,ING00112,pinch Sugar,pinch sugar,recipe_corpus,0.95,VALIDATED
+ALIAS00252,ING00113,sunflower oil,sunflower oil,canonical_database,1.0,VALIDATED
+ALIAS00253,ING00114,sweet corn,sweet corn,canonical_database,1.0,VALIDATED
+ALIAS00254,ING00115,tamarind,tamarind,canonical_database,1.0,VALIDATED
+ALIAS00255,ING00115,tamarind water,tamarind water,candidate_corpus,0.0,REJECTED
+ALIAS00256,ING00116,tamarind,tamarind,canonical_database,1.0,VALIDATED
+ALIAS00257,ING00116,tamarind paste,tamarind paste,recipe_corpus,0.95,VALIDATED
+ALIAS00258,ING00117,tofu,tofu,canonical_database,1.0,VALIDATED
+ALIAS00259,ING00118,tomato,tomato,canonical_database,1.0,VALIDATED
+ALIAS00260,ING00119,Tomato Puree,tomato puree,canonical_database,1.0,VALIDATED
+ALIAS00261,ING00119,tomato,tomato,canonical_database,1.0,VALIDATED
+ALIAS00262,ING00119,Homemade tomato puree,homemade tomato puree,recipe_corpus,0.95,VALIDATED
+ALIAS00263,ING00120,toor dal,toor dal,canonical_database,1.0,VALIDATED
+ALIAS00264,ING00120,Arhar dal (Split Toor Dal),arhar dal,recipe_corpus,0.95,VALIDATED
+ALIAS00265,ING00120,Split Toor Dal,split toor dal,parenthetical_synonym,0.9,VALIDATED
+ALIAS00266,ING00121,Turmeric Powder,turmeric powder,canonical_database,1.0,VALIDATED
+ALIAS00267,ING00121,turmeric,turmeric,canonical_database,1.0,VALIDATED
+ALIAS00268,ING00121,pinch Turmeric powder (Haldi),pinch turmeric powder,recipe_corpus,0.95,VALIDATED
+ALIAS00269,ING00121,small Teaspoon turmeric powder,small teaspoon turmeric powder,recipe_corpus,0.95,VALIDATED
+ALIAS00270,ING00121,Haldi,haldi,parenthetical_synonym,0.9,VALIDATED
+ALIAS00271,ING00122,White Urad Dal,white urad dal,canonical_database,1.0,VALIDATED
+ALIAS00272,ING00122,urad dal,urad dal,canonical_database,1.0,VALIDATED
+ALIAS00273,ING00123,vanilla,vanilla,canonical_database,1.0,VALIDATED
+ALIAS00274,ING00123,Vanilla Extract,vanilla extract,recipe_corpus,0.95,VALIDATED
+ALIAS00275,ING00124,vinegar,vinegar,canonical_database,1.0,VALIDATED
+ALIAS00276,ING00125,walnut,walnut,canonical_database,1.0,VALIDATED
+ALIAS00277,ING00126,water,water,canonical_database,1.0,VALIDATED
+ALIAS00278,ING00126,Lukewarm Water,lukewarm water,recipe_corpus,0.95,VALIDATED
+ALIAS00279,ING00127,yeast,yeast,canonical_database,1.0,VALIDATED
+ALIAS00280,ING00127,Active dry yeast,active dry yeast,recipe_corpus,0.95,VALIDATED
+ALIAS00281,ING00128,yellow bell pepper,yellow bell pepper,canonical_database,1.0,VALIDATED
+ALIAS00282,ING00128,Capsicum,capsicum,parenthetical_synonym,0.9,VALIDATED
+ALIAS00283,ING00129,bitter gourd,bitter gourd,canonical_database,1.0,VALIDATED
+ALIAS00284,ING00129,Karela (Bitter Gourd/ Pavakkai),karela,recipe_corpus,0.95,VALIDATED
+ALIAS00285,ING00129,Pavakkai,pavakkai,parenthetical_synonym,0.9,VALIDATED

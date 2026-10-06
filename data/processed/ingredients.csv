@@ -127,3 +127,4 @@ ING00125,walnut,Walnut,default,nut,122,1,Indian recipe corpus + ingredient norma
 ING00126,water,Water,default,liquid,1204,2,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
 ING00127,yeast,Yeast (Active Dry),active dry,baking,99,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
 ING00128,yellow bell pepper,Yellow Bell Pepper,default,vegetable,82,1,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO
+ING00129,bitter gourd,Bitter Gourd,default,vegetable,46,3,Indian recipe corpus + ingredient normalization pipeline,VALIDATED_AUTO

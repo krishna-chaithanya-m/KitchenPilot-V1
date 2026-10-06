@@ -13,6 +13,7 @@ from typing import Dict, List, Optional, Set, Tuple
 
 import pandas as pd
 
+from src.ingredients.normalizer import normalize_ingredient_phrase
 from src.recommendation.config import RecommendationConfig
 
 
@@ -52,16 +53,32 @@ class IngredientMatcher:
 
     def _load_mappings(self) -> None:
         """Load canonical ingredients and index recipes by canonical ingredient sets."""
+        id_to_canon: Dict[str, str] = {}
         if self.config.ingredients_path.is_file():
             ing_df = pd.read_csv(self.config.ingredients_path)
             for _, row in ing_df.iterrows():
+                cid = str(row["ingredient_id"]).strip()
                 cname = self._clean_str(row["canonical_name"])
                 if cname:
                     self._canonical_vocab.add(cname)
                     self._alias_to_canonical[cname] = cname
+                    id_to_canon[cid] = cname
                     disp = self._clean_str(row.get("display_name", ""))
                     if disp:
                         self._alias_to_canonical[disp] = cname
+
+        # Load compiled alias registry if available
+        if hasattr(self.config, "aliases_path") and self.config.aliases_path.is_file():
+            alias_df = pd.read_csv(self.config.aliases_path)
+            for _, row in alias_df.iterrows():
+                cid = str(row.get("canonical_ingredient_id", "")).strip()
+                canon = id_to_canon.get(cid)
+                if not canon:
+                    continue
+                for col in ["alias", "normalized_alias"]:
+                    val = self._clean_str(row.get(col, ""))
+                    if val and val not in self._alias_to_canonical:
+                        self._alias_to_canonical[val] = canon
 
         linked_df = pd.read_csv(self.config.linked_ingredients_path)
         for _, row in linked_df.iterrows():
@@ -97,6 +114,12 @@ class IngredientMatcher:
         # Direct match
         if cleaned in self._alias_to_canonical:
             return self._alias_to_canonical[cleaned]
+
+        # Normalized phrase match (e.g. 'to 3 tablespoons karela' -> 'karela')
+        norm_phrase, _ = normalize_ingredient_phrase(query)
+        norm_cleaned = self._clean_str(norm_phrase)
+        if norm_cleaned and norm_cleaned in self._alias_to_canonical:
+            return self._alias_to_canonical[norm_cleaned]
 
         # Simple plural stripping (e.g. tomatoes -> tomato, onions -> onion)
         if cleaned.endswith("es") and cleaned[:-2] in self._alias_to_canonical:

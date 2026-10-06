@@ -1,0 +1,169 @@
+{
+  "description": "Stage D Semantic Retrieval Evaluation Query Benchmark. Designed for characterization and coverage measurement across diverse query types. Not human-labeled relevance ground truth.",
+  "version": "1.0.0",
+  "queries": [
+    {
+      "id": "Q01",
+      "query": "vegetarian South Indian breakfast with lentils",
+      "category": "natural_combination",
+      "intended_cuisine": "South Indian Recipes",
+      "intended_meal_type": "South Indian Breakfast",
+      "dietary": "vegetarian"
+    },
+    {
+      "id": "Q02",
+      "query": "high protein paneer curry for dinner",
+      "category": "ingredient_nutrition",
+      "intended_meal_type": "Dinner",
+      "dietary": "vegetarian"
+    },
+    {
+      "id": "Q03",
+      "query": "spicy chicken biryani Andhra style",
+      "category": "regional_cuisine",
+      "intended_cuisine": "Andhra",
+      "intended_meal_type": "Main Course",
+      "dietary": "non-vegetarian"
+    },
+    {
+      "id": "Q04",
+      "query": "diabetic friendly bitter gourd karela subzi",
+      "category": "dietary_ingredient",
+      "dietary": "diabetic friendly"
+    },
+    {
+      "id": "Q05",
+      "query": "quick healthy oats breakfast smoothie",
+      "category": "meal_type_ingredient",
+      "intended_meal_type": "Breakfast"
+    },
+    {
+      "id": "Q06",
+      "query": "vegan mushroom stir fry with bell peppers",
+      "category": "dietary_ingredient",
+      "dietary": "vegan"
+    },
+    {
+      "id": "Q07",
+      "query": "traditional Bengali fish curry with mustard",
+      "category": "regional_cuisine",
+      "intended_cuisine": "Bengali Recipes",
+      "dietary": "non-vegetarian"
+    },
+    {
+      "id": "Q08",
+      "query": "jain no onion no garlic dal tadka",
+      "category": "dietary_requirement",
+      "dietary": "jain"
+    },
+    {
+      "id": "Q09",
+      "query": "crispy tea time potato snack with chaat masala",
+      "category": "meal_type_snack",
+      "intended_meal_type": "Snack"
+    },
+    {
+      "id": "Q10",
+      "query": "low calorie green salad with cucumber and lemon",
+      "category": "nutrition_oriented",
+      "intended_meal_type": "Side Dish"
+    },
+    {
+      "id": "Q11",
+      "query": "Maharashtrian sabudana khichdi for fasting",
+      "category": "regional_cuisine",
+      "intended_cuisine": "Maharashtrian Recipes"
+    },
+    {
+      "id": "Q12",
+      "query": "rich festive Mughlai mutton korma with saffron",
+      "category": "regional_cuisine",
+      "intended_cuisine": "Mughlai",
+      "dietary": "non-vegetarian"
+    },
+    {
+      "id": "Q13",
+      "query": "satvik kheer with milk rice and cardamom",
+      "category": "dietary_dessert",
+      "intended_meal_type": "Dessert",
+      "dietary": "satvik"
+    },
+    {
+      "id": "Q14",
+      "query": "Kerala style coconut vegetable stew with appam",
+      "category": "regional_cuisine",
+      "intended_cuisine": "Kerala Recipes",
+      "dietary": "vegetarian"
+    },
+    {
+      "id": "Q15",
+      "query": "steamed idli sambar with coconut chutney",
+      "category": "meal_type_ingredient",
+      "intended_cuisine": "South Indian Recipes",
+      "intended_meal_type": "Breakfast"
+    },
+    {
+      "id": "Q16",
+      "query": "iron rich palak spinach soup with garlic",
+      "category": "nutrition_oriented",
+      "intended_meal_type": "Appetizer"
+    },
+    {
+      "id": "Q17",
+      "query": "Gujarati sweet and sour dal with peanuts",
+      "category": "regional_cuisine",
+      "intended_cuisine": "Gujarati Recipes",
+      "dietary": "vegetarian"
+    },
+    {
+      "id": "Q18",
+      "query": "tandoori grilled prawns appetizer",
+      "category": "ingredient_meal_type",
+      "intended_meal_type": "Appetizer",
+      "dietary": "non-vegetarian"
+    },
+    {
+      "id": "Q19",
+      "query": "fiber rich sprouted moong salad",
+      "category": "nutrition_oriented",
+      "dietary": "vegetarian"
+    },
+    {
+      "id": "Q20",
+      "query": "Rajasthani dal baati churma lunch",
+      "category": "regional_cuisine",
+      "intended_cuisine": "Rajasthani",
+      "intended_meal_type": "Lunch"
+    },
+    {
+      "id": "Q21",
+      "query": "gluten free ragi roti flatbread",
+      "category": "dietary_ingredient"
+    },
+    {
+      "id": "Q22",
+      "query": "North Indian butter chicken with creamy gravy",
+      "category": "regional_cuisine",
+      "intended_cuisine": "North Indian Recipes",
+      "dietary": "non-vegetarian"
+    },
+    {
+      "id": "Q23",
+      "query": "Kashmiri rogan josh with aromatic whole spices",
+      "category": "regional_cuisine",
+      "intended_cuisine": "Kashmiri",
+      "dietary": "non-vegetarian"
+    },
+    {
+      "id": "Q24",
+      "query": "quick 15 minute egg fried rice lunch",
+      "category": "quick_meal",
+      "intended_meal_type": "Lunch"
+    },
+    {
+      "id": "Q25",
+      "query": "refreshing summer mint chaas buttermilk beverage",
+      "category": "beverage"
+    }
+  ]
+}

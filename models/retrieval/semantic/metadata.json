@@ -1,0 +1,20 @@
+{
+  "model_name": "BAAI/bge-small-en-v1.5",
+  "model_version": "1.5",
+  "embedding_dimension": 384,
+  "normalization": "l2",
+  "normalize_embeddings": true,
+  "similarity_metric": "cosine_similarity_via_dot_product",
+  "corpus_version": "0.1.0",
+  "recipe_count": 6871,
+  "generation_timestamp": "2026-10-03T16:01:08.667891+00:00",
+  "library_version": "6.1.0",
+  "torch_version": "2.14.1+cpu",
+  "corpus_sha256": "008d75ae96cc580c96d2244a73b06017fc09c36192f34a265b0c520e3a0ae64d",
+  "embeddings_sha256": "1423c5e233a5decdd7e6b90879c7b25166d158bcbf805336f0354f04f47ca382",
+  "embeddings_shape": [
+    6871,
+    384
+  ],
+  "embeddings_file_size_bytes": 10553984
+}

@@ -33,6 +33,7 @@ class UserPreferences:
 
     excluded_ingredients: Optional[List[str]] = field(default_factory=list)
     required_ingredients: Optional[List[str]] = field(default_factory=list)
+    disliked_ingredients: Optional[List[str]] = field(default_factory=list)
 
     max_prep_time_min: Optional[float] = None
     max_total_time_min: Optional[float] = None
@@ -134,30 +135,6 @@ class PreferenceFilter:
             req_set = matcher.resolve_ingredient_list(preferences.required_ingredients)
             recipe_canons = matcher._recipe_canonical_map.get(recipe_id, set())
             if not req_set.issubset(recipe_canons):
-                return False
-
-        # 8. Hard Cuisine filter
-        if preferences.cuisine:
-            cuisines = self._to_clean_list(preferences.cuisine)
-            if cuisines and not any(c in meta["cuisine"] for c in cuisines):
-                return False
-
-        # 9. Hard Meal Type filter
-        if preferences.meal_type:
-            meal_types = self._to_clean_list(preferences.meal_type)
-            if meal_types and not any(m in meta["meal_type"] for m in meal_types):
-                return False
-
-        # 10. Hard Category filter
-        if preferences.category:
-            categories = self._to_clean_list(preferences.category)
-            if categories and not any(cat in meta["category"] for cat in categories):
-                return False
-
-        # 11. Hard Diet Type filter
-        if preferences.diet_type:
-            diet_types = self._to_clean_list(preferences.diet_type)
-            if diet_types and not any(dt in meta["diet_type"] for dt in diet_types):
                 return False
 
         return True

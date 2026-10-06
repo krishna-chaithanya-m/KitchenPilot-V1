@@ -32,8 +32,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 # Protected source baseline hashes (LF-normalized SHA-256 for deterministic cross-platform verification)
 BASELINE_HASHES = {
-    PROJECT_ROOT / "data/processed/recipes.csv": "87c1c8424a005a3b31d9a0fa9c7dfa6785a6c487aa9d3aee6763335f764e8833",
-    PROJECT_ROOT / "data/processed/recipe_ingredients_linked.csv": "2db8eff5947eaa0dd6069117d962f36fcda783652f45f48effeabb3327dfbab2",
+    PROJECT_ROOT / "data/processed/recipes.csv": "995badac27df7a28601f7894b236ec6447be8c9ba2048eb8a38478716b6f53c4",
+    PROJECT_ROOT / "data/processed/recipe_ingredients_linked.csv": "6cc7421401f018a16c0ea096f212ada8408046fe9f2cadc49c78ed77e3c741f0",
     PROJECT_ROOT / "data/mappings/cnf_ingredient_mapping_curated.csv": "2297dd1c27412cac27c1864b8a7782b6d00a596c9bfe20f5e48f9872d5d166dd",
     PROJECT_ROOT / "data/raw/nutrition/cnf_2026/measure_weight_conversion.csv": "0b920b918bd789b9a6d56ac73eb973cc50a71b56397e00e18efe37d102e8a01a",
     PROJECT_ROOT / "data/raw/nutrition/cnf_2026/measure_name.csv": "f98cdaf345f877db3b88002c7c2c4819d14594ab95d826b39258fd15d14dd16e",

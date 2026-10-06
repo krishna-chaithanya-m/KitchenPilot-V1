@@ -363,10 +363,11 @@ def print_summary(linked_df: pd.DataFrame) -> None:
         print(f"{status:<20} {int(status_counts.get(status, 0))}")
     print(f"\nUnique mapped ingredients: {mapped_ingredient_ids}")
     print(f"Unique unmapped ingredient strings: {len(unmapped_counts)}")
-    print("\nTop 20 unmapped ingredient strings by frequency:")
+    print(f"\nTop 20 unmapped ingredient strings by frequency:")
     if unmapped_counts:
         for ingredient, count in unmapped_counts.most_common(20):
-            print(f"{count:>6}  {ingredient}")
+            safe_ing = str(ingredient).encode("ascii", errors="replace").decode("ascii")
+            print(f"{count:>6}  {safe_ing}")
     else:
         print("No unmapped ingredients.")
     print(f"\nOutput:\n{OUTPUT_FILE}")

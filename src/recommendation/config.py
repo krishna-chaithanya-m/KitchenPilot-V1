@@ -62,6 +62,9 @@ class RecommendationConfig:
     ingredients_path: Path = field(
         default_factory=lambda: PROJECT_ROOT / "data" / "processed" / "ingredients.csv"
     )
+    aliases_path: Path = field(
+        default_factory=lambda: PROJECT_ROOT / "data" / "mappings" / "ingredients" / "ingredient_aliases.csv"
+    )
 
     corpus_path: Path = field(
         default_factory=lambda: PROJECT_ROOT / "data" / "processed" / "recipe_corpus.csv"
@@ -79,7 +82,39 @@ class RecommendationConfig:
         default_factory=lambda: PROJECT_ROOT / "data" / "processed" / "recommendation_results.csv"
     )
 
+    # Stage D Semantic Retrieval Configuration
+    semantic_retrieval_enabled: bool = False
+    semantic_model_name: str = "BAAI/bge-small-en-v1.5"
+    semantic_top_k: int = 50
+    tfidf_top_k: int = 50
+    semantic_embeddings_path: Path = field(
+        default_factory=lambda: PROJECT_ROOT / "models" / "retrieval" / "semantic" / "recipe_embeddings.npy"
+    )
+    semantic_index_path: Path = field(
+        default_factory=lambda: PROJECT_ROOT / "models" / "retrieval" / "semantic" / "recipe_index.csv"
+    )
+    semantic_metadata_path: Path = field(
+        default_factory=lambda: PROJECT_ROOT / "models" / "retrieval" / "semantic" / "metadata.json"
+    )
+
+    # Stage F XGBoost Ranking Configuration
+    xgboost_ranking_enabled: bool = False
+    xgboost_model_path: Path = field(
+        default_factory=lambda: PROJECT_ROOT / "models" / "ranking" / "xgboost_ranker.json"
+    )
+    xgboost_feature_schema_path: Path = field(
+        default_factory=lambda: PROJECT_ROOT / "models" / "ranking" / "feature_schema.json"
+    )
+    xgboost_metadata_path: Path = field(
+        default_factory=lambda: PROJECT_ROOT / "models" / "ranking" / "metadata.json"
+    )
+
+    # Stage G Personalization Configuration
+    personalization_enabled: bool = True
+    personalization_weight: float = 0.20
+
     # Models and weights
+    constraint_engine_enabled: bool = True
     tfidf: TFIDFConfig = field(default_factory=TFIDFConfig)
     weights: HybridWeights = field(default_factory=HybridWeights)
     ingredient_repetition_weight: int = 3  # Repeat canonical ingredients in corpus text to prioritize them

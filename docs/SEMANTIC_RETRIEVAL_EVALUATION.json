@@ -1,0 +1,27 @@
+{
+  "model_loading_time_sec": 20.14,
+  "first_query_latency_ms": 22.13,
+  "mean_query_embedding_latency_ms": 19.4,
+  "mean_vector_retrieval_latency_ms": 0.77,
+  "mean_total_warm_latency_ms": 20.17,
+  "p95_total_warm_latency_ms": 23.26,
+  "mean_tfidf_latency_ms": 11.89,
+  "mean_hybrid_candidate_latency_ms": 34.61,
+  "semantic_catalog_coverage_pct": 3.61,
+  "tfidf_catalog_coverage_pct": 3.61,
+  "hybrid_catalog_coverage_pct": 26.43,
+  "semantic_unique_recipes_retrieved": 248,
+  "tfidf_unique_recipes_retrieved": 248,
+  "hybrid_unique_recipes_retrieved": 1816,
+  "mean_semantic_diversity": 0.179,
+  "mean_top10_jaccard_overlap": 0.172,
+  "mean_candidate_pool_size": 83.1,
+  "provenance_summary": {
+    "tfidf_only": 828,
+    "semantic_only": 828,
+    "both": 422
+  },
+  "is_deterministic": true,
+  "num_queries_evaluated": 25,
+  "catalog_size": 6871
+}

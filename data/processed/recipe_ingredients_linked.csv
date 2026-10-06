@@ -1,5 +1,5 @@
 original_ingredient,quantity,unit,ingredient,preparation,recipe_id,ingredient_id,canonical_ingredient,display_name,ingredient_form,category,mapping_status,mapping_source
-6 Karela (Bitter Gourd/ Pavakkai) - deseeded,6,,Karela (Bitter Gourd/ Pavakkai),deseeded,R00001,,,,,,REVIEW,NONE
+6 Karela (Bitter Gourd/ Pavakkai) - deseeded,6,,Karela (Bitter Gourd/ Pavakkai),deseeded,R00001,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 Salt - to taste,,,Salt,to taste,R00001,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 Onion - thinly sliced,1,,Onion,thinly sliced,R00001,ING00083,onion,Onion,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 3 tablespoon Gram flour (besan),3,tablespoon,Gram flour (besan),,R00001,,,,,,REVIEW,NONE
@@ -979,7 +979,7 @@ Salt - to taste,,,Salt,to taste,R00084,ING00103,salt,Salt,default,seasoning,MAPP
 4 Dry Red Chilli,4,,Dry Red Chilli,,R00085,ING00096,red chilli,Dry Red Chilli,dried,spice,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 tablespoons Jaggery,2,tablespoons,Jaggery,,R00085,ING00068,jaggery,Jaggery,default,sweetener,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 pinch Asafoetida (hing),1,,pinch Asafoetida (hing),,R00085,ING00004,asafoetida,Asafoetida,default,spice,MAPPED_VALIDATED,VALIDATED_MAPPING
-1 Karela (Bitter Gourd/ Pavakkai) - (Small),1,,Karela (Bitter Gourd/ Pavakkai),(Small),R00085,,,,,,REVIEW,NONE
+1 Karela (Bitter Gourd/ Pavakkai) - (Small),1,,Karela (Bitter Gourd/ Pavakkai),(Small),R00085,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 Salt - to taste,,,Salt,to taste,R00085,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 teaspoons Sunflower Oil,2,teaspoons,Sunflower Oil,,R00085,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 teaspoons Sunflower Oil,2,teaspoons,Sunflower Oil,,R00085,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -2441,7 +2441,7 @@ Salt - to taste,,,Salt,to taste,R00201,ING00103,salt,Salt,default,seasoning,MAPP
 1/2 teaspoon Mustard seeds,1/2,teaspoon,Mustard seeds,,R00201,ING00079,mustard,Mustard Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Sunflower Oil,1,teaspoon,Sunflower Oil,,R00201,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/4 teaspoon Asafoetida (hing),1/4,teaspoon,Asafoetida (hing),,R00201,ING00004,asafoetida,Asafoetida,default,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
-4 Karela (Bitter Gourd/ Pavakkai) - sliced into rounds,4,,Karela (Bitter Gourd/ Pavakkai),sliced into rounds,R00202,,,,,,REVIEW,NONE
+4 Karela (Bitter Gourd/ Pavakkai) - sliced into rounds,4,,Karela (Bitter Gourd/ Pavakkai),sliced into rounds,R00202,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 teaspoons Coriander Powder (Dhania),2,teaspoons,Coriander Powder (Dhania),,R00202,ING00039,coriander,Coriander Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Red Chilli powder - (adjust),1,teaspoon,Red Chilli powder,(adjust),R00202,ING00098,red chilli,Red Chilli Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 pinch Asafoetida (hing),1,,pinch Asafoetida (hing),,R00202,ING00004,asafoetida,Asafoetida,default,spice,MAPPED_VALIDATED,VALIDATED_MAPPING
@@ -4899,7 +4899,7 @@ Salt - to taste,,,Salt,to taste,R00414,ING00103,salt,Salt,default,seasoning,MAPP
 1/4 teaspoon Asafoetida (hing),1/4,teaspoon,Asafoetida (hing),,R00414,ING00004,asafoetida,Asafoetida,default,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 Green Chillies - finely chopped,2,,Green Chillies,finely chopped,R00414,ING00065,green chilli,Green Chilli,default,other,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 sprig Curry leaves - few,1,sprig,Curry leaves,few,R00414,ING00049,curry leaf,Curry Leaf,default,herb,MAPPED_VALIDATED,VALIDATED_MAPPING
-4 Karela (Bitter Gourd/ Pavakkai) - cut into thin strips,4,,Karela (Bitter Gourd/ Pavakkai),cut into thin strips,R00415,,,,,,REVIEW,NONE
+4 Karela (Bitter Gourd/ Pavakkai) - cut into thin strips,4,,Karela (Bitter Gourd/ Pavakkai),cut into thin strips,R00415,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 teaspoon Salt - or to taste,1,teaspoon,Salt,or to taste,R00415,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 tablespoon Mustard oil,1,tablespoon,Mustard oil,,R00415,ING00078,mustard,Mustard Oil,oil,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 tablespoon Fennel seeds (Saunf),1,tablespoon,Fennel seeds (Saunf),,R00415,ING00054,fennel,Fennel Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -6717,7 +6717,7 @@ Salt - to taste,,,Salt,to taste,R00590,ING00103,salt,Salt,default,seasoning,MAPP
 1 teaspoon Vanilla Extract,1,teaspoon,Vanilla Extract,,R00592,ING00123,vanilla,Vanilla,default,flavoring,MAPPED_VALIDATED,VALIDATED_MAPPING
 1-1/2 cups Coconut milk,1 1/2,cups,Coconut milk,,R00592,ING00035,coconut,Coconut Milk,milk,dairy,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 cups Ice cubes,2,cups,Ice cubes,,R00592,,,,,,REVIEW,NONE
-2 Karela (Bitter Gourd/ Pavakkai) - cut cylindrical,2,,Karela (Bitter Gourd/ Pavakkai),cut cylindrical,R00593,,,,,,REVIEW,NONE
+2 Karela (Bitter Gourd/ Pavakkai) - cut cylindrical,2,,Karela (Bitter Gourd/ Pavakkai),cut cylindrical,R00593,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 3 tablespoon Curd (Dahi / Yogurt),3,tablespoon,Curd (Dahi / Yogurt),,R00593,ING00047,curd,Curd,default,dairy,MAPPED_VALIDATED,VALIDATED_MAPPING
 3 Onions - chopped,3,,Onions,chopped,R00593,ING00083,onion,Onion,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 6 cloves Garlic - chopped,6,cloves,Garlic,chopped,R00593,ING00059,garlic,Garlic,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -7014,7 +7014,7 @@ Salt and Pepper - to taste,,,Salt and Pepper,to taste,R00618,,,,,,REVIEW,NONE
 1/2 teaspoon Salt - optional,1/2,teaspoon,Salt,optional,R00620,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Sunflower Oil,1,teaspoon,Sunflower Oil,,R00620,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
 Ghee - for serving,,,Ghee,for serving,R00620,ING00060,ghee,Ghee,default,dairy,MAPPED_CANONICAL,CANONICAL_DATABASE
-2 Karela (Bitter Gourd/ Pavakkai),2,,Karela (Bitter Gourd/ Pavakkai),,R00621,,,,,,REVIEW,NONE
+2 Karela (Bitter Gourd/ Pavakkai),2,,Karela (Bitter Gourd/ Pavakkai),,R00621,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 Onions,2,,Onions,,R00621,ING00083,onion,Onion,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/4 cup Tamarind Water,1/4,cup,Tamarind Water,,R00621,,,,,,REVIEW,NONE
 1/2 cups Water,1/2,cups,Water,,R00621,ING00126,water,Water,default,liquid,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -8830,7 +8830,7 @@ Slivered Almonds (Badam) - (optional),,,Slivered Almonds (Badam),(optional),R007
 1/2 teaspoon Baking powder,1/2,teaspoon,Baking powder,,R00775,ING00005,baking powder,Baking Powder,default,baking,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon Vanilla Extract,1/2,teaspoon,Vanilla Extract,,R00775,ING00123,vanilla,Vanilla,default,flavoring,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 cup Fresh coconut - grated,1,cup,Fresh coconut,grated,R00775,ING00034,coconut,Fresh Coconut,fresh,fruit,MAPPED_CANONICAL,CANONICAL_DATABASE
-5 Karela (Bitter Gourd/ Pavakkai),5,,Karela (Bitter Gourd/ Pavakkai),,R00776,,,,,,REVIEW,NONE
+5 Karela (Bitter Gourd/ Pavakkai),5,,Karela (Bitter Gourd/ Pavakkai),,R00776,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 Sweet Potatoes - boiled,2,,Sweet Potatoes,boiled,R00776,,,,,,REVIEW,NONE
 2 Tomatoes - chopped,2,,Tomatoes,chopped,R00776,ING00118,tomato,Tomato,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 inch Ginger - chopped,1,inch,Ginger,chopped,R00776,ING00061,ginger,Ginger,default,root,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -10495,7 +10495,7 @@ Salt - to taste,,,Salt,to taste,R00923,ING00103,salt,Salt,default,seasoning,MAPP
 1 teaspoon Cumin seeds (Jeera),1,teaspoon,Cumin seeds (Jeera),,R00923,ING00046,cumin,Cumin Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 Dry Red Chilli - broken,2,,Dry Red Chilli,broken,R00923,ING00096,red chilli,Dry Red Chilli,dried,spice,MAPPED_VALIDATED,VALIDATED_MAPPING
 7 Curry leaves,7,,Curry leaves,,R00923,ING00049,curry leaf,Curry Leaf,default,herb,MAPPED_VALIDATED,VALIDATED_MAPPING
-3 Karela (Bitter Gourd/ Pavakkai),3,,Karela (Bitter Gourd/ Pavakkai),,R00924,,,,,,REVIEW,NONE
+3 Karela (Bitter Gourd/ Pavakkai),3,,Karela (Bitter Gourd/ Pavakkai),,R00924,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Onion - chopped,1,,Onion,chopped,R00924,ING00083,onion,Onion,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 cup Curd (Dahi / Yogurt) - or buttermilk,1,cup,Curd (Dahi / Yogurt),or buttermilk,R00924,ING00047,curd,Curd,default,dairy,MAPPED_VALIDATED,VALIDATED_MAPPING
 pinch Turmeric powder (Haldi) - to reduce bitter from bitter gourd,,,pinch Turmeric powder (Haldi),to reduce bitter from bitter gourd,R00924,ING00121,turmeric,Turmeric Powder,powder,spice,MAPPED_VALIDATED,VALIDATED_MAPPING
@@ -12225,7 +12225,7 @@ Salt - to taste,,,Salt,to taste,R01092,ING00103,salt,Salt,default,seasoning,MAPP
 4 sprig coriander - finely chopped,4,sprig,coriander,finely chopped,R01094,,,,,,REVIEW,NONE
 salt - as per taste,,,salt,as per taste,R01094,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 oil - as per use,,,oil,as per use,R01094,ING00037,cooking oil,Cooking Oil,default,oil,MAPPED_VALIDATED,VALIDATED_MAPPING
-1 Karela (Bitter Gourd/ Pavakkai) - wash,1,,Karela (Bitter Gourd/ Pavakkai),wash,R01095,,,,,,REVIEW,NONE
+1 Karela (Bitter Gourd/ Pavakkai) - wash,1,,Karela (Bitter Gourd/ Pavakkai),wash,R01095,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 6 Brinjal (Baingan / Eggplant) - thinly sliced,6,,Brinjal (Baingan / Eggplant),thinly sliced,R01095,ING00012,brinjal,Brinjal,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 Onion - chopped,1,,Onion,chopped,R01095,ING00083,onion,Onion,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon Mustard seeds,1/2,teaspoon,Mustard seeds,,R01095,ING00079,mustard,Mustard Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -14359,7 +14359,7 @@ salt - as per taste,,,salt,as per taste,R01288,ING00103,salt,Salt,default,season
 1 cup Britannia Cream Cheese,1,cup,Britannia Cream Cheese,,R01289,,,,,,REVIEW,NONE
 1 cup Heavy whipping cream,1,cup,Heavy whipping cream,,R01289,,,,,,REVIEW,NONE
 1/2 cup Icing Sugar,1/2,cup,Icing Sugar,,R01289,,,,,,REVIEW,NONE
-2 Karela (Bitter Gourd/ Pavakkai),2,,Karela (Bitter Gourd/ Pavakkai),,R01292,,,,,,REVIEW,NONE
+2 Karela (Bitter Gourd/ Pavakkai),2,,Karela (Bitter Gourd/ Pavakkai),,R01292,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 teaspoon Red Chilli powder,1/2,teaspoon,Red Chilli powder,,R01292,ING00098,red chilli,Red Chilli Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon Turmeric powder (Haldi),1/2,teaspoon,Turmeric powder (Haldi),,R01292,ING00121,turmeric,Turmeric Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 Tablespoons Sooji (Semolina/ Rava),2,tablespoons,Sooji (Semolina/ Rava),,R01292,ING00105,semolina,Semolina,default,grain,MAPPED_VALIDATED,VALIDATED_MAPPING
@@ -14379,7 +14379,7 @@ Water - to knead,,,Water,to knead,R01295,ING00126,water,Water,default,liquid,MAP
 Salt - to taste,,,Salt,to taste,R01298,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 Black pepper powder - for seasoning,,,Black pepper powder,for seasoning,R01298,ING00010,black pepper,Black Pepper Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 Sunflower Oil - for cooking,,,Sunflower Oil,for cooking,R01298,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
-500 grams Karela (Bitter Gourd/ Pavakkai) - cut into small dices (remove excess seeds from inside),500,grams,Karela (Bitter Gourd/ Pavakkai),cut into small dices (remove excess seeds from inside),R01299,,,,,,REVIEW,NONE
+500 grams Karela (Bitter Gourd/ Pavakkai) - cut into small dices (remove excess seeds from inside),500,grams,Karela (Bitter Gourd/ Pavakkai),cut into small dices (remove excess seeds from inside),R01299,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 teaspoon Turmeric powder (Haldi),1/2,teaspoon,Turmeric powder (Haldi),,R01299,ING00121,turmeric,Turmeric Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon Mustard seeds,1/2,teaspoon,Mustard seeds,,R01299,ING00079,mustard,Mustard Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon White Urad Dal (Split),1,teaspoon,White Urad Dal (Split),,R01299,ING00122,urad dal,White Urad Dal,white,pulse,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -17412,7 +17412,7 @@ Salt - to taste,,,Salt,to taste,R01576,ING00103,salt,Salt,default,seasoning,MAPP
 4 Egg whites,4,,Egg whites,,R01577,,,,,,REVIEW,NONE
 3 tablespoons Lemon juice,3,tablespoons,Lemon juice,,R01577,ING00071,lemon juice,Lemon Juice,default,fruit,MAPPED_CANONICAL,CANONICAL_DATABASE
 4 tablespoons Sugar,4,tablespoons,Sugar,,R01577,ING00112,sugar,Sugar,default,sweetener,MAPPED_VALIDATED,VALIDATED_MAPPING
-6 bitter gourd,6,,bitter gourd,,R01578,,,,,,REVIEW,NONE
+6 bitter gourd,6,,bitter gourd,,R01578,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 salt - as per taste,,,salt,as per taste,R01578,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 onion - finely chopped,1,,onion,finely chopped,R01578,ING00083,onion,Onion,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 3 tablespoons gram flour,3,tablespoons,gram flour,,R01578,,,,,,REVIEW,NONE
@@ -20514,7 +20514,7 @@ Salt - to taste,,,Salt,to taste,R01873,ING00103,salt,Salt,default,seasoning,MAPP
 1 teaspoon Coriander Powder (Dhania),1,teaspoon,Coriander Powder (Dhania),,R01873,ING00039,coriander,Coriander Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 tablespoon Mustard oil,2,tablespoon,Mustard oil,,R01873,ING00078,mustard,Mustard Oil,oil,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
 Salt - to taste,,,Salt,to taste,R01873,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
-3 Karela (Bitter Gourd/ Pavakkai) - peeled and grated,3,,Karela (Bitter Gourd/ Pavakkai),peeled and grated,R01874,,,,,,REVIEW,NONE
+3 Karela (Bitter Gourd/ Pavakkai) - peeled and grated,3,,Karela (Bitter Gourd/ Pavakkai),peeled and grated,R01874,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 4 tablespoons Gram flour (besan),4,tablespoons,Gram flour (besan),,R01874,,,,,,REVIEW,NONE
 2 tablespoons Rice flour,2,tablespoons,Rice flour,,R01874,ING00101,rice,Rice Flour,flour,flour,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 tablespoons Jowar Flour (Sorghum) - white millet flour,2,tablespoons,Jowar Flour (Sorghum),white millet flour,R01874,,,,,,REVIEW,NONE
@@ -22251,7 +22251,7 @@ Mixed nuts - for garnishing,,,Mixed nuts,for garnishing,R02061,,,,,,REVIEW,NONE
 1/2 कप सूजी,1/2,,कप सूजी,,R02063,,,,,,REVIEW,NONE
 1 बड़ा चमच्च पूरी काली मिर्च - पीस ले,1,,बड़ा चमच्च पूरी काली मिर्च,पीस ले,R02063,,,,,,REVIEW,NONE
 ओलिव का तेल - प्रयोग अनुसार,,,ओलिव का तेल,प्रयोग अनुसार,R02063,,,,,,REVIEW,NONE
-5 Karela (Bitter Gourd/ Pavakkai),5,,Karela (Bitter Gourd/ Pavakkai),,R02064,,,,,,REVIEW,NONE
+5 Karela (Bitter Gourd/ Pavakkai),5,,Karela (Bitter Gourd/ Pavakkai),,R02064,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 Potatoes (Aloo) - boiled,2,,Potatoes (Aloo),boiled,R02064,ING00092,potato,Potato,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/4 teaspoon Turmeric powder (Haldi),1/4,teaspoon,Turmeric powder (Haldi),,R02064,ING00121,turmeric,Turmeric Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon Red Chilli powder,1/2,teaspoon,Red Chilli powder,,R02064,ING00098,red chilli,Red Chilli Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -26311,7 +26311,7 @@ Salt - to taste,,,Salt,to taste,R02469,ING00103,salt,Salt,default,seasoning,MAPP
 Sunflower Oil - as needed,,,Sunflower Oil,as needed,R02469,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 cups Whole Wheat Flour,2,cups,Whole Wheat Flour,,R02470,,,,,,REVIEW,NONE
 1/2 cup Gram flour (besan),1/2,cup,Gram flour (besan),,R02470,,,,,,REVIEW,NONE
-1 cup Karela (Bitter Gourd/ Pavakkai) - peel,1,cup,Karela (Bitter Gourd/ Pavakkai),peel,R02470,,,,,,REVIEW,NONE
+1 cup Karela (Bitter Gourd/ Pavakkai) - peel,1,cup,Karela (Bitter Gourd/ Pavakkai),peel,R02470,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 tablespoon Ajwain (Carom seeds),2,tablespoon,Ajwain (Carom seeds),,R02470,ING00001,ajwain,Ajwain,default,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 teaspoon Red Chilli powder,2,teaspoon,Red Chilli powder,,R02470,ING00098,red chilli,Red Chilli Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Turmeric powder (Haldi),1,teaspoon,Turmeric powder (Haldi),,R02470,ING00121,turmeric,Turmeric Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -26354,7 +26354,7 @@ Salt - to taste,,,Salt,to taste,R02471,ING00103,salt,Salt,default,seasoning,MAPP
 1 teaspoon Cumin seeds (Jeera),1,teaspoon,Cumin seeds (Jeera),,R02473,ING00046,cumin,Cumin Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 Dry Red Chillies,2,,Dry Red Chillies,,R02473,ING00051,dry red chilli,Dry Red Chilli,default,other,MAPPED_VALIDATED,VALIDATED_MAPPING
 Salt - to taste,,,Salt,to taste,R02473,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
-2 cups bitter gourd - boiled after removing seeds,2,cups,bitter gourd,boiled after removing seeds,R02475,,,,,,REVIEW,NONE
+2 cups bitter gourd - boiled after removing seeds,2,cups,bitter gourd,boiled after removing seeds,R02475,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/4 teaspoon mustard seeds,1/4,teaspoon,mustard seeds,,R02475,ING00079,mustard,Mustard Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/4 teaspoon cumin seeds,1/4,teaspoon,cumin seeds,,R02475,ING00046,cumin,Cumin Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon turmeric powder,1/2,teaspoon,turmeric powder,,R02475,ING00121,turmeric,Turmeric Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -26725,7 +26725,7 @@ Salt - to taste,,,Salt,to taste,R02504,ING00103,salt,Salt,default,seasoning,MAPP
 1/2 cup Hung Curd (Greek Yogurt),1/2,cup,Hung Curd (Greek Yogurt),,R02504,ING00048,curd,Curd (Hung),hung,dairy,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 teaspoon Red Chilli flakes,1/2,teaspoon,Red Chilli flakes,,R02504,ING00097,red chilli,Red Chilli Flakes,flakes,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 Salt - to taste,,,Salt,to taste,R02504,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
-1 bitter gourd,1,,bitter gourd,,R02505,,,,,,REVIEW,NONE
+1 bitter gourd,1,,bitter gourd,,R02505,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 rice flour,1,,rice flour,,R02505,ING00101,rice,Rice Flour,flour,flour,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 tablespoon gram flour,1,tablespoon,gram flour,,R02505,,,,,,REVIEW,NONE
 3/4 tablespoon corn flour,3/4,tablespoon,corn flour,,R02505,ING00041,corn,Corn Flour,flour,flour,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -35523,7 +35523,7 @@ Salt - to taste,,,Salt,to taste,R03490,ING00103,salt,Salt,default,seasoning,MAPP
 2 tablespoons Fresh cream,2,tablespoons,Fresh cream,,R03493,ING00042,cream,Fresh Cream,fresh,dairy,MAPPED_CANONICAL,CANONICAL_DATABASE
 Salt - to taste,,,Salt,to taste,R03493,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon Lemon juice,1/2,teaspoon,Lemon juice,,R03493,ING00071,lemon juice,Lemon Juice,default,fruit,MAPPED_CANONICAL,CANONICAL_DATABASE
-300 grams Karela (Bitter Gourd/ Pavakkai) - small & tender,300,grams,Karela (Bitter Gourd/ Pavakkai),small & tender,R03494,,,,,,REVIEW,NONE
+300 grams Karela (Bitter Gourd/ Pavakkai) - small & tender,300,grams,Karela (Bitter Gourd/ Pavakkai),small & tender,R03494,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 tablespoons Curd (Dahi / Yogurt),2,tablespoons,Curd (Dahi / Yogurt),,R03494,ING00047,curd,Curd,default,dairy,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/4 teaspoon Turmeric powder (Haldi),1/4,teaspoon,Turmeric powder (Haldi),,R03494,ING00121,turmeric,Turmeric Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Mustard seeds,1,teaspoon,Mustard seeds,,R03494,ING00079,mustard,Mustard Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -37050,7 +37050,7 @@ Strawberries - few,,,Strawberries,few,R03662,,,,,,REVIEW,NONE
 2 Apples - peeled and cubed,2,,Apples,peeled and cubed,R03664,,,,,,REVIEW,NONE
 1/2 teaspoon Cinnamon Powder (Dalchini),1/2,teaspoon,Cinnamon Powder (Dalchini),,R03664,ING00029,cinnamon,Cinnamon Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 3 cups Soy milk - (adjust),3,cups,Soy milk,(adjust),R03664,,,,,,REVIEW,NONE
-3 Karela (Bitter Gourd/ Pavakkai),3,,Karela (Bitter Gourd/ Pavakkai),,R03665,,,,,,REVIEW,NONE
+3 Karela (Bitter Gourd/ Pavakkai),3,,Karela (Bitter Gourd/ Pavakkai),,R03665,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 cup Paneer (Homemade Cottage Cheese) - grated,1/2,cup,Paneer (Homemade Cottage Cheese),grated,R03665,ING00085,paneer,Paneer,default,dairy,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 Potatoes (Aloo) - boiled and mashed,2,,Potatoes (Aloo),boiled and mashed,R03665,ING00092,potato,Potato,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 Salt - to taste,,,Salt,to taste,R03665,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -37475,7 +37475,7 @@ Salt - to taste,,,Salt,to taste,R03714,ING00103,salt,Salt,default,seasoning,MAPP
 Red Chilli powder - to taste,,,Red Chilli powder,to taste,R03714,ING00098,red chilli,Red Chilli Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 Sunflower Oil - for cooking,,,Sunflower Oil,for cooking,R03714,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
 4 sprig Coriander (Dhania) Leaves - finely chopped,4,sprig,Coriander (Dhania) Leaves,finely chopped,R03714,ING00038,coriander,Coriander Leaves,leaf,herb,MAPPED_CANONICAL,CANONICAL_DATABASE
-1 Karela (Bitter Gourd/ Pavakkai) - sliced,1,,Karela (Bitter Gourd/ Pavakkai),sliced,R03717,,,,,,REVIEW,NONE
+1 Karela (Bitter Gourd/ Pavakkai) - sliced,1,,Karela (Bitter Gourd/ Pavakkai),sliced,R03717,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Potato (Aloo) - pealed and diced,1,,Potato (Aloo),pealed and diced,R03717,ING00092,potato,Potato,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 Onion - chopped,1,,Onion,chopped,R03717,ING00083,onion,Onion,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Cumin seeds (Jeera),1,teaspoon,Cumin seeds (Jeera),,R03717,ING00046,cumin,Cumin Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -38386,7 +38386,7 @@ Few Saffron strands,,,Few Saffron strands,,R03815,,,,,,REVIEW,NONE
 2 teaspoons Corn flour,2,teaspoons,Corn flour,,R03816,ING00041,corn,Corn Flour,flour,flour,MAPPED_CANONICAL,CANONICAL_DATABASE
 4 tablespoons Sunflower Oil,4,tablespoons,Sunflower Oil,,R03816,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
 Salt - to taste,,,Salt,to taste,R03816,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
-4 bitter gourd,4,,bitter gourd,,R03819,,,,,,REVIEW,NONE
+4 bitter gourd,4,,bitter gourd,,R03819,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 potatoes - chopped,2,,potatoes,chopped,R03819,ING00092,potato,Potato,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 3 onions - chopped,3,,onions,chopped,R03819,ING00083,onion,Onion,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 teaspoons panch phoran masala,2,teaspoons,panch phoran masala,,R03819,,,,,,REVIEW,NONE
@@ -38860,7 +38860,7 @@ Sunflower Oil - for cooking,,,Sunflower Oil,for cooking,R03869,ING00113,sunflowe
 1 teaspoon Orange Zest (Rind),1,teaspoon,Orange Zest (Rind),,R03872,,,,,,REVIEW,NONE
 200 grams Dark chocolate - semi sweet,200,grams,Dark chocolate,semi sweet,R03872,,,,,,REVIEW,NONE
 1/2 cup Hazelnut - slightly toasted and powdered (or cashew nuts),1/2,cup,Hazelnut,slightly toasted and powdered (or cashew nuts),R03872,,,,,,REVIEW,NONE
-2 Karela (Bitter Gourd/ Pavakkai) - deseeded and cut into thin strips,2,,Karela (Bitter Gourd/ Pavakkai),deseeded and cut into thin strips,R03873,,,,,,REVIEW,NONE
+2 Karela (Bitter Gourd/ Pavakkai) - deseeded and cut into thin strips,2,,Karela (Bitter Gourd/ Pavakkai),deseeded and cut into thin strips,R03873,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 tablespoons Mustard oil,2,tablespoons,Mustard oil,,R03873,ING00078,mustard,Mustard Oil,oil,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Cumin seeds (Jeera),1,teaspoon,Cumin seeds (Jeera),,R03873,ING00046,cumin,Cumin Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 4 cloves Garlic - finely chopped,4,cloves,Garlic,finely chopped,R03873,ING00059,garlic,Garlic,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -40121,7 +40121,7 @@ salt - as per taste,,,salt,as per taste,R04025,ING00103,salt,Salt,default,season
 1 cup curd,1,cup,curd,,R04027,ING00047,curd,Curd,default,dairy,MAPPED_VALIDATED,VALIDATED_MAPPING
 1-1 / 2 cup water,1 1/2,cup,water,,R04027,ING00126,water,Water,default,liquid,MAPPED_CANONICAL,CANONICAL_DATABASE
 salt - as per taste,,,salt,as per taste,R04027,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
-2 bitter gourd - peel and chop,2,,bitter gourd,peel and chop,R04027,,,,,,REVIEW,NONE
+2 bitter gourd - peel and chop,2,,bitter gourd,peel and chop,R04027,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon cumin seeds,1/2,teaspoon,cumin seeds,,R04027,ING00046,cumin,Cumin Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/4 teaspoon mustard seeds,1/4,teaspoon,mustard seeds,,R04027,ING00079,mustard,Mustard Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 sprig curry leaves,1,sprig,curry leaves,,R04027,ING00049,curry leaf,Curry Leaf,default,herb,MAPPED_VALIDATED,VALIDATED_MAPPING
@@ -43004,7 +43004,7 @@ Salt - to taste,,,Salt,to taste,R04403,ING00103,salt,Salt,default,seasoning,MAPP
 1/2 teaspoon Mustard seeds,1/2,teaspoon,Mustard seeds,,R04403,ING00079,mustard,Mustard Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 5 Curry leaves,5,,Curry leaves,,R04403,ING00049,curry leaf,Curry Leaf,default,herb,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Dry Red Chilli,1,,Dry Red Chilli,,R04403,ING00096,red chilli,Dry Red Chilli,dried,spice,MAPPED_VALIDATED,VALIDATED_MAPPING
-3 Karela (Bitter Gourd/ Pavakkai) - cut into thin wedges with seeds removed,3,,Karela (Bitter Gourd/ Pavakkai),cut into thin wedges with seeds removed,R04404,,,,,,REVIEW,NONE
+3 Karela (Bitter Gourd/ Pavakkai) - cut into thin wedges with seeds removed,3,,Karela (Bitter Gourd/ Pavakkai),cut into thin wedges with seeds removed,R04404,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Onion - thinly sliced,1,,Onion,thinly sliced,R04404,ING00083,onion,Onion,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 cloves Garlic - grated,2,cloves,Garlic,grated,R04404,ING00059,garlic,Garlic,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 inch Ginger - grated,1,inch,Ginger,grated,R04404,ING00061,ginger,Ginger,default,root,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -44925,7 +44925,7 @@ Sunflower Oil - for cooking,,,Sunflower Oil,for cooking,R04650,ING00113,sunflowe
 1 teaspoon Lemon juice,1,teaspoon,Lemon juice,,R04654,ING00071,lemon juice,Lemon Juice,default,fruit,MAPPED_CANONICAL,CANONICAL_DATABASE
 Salt - to taste or kala namak (for fasting),,,Salt,to taste or kala namak (for fasting),R04654,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 Coriander (Dhania) Leaves - handful for garnish,,,Coriander (Dhania) Leaves,handful for garnish,R04654,ING00038,coriander,Coriander Leaves,leaf,herb,MAPPED_CANONICAL,CANONICAL_DATABASE
-300 grams Karela (Bitter Gourd/ Pavakkai) - cut into small cubes,300,grams,Karela (Bitter Gourd/ Pavakkai),cut into small cubes,R04655,,,,,,REVIEW,NONE
+300 grams Karela (Bitter Gourd/ Pavakkai) - cut into small cubes,300,grams,Karela (Bitter Gourd/ Pavakkai),cut into small cubes,R04655,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 Potatoes (Aloo) - cut into small cubes,2,,Potatoes (Aloo),cut into small cubes,R04655,ING00092,potato,Potato,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 teaspoon Mustard seeds,1,teaspoon,Mustard seeds,,R04655,ING00079,mustard,Mustard Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/4 cup Fresh coconut - grated,1/4,cup,Fresh coconut,grated,R04655,ING00034,coconut,Fresh Coconut,fresh,fruit,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -50526,7 +50526,7 @@ Salt - to taste,,,Salt,to taste,R05398,ING00103,salt,Salt,default,seasoning,MAPP
 1/2 छोटा चमच्च राइ,1/2,,छोटा चमच्च राइ,,R05403,ING00079,mustard,Mustard Seeds,seed,spice,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 टहनी कढ़ी पत्ता - तोड़ ले,1,,टहनी कढ़ी पत्ता,तोड़ ले,R05403,ING00049,curry leaf,Curry Leaf,default,herb,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 सुखी लाल मिर्च,2,,सुखी लाल मिर्च,,R05403,,,,,,REVIEW,NONE
-1 Karela (Bitter Gourd/ Pavakkai) - cut into roundels,1,,Karela (Bitter Gourd/ Pavakkai),cut into roundels,R05405,,,,,,REVIEW,NONE
+1 Karela (Bitter Gourd/ Pavakkai) - cut into roundels,1,,Karela (Bitter Gourd/ Pavakkai),cut into roundels,R05405,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 cup Gram flour (besan),1/2,cup,Gram flour (besan),,R05405,,,,,,REVIEW,NONE
 3 cloves Garlic - finely chopped,3,cloves,Garlic,finely chopped,R05405,ING00059,garlic,Garlic,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Ajwain (Carom seeds),1,teaspoon,Ajwain (Carom seeds),,R05405,ING00001,ajwain,Ajwain,default,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -51909,7 +51909,7 @@ Salt - to taste,,,Salt,to taste,R05576,ING00103,salt,Salt,default,seasoning,MAPP
 1 teaspoon Cumin seeds (Jeera),1,teaspoon,Cumin seeds (Jeera),,R05576,ING00046,cumin,Cumin Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon Asafoetida (hing),1/2,teaspoon,Asafoetida (hing),,R05576,ING00004,asafoetida,Asafoetida,default,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 sprig Coriander (Dhania) Leaves - finely chopped,2,sprig,Coriander (Dhania) Leaves,finely chopped,R05576,ING00038,coriander,Coriander Leaves,leaf,herb,MAPPED_CANONICAL,CANONICAL_DATABASE
-2 Karela (Bitter Gourd/ Pavakkai),2,,Karela (Bitter Gourd/ Pavakkai),,R05577,,,,,,REVIEW,NONE
+2 Karela (Bitter Gourd/ Pavakkai),2,,Karela (Bitter Gourd/ Pavakkai),,R05577,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Potato (Aloo) - cut lengthwise,1,,Potato (Aloo),cut lengthwise,R05577,ING00092,potato,Potato,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 15 Cashew nuts,15,,Cashew nuts,,R05577,ING00021,cashew,Cashew,default,nut,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Dry Red Chilli - broken & deseeded,1,,Dry Red Chilli,broken & deseeded,R05577,ING00096,red chilli,Dry Red Chilli,dried,spice,MAPPED_VALIDATED,VALIDATED_MAPPING
@@ -53877,7 +53877,7 @@ Salt - to taste,,,Salt,to taste,R05843,ING00103,salt,Salt,default,seasoning,MAPP
 1/2 teaspoon Baking powder,1/2,teaspoon,Baking powder,,R05844,ING00005,baking powder,Baking Powder,default,baking,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon Baking soda,1/2,teaspoon,Baking soda,,R05844,ING00006,baking soda,Baking Soda,default,baking,MAPPED_CANONICAL,CANONICAL_DATABASE
 Salt - a pinch,,,Salt,a pinch,R05844,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
-2 Karela (Bitter Gourd/ Pavakkai) - deseeded,2,,Karela (Bitter Gourd/ Pavakkai),deseeded,R05845,,,,,,REVIEW,NONE
+2 Karela (Bitter Gourd/ Pavakkai) - deseeded,2,,Karela (Bitter Gourd/ Pavakkai),deseeded,R05845,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Ginger,1,,Ginger,,R05845,ING00061,ginger,Ginger,default,root,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 teaspoons Lemon juice,2,teaspoons,Lemon juice,,R05845,ING00071,lemon juice,Lemon Juice,default,fruit,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon Turmeric powder (Haldi),1/2,teaspoon,Turmeric powder (Haldi),,R05845,ING00121,turmeric,Turmeric Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -54310,7 +54310,7 @@ Salt - as required,,,Salt,as required,R05907,ING00103,salt,Salt,default,seasonin
 1/2 cup sweet potato,1/2,cup,sweet potato,,R05909,,,,,,REVIEW,NONE
 1/4 cup onion - thinly sliced,1/4,cup,onion,thinly sliced,R05909,ING00083,onion,Onion,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 tablespoon dry coconut,1,tablespoon,dry coconut,,R05909,,,,,,REVIEW,NONE
-1 cup bitter gourd - chopped,1,cup,bitter gourd,chopped,R05909,,,,,,REVIEW,NONE
+1 cup bitter gourd - chopped,1,cup,bitter gourd,chopped,R05909,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 tablespoons tamarind water,2,tablespoons,tamarind water,,R05909,,,,,,REVIEW,NONE
 4 red chillies,4,,red chillies,,R05909,,,,,,REVIEW,NONE
 sesame oil - 1 large Tablespoon peanuts,,,sesame oil,1 large Tablespoon peanuts,R05909,ING00106,sesame,Sesame Oil,oil,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -57926,7 +57926,7 @@ Water - chilled as required,,,Water,chilled as required,R06446,ING00126,water,Wa
 2 teaspoon Corn flour,2,teaspoon,Corn flour,,R06452,ING00041,corn,Corn Flour,flour,flour,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Red Chilli flakes,1,teaspoon,Red Chilli flakes,,R06452,ING00097,red chilli,Red Chilli Flakes,flakes,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 Salt - to taste,,,Salt,to taste,R06452,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
-1 Karela (Bitter Gourd/ Pavakkai) - small diced,1,,Karela (Bitter Gourd/ Pavakkai),small diced,R06453,,,,,,REVIEW,NONE
+1 Karela (Bitter Gourd/ Pavakkai) - small diced,1,,Karela (Bitter Gourd/ Pavakkai),small diced,R06453,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Raw Banana - peeled and diced,1,,Raw Banana,peeled and diced,R06453,,,,,,REVIEW,NONE
 1 Carrot (Gajjar) - peeled and diced,1,,Carrot (Gajjar),peeled and diced,R06453,ING00020,carrot,Carrot,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 Potato (Aloo) - peeled and diced,1,,Potato (Aloo),peeled and diced,R06453,ING00092,potato,Potato,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -59453,7 +59453,7 @@ Salt - as required,,,Salt,as required,R06707,ING00103,salt,Salt,default,seasonin
 1 Whole Egg,1,,Whole Egg,,R06708,ING00052,egg,Egg,default,egg,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 cup Milk,1/2,cup,Milk,,R06708,ING00073,milk,Milk,default,dairy,MAPPED_CANONICAL,CANONICAL_DATABASE
 Salt - a pinch,,,Salt,a pinch,R06708,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
-2 Karela (Bitter Gourd/ Pavakkai) - sliced thinly,2,,Karela (Bitter Gourd/ Pavakkai),sliced thinly,R06709,,,,,,REVIEW,NONE
+2 Karela (Bitter Gourd/ Pavakkai) - sliced thinly,2,,Karela (Bitter Gourd/ Pavakkai),sliced thinly,R06709,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Onion - finely chopped,1,,Onion,finely chopped,R06709,ING00083,onion,Onion,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 cup Fresh coconut - grated,1/2,cup,Fresh coconut,grated,R06709,ING00034,coconut,Fresh Coconut,fresh,fruit,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 teaspoon Red Chilli powder,1/2,teaspoon,Red Chilli powder,,R06709,ING00098,red chilli,Red Chilli Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -59732,7 +59732,7 @@ salt - Taste,,,salt,Taste,R06744,ING00103,salt,Salt,default,seasoning,MAPPED_CAN
 1/4 teaspoon asafoetida,1/4,teaspoon,asafoetida,,R06744,ING00004,asafoetida,Asafoetida,default,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/4 teaspoon turmeric powder,1/4,teaspoon,turmeric powder,,R06744,ING00121,turmeric,Turmeric Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 charcoal,1,,charcoal,,R06744,,,,,,REVIEW,NONE
-2 bitter gourd - cut it round,2,,bitter gourd,cut it round,R06745,,,,,,REVIEW,NONE
+2 bitter gourd - cut it round,2,,bitter gourd,cut it round,R06745,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 onions - thin and straight cut,2,,onions,thin and straight cut,R06745,ING00083,onion,Onion,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 tomatoes - finely chopped,2,,tomatoes,finely chopped,R06745,ING00118,tomato,Tomato,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/4 cup curd,1/4,cup,curd,,R06745,ING00047,curd,Curd,default,dairy,MAPPED_VALIDATED,VALIDATED_MAPPING
@@ -61772,7 +61772,7 @@ Raw Peanuts (Moongphali),,,Raw Peanuts (Moongphali),,R07077,ING00089,peanut,Pean
 1 teaspoon Gram flour (besan),1,teaspoon,Gram flour (besan),,R07082,,,,,,REVIEW,NONE
 1-1/2 cups Water,1 1/2,cups,Water,,R07082,ING00126,water,Water,default,liquid,MAPPED_CANONICAL,CANONICAL_DATABASE
 Salt - to taste,,,Salt,to taste,R07082,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
-2 Karela (Bitter Gourd/ Pavakkai) - de skinned,2,,Karela (Bitter Gourd/ Pavakkai),de skinned,R07082,,,,,,REVIEW,NONE
+2 Karela (Bitter Gourd/ Pavakkai) - de skinned,2,,Karela (Bitter Gourd/ Pavakkai),de skinned,R07082,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 teaspoon Cumin seeds (Jeera),1/2,teaspoon,Cumin seeds (Jeera),,R07082,ING00046,cumin,Cumin Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/4 teaspoon Mustard seeds,1/4,teaspoon,Mustard seeds,,R07082,ING00079,mustard,Mustard Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 sprig Curry leaves,1,sprig,Curry leaves,,R07082,ING00049,curry leaf,Curry Leaf,default,herb,MAPPED_VALIDATED,VALIDATED_MAPPING
@@ -61797,7 +61797,7 @@ Sunflower Oil - as required,,,Sunflower Oil,as required,R07083,ING00113,sunflowe
 3 tablespoon Mustard seeds,3,tablespoon,Mustard seeds,,R07084,ING00079,mustard,Mustard Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 tablespoon Methi Seeds (Fenugreek Seeds),1,tablespoon,Methi Seeds (Fenugreek Seeds),,R07084,ING00055,fenugreek,Fenugreek Seeds,seed,spice,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 tablespoon Asafoetida (hing),1/2,tablespoon,Asafoetida (hing),,R07084,ING00004,asafoetida,Asafoetida,default,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
-4 Karela (Bitter Gourd/ Pavakkai),4,,Karela (Bitter Gourd/ Pavakkai),,R07084,,,,,,REVIEW,NONE
+4 Karela (Bitter Gourd/ Pavakkai),4,,Karela (Bitter Gourd/ Pavakkai),,R07084,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 cup Jaggery,1/2,cup,Jaggery,,R07084,ING00068,jaggery,Jaggery,default,sweetener,MAPPED_CANONICAL,CANONICAL_DATABASE
 18 grams Tamarind,18,grams,Tamarind,,R07084,ING00115,tamarind,Tamarind,default,condiment,MAPPED_VALIDATED,VALIDATED_MAPPING
 Salt - to taste,,,Salt,to taste,R07084,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -63281,7 +63281,7 @@ Sesame (Gingelly) Oil - for cooking,,,Sesame (Gingelly) Oil,for cooking,R07342,I
 2 teaspoons Black pepper powder,2,teaspoons,Black pepper powder,,R07343,ING00010,black pepper,Black Pepper Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 Salt - as per your taste,,,Salt,as per your taste,R07343,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 Water - for kneading the dough,,,Water,for kneading the dough,R07343,ING00126,water,Water,default,liquid,MAPPED_CANONICAL,CANONICAL_DATABASE
-1 Karela (Bitter Gourd/ Pavakkai),1,,Karela (Bitter Gourd/ Pavakkai),,R07346,,,,,,REVIEW,NONE
+1 Karela (Bitter Gourd/ Pavakkai),1,,Karela (Bitter Gourd/ Pavakkai),,R07346,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Rice flour,1,,Rice flour,,R07346,ING00101,rice,Rice Flour,flour,flour,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 tablespoon Gram flour (besan),1,tablespoon,Gram flour (besan),,R07346,,,,,,REVIEW,NONE
 3/4 tablespoon Corn flour,3/4,tablespoon,Corn flour,,R07346,ING00041,corn,Corn Flour,flour,flour,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -67644,7 +67644,7 @@ Black pepper powder - to taste,,,Black pepper powder,to taste,R08169,ING00010,bl
 Tomato - as required to garnish,,,Tomato,as required to garnish,R08169,ING00118,tomato,Tomato,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 Black olives - as required to garnish,,,Black olives,as required to garnish,R08169,,,,,,REVIEW,NONE
 4 tablespoons Mozzarella cheese - grated,4,tablespoons,Mozzarella cheese,grated,R08169,ING00076,mozzarella,Mozzarella,default,dairy,MAPPED_VALIDATED,VALIDATED_MAPPING
-2 Karela (Bitter Gourd/ Pavakkai) - grated,2,,Karela (Bitter Gourd/ Pavakkai),grated,R08170,,,,,,REVIEW,NONE
+2 Karela (Bitter Gourd/ Pavakkai) - grated,2,,Karela (Bitter Gourd/ Pavakkai),grated,R08170,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Carrot (Gajjar) - grated,1,,Carrot (Gajjar),grated,R08170,ING00020,carrot,Carrot,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 200 grams Paneer (Homemade Cottage Cheese) - grated,200,grams,Paneer (Homemade Cottage Cheese),grated,R08170,ING00085,paneer,Paneer,default,dairy,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/4 cup Oats Flour,1/4,cup,Oats Flour,,R08170,,,,,,REVIEW,NONE
@@ -70361,7 +70361,7 @@ Salt - or to taste,,,Salt,or to taste,R08723,ING00103,salt,Salt,default,seasonin
 Sunflower Oil - for shallow frying,,,Sunflower Oil,for shallow frying,R08723,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 cup Whole Wheat Flour,1,cup,Whole Wheat Flour,,R08724,,,,,,REVIEW,NONE
 1/2 cup Gram flour (besan),1/2,cup,Gram flour (besan),,R08724,,,,,,REVIEW,NONE
-2 to 3 tablespoons Karela (Bitter Gourd/ Pavakkai) - grated,2,,to 3 tablespoons Karela (Bitter Gourd/ Pavakkai),grated,R08724,,,,,,REVIEW,NONE
+2 to 3 tablespoons Karela (Bitter Gourd/ Pavakkai) - grated,2,,to 3 tablespoons Karela (Bitter Gourd/ Pavakkai),grated,R08724,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 teaspoon Ajwain (Carom seeds),1,teaspoon,Ajwain (Carom seeds),,R08724,ING00001,ajwain,Ajwain,default,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 inch Ginger - grated,1,inch,Ginger,grated,R08724,ING00061,ginger,Ginger,default,root,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 Green Chillies - ground to paste,2,,Green Chillies,ground to paste,R08724,ING00065,green chilli,Green Chilli,default,other,MAPPED_VALIDATED,VALIDATED_MAPPING
@@ -70642,7 +70642,7 @@ Salt - to taste,,,Salt,to taste,R08784,ING00103,salt,Salt,default,seasoning,MAPP
 1 teaspoon Lemon zest - grated,1,teaspoon,Lemon zest,grated,R08785,,,,,,REVIEW,NONE
 1 Lemon juice,1,,Lemon juice,,R08785,ING00071,lemon juice,Lemon Juice,default,fruit,MAPPED_CANONICAL,CANONICAL_DATABASE
 100 grams Butter,100,grams,Butter,,R08785,ING00015,butter,Butter,default,dairy,MAPPED_CANONICAL,CANONICAL_DATABASE
-1 Karela (Bitter Gourd/ Pavakkai) - sliced,1,,Karela (Bitter Gourd/ Pavakkai),sliced,R08792,,,,,,REVIEW,NONE
+1 Karela (Bitter Gourd/ Pavakkai) - sliced,1,,Karela (Bitter Gourd/ Pavakkai),sliced,R08792,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Sweet Potato - julienne,1,,Sweet Potato,julienne,R08792,,,,,,REVIEW,NONE
 1 cup Brinjal (Baingan / Eggplant) - diced,1,cup,Brinjal (Baingan / Eggplant),diced,R08792,ING00012,brinjal,Brinjal,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 cup Kaddu (Parangikai/ Pumpkin) - diced,1,cup,Kaddu (Parangikai/ Pumpkin),diced,R08792,ING00093,pumpkin,Pumpkin,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
@@ -77404,7 +77404,7 @@ Salt - as per taste,,,Salt,as per taste,R10489,ING00103,salt,Salt,default,season
 2 Garlic - thinly sliced,2,,Garlic,thinly sliced,R10489,ING00059,garlic,Garlic,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 3 Dry Red Chillies,3,,Dry Red Chillies,,R10489,ING00051,dry red chilli,Dry Red Chilli,default,other,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 tablespoon Sunflower Oil,1,tablespoon,Sunflower Oil,,R10489,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
-2 Karela (Bitter Gourd/ Pavakkai),2,,Karela (Bitter Gourd/ Pavakkai),,R10498,,,,,,REVIEW,NONE
+2 Karela (Bitter Gourd/ Pavakkai),2,,Karela (Bitter Gourd/ Pavakkai),,R10498,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 teaspoon Salt - adjust to taste,1/2,teaspoon,Salt,adjust to taste,R10498,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 1/2 cup Raw Peanuts (Moongphali),1/2,cup,Raw Peanuts (Moongphali),,R10498,ING00089,peanut,Peanut,default,nut,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 cup Fresh coconut - grated and roasted,1/2,cup,Fresh coconut,grated and roasted,R10498,ING00034,coconut,Fresh Coconut,fresh,fruit,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -78638,7 +78638,7 @@ Salt - to taste,,,Salt,to taste,R10942,ING00103,salt,Salt,default,seasoning,MAPP
 1/4 teaspoon Asafoetida (hing),1/4,teaspoon,Asafoetida (hing),,R10942,ING00004,asafoetida,Asafoetida,default,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 6 Curry leaves,6,,Curry leaves,,R10942,ING00049,curry leaf,Curry Leaf,default,herb,MAPPED_VALIDATED,VALIDATED_MAPPING
 3 sprig Coriander (Dhania) Leaves,3,sprig,Coriander (Dhania) Leaves,,R10942,ING00038,coriander,Coriander Leaves,leaf,herb,MAPPED_CANONICAL,CANONICAL_DATABASE
-3 Karela (Bitter Gourd/ Pavakkai) - roughly scraped,3,,Karela (Bitter Gourd/ Pavakkai),roughly scraped,R10945,,,,,,REVIEW,NONE
+3 Karela (Bitter Gourd/ Pavakkai) - roughly scraped,3,,Karela (Bitter Gourd/ Pavakkai),roughly scraped,R10945,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 cup Gram flour (besan),1/2,cup,Gram flour (besan),,R10945,,,,,,REVIEW,NONE
 2 tablespoon Rice flour,2,tablespoon,Rice flour,,R10945,ING00101,rice,Rice Flour,flour,flour,MAPPED_CANONICAL,CANONICAL_DATABASE
 10-12 Curry leaves - torn,10,,-12 Curry leaves,torn,R10945,,,,,,REVIEW,NONE
@@ -79616,7 +79616,7 @@ Salt - to taste,,,Salt,to taste,R11186,ING00103,salt,Salt,default,seasoning,MAPP
 5 grams Salt,5,grams,Salt,,R11204,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 220 grams Butter (unsalted) - chilled and chopped into 3/4 inch pieces,220,grams,Butter (unsalted),chilled and chopped into 3/4 inch pieces,R11204,ING00015,butter,Butter,default,dairy,MAPPED_CANONICAL,CANONICAL_DATABASE
 120 ml Chilled water,120,ml,Chilled water,,R11204,,,,,,REVIEW,NONE
-2 Karela (Bitter Gourd/ Pavakkai) - cut into roundels,2,,Karela (Bitter Gourd/ Pavakkai),cut into roundels,R11206,,,,,,REVIEW,NONE
+2 Karela (Bitter Gourd/ Pavakkai) - cut into roundels,2,,Karela (Bitter Gourd/ Pavakkai),cut into roundels,R11206,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 Onions - thinly sliced,2,,Onions,thinly sliced,R11206,ING00083,onion,Onion,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 Tomatoes - finely chopped,2,,Tomatoes,finely chopped,R11206,ING00118,tomato,Tomato,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/4 cup Curd (Dahi / Yogurt),1/4,cup,Curd (Dahi / Yogurt),,R11206,ING00047,curd,Curd,default,dairy,MAPPED_VALIDATED,VALIDATED_MAPPING
@@ -79896,7 +79896,7 @@ Salt - to taste,,,Salt,to taste,R11322,ING00103,salt,Salt,default,seasoning,MAPP
 1-1/2 जीरा,1 1/2,,जीरा,,R11324,ING00044,cumin,Cumin,default,spice,MAPPED_VALIDATED,VALIDATED_MAPPING
 1/2 छोटा चमच्च काली मिर्च पाउडर,1/2,,छोटा चमच्च काली मिर्च पाउडर,,R11324,ING00010,black pepper,Black Pepper Powder,powder,spice,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 सुखी लाल मिर्च,2,,सुखी लाल मिर्च,,R11324,,,,,,REVIEW,NONE
-300 grams Karela (Bitter Gourd/ Pavakkai),300,grams,Karela (Bitter Gourd/ Pavakkai),,R11325,,,,,,REVIEW,NONE
+300 grams Karela (Bitter Gourd/ Pavakkai),300,grams,Karela (Bitter Gourd/ Pavakkai),,R11325,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 2 Onions - thinly sliced,2,,Onions,thinly sliced,R11325,ING00083,onion,Onion,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 6 cloves Garlic - finely chopped,6,cloves,Garlic,finely chopped,R11325,ING00059,garlic,Garlic,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 inch Ginger - finely chopped,1,inch,Ginger,finely chopped,R11325,ING00061,ginger,Ginger,default,root,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -81484,7 +81484,7 @@ Salt - to taste,,,Salt,to taste,R12085,ING00103,salt,Salt,default,seasoning,MAPP
 3 cloves Garlic,3,cloves,Garlic,,R12085,ING00059,garlic,Garlic,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 inch Ginger,1,inch,Ginger,,R12085,ING00061,ginger,Ginger,default,root,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 Onions - roughly chopped,1,,Onions,roughly chopped,R12085,ING00083,onion,Onion,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
-5 Karela (Bitter Gourd/ Pavakkai),5,,Karela (Bitter Gourd/ Pavakkai),,R12100,,,,,,REVIEW,NONE
+5 Karela (Bitter Gourd/ Pavakkai),5,,Karela (Bitter Gourd/ Pavakkai),,R12100,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Onion - finely chopped,1,,Onion,finely chopped,R12100,ING00083,onion,Onion,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Turmeric powder (Haldi),1,teaspoon,Turmeric powder (Haldi),,R12100,ING00121,turmeric,Turmeric Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Red Chilli powder,1,teaspoon,Red Chilli powder,,R12100,ING00098,red chilli,Red Chilli Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -81810,7 +81810,7 @@ Sunflower Oil - for deep frying,,,Sunflower Oil,for deep frying,R12196,ING00113,
 1/4 teaspoon SSP Asafoetida (Hing),1/4,teaspoon,SSP Asafoetida (Hing),,R12200,,,,,,REVIEW,NONE
 Salt - to taste,,,Salt,to taste,R12200,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 6 Hog Plum (Amtekai),6,,Hog Plum (Amtekai),,R12201,,,,,,REVIEW,NONE
-1 Karela (Bitter Gourd/ Pavakkai),1,,Karela (Bitter Gourd/ Pavakkai),,R12201,,,,,,REVIEW,NONE
+1 Karela (Bitter Gourd/ Pavakkai),1,,Karela (Bitter Gourd/ Pavakkai),,R12201,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 6 tablespoons Jaggery,6,tablespoons,Jaggery,,R12201,ING00068,jaggery,Jaggery,default,sweetener,MAPPED_CANONICAL,CANONICAL_DATABASE
 Salt - to taste,,,Salt,to taste,R12201,ING00103,salt,Salt,default,seasoning,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Sunflower Oil,1,teaspoon,Sunflower Oil,,R12201,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -82328,7 +82328,7 @@ Water - as required to make a thick batter,,,Water,as required to make a thick b
 2 teaspoons Cumin seeds (Jeera),2,teaspoons,Cumin seeds (Jeera),,R12474,ING00046,cumin,Cumin Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 2 teaspoons Fennel seeds (Saunf),2,teaspoons,Fennel seeds (Saunf),,R12474,ING00054,fennel,Fennel Seeds,seed,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 3 teaspoons Sesame seeds (Til seeds),3,teaspoons,Sesame seeds (Til seeds),,R12474,ING00107,sesame,Sesame Seeds,seed,seed,MAPPED_CANONICAL,CANONICAL_DATABASE
-8 Karela (Bitter Gourd/ Pavakkai),8,,Karela (Bitter Gourd/ Pavakkai),,R12484,,,,,,REVIEW,NONE
+8 Karela (Bitter Gourd/ Pavakkai),8,,Karela (Bitter Gourd/ Pavakkai),,R12484,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 Sunflower Oil - coconut oil or mustard oil as required (maximum 3 tablespoons),,,Sunflower Oil,coconut oil or mustard oil as required (maximum 3 tablespoons),R12484,ING00113,sunflower oil,Sunflower Oil,default,oil,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Kashmiri Red Chilli Powder,1,teaspoon,Kashmiri Red Chilli Powder,,R12484,ING00069,kashmiri red chilli,Kashmiri Red Chilli Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 teaspoon Garam masala powder,1,teaspoon,Garam masala powder,,R12484,ING00058,garam masala,Garam Masala Powder,powder,spice,MAPPED_CANONICAL,CANONICAL_DATABASE
@@ -82867,7 +82867,7 @@ Salt - as required,,,Salt,as required,R12788,ING00103,salt,Salt,default,seasonin
 1/2 cup Sweet Potatoes,1/2,cup,Sweet Potatoes,,R12790,,,,,,REVIEW,NONE
 1/4 cup Onion - thinly sliced,1/4,cup,Onion,thinly sliced,R12790,ING00083,onion,Onion,default,vegetable,MAPPED_CANONICAL,CANONICAL_DATABASE
 1 tablespoon Dry coconut (kopra),1,tablespoon,Dry coconut (kopra),,R12790,,,,,,REVIEW,NONE
-1 cup Karela (Bitter Gourd/ Pavakkai) - chopped,1,cup,Karela (Bitter Gourd/ Pavakkai),chopped,R12790,,,,,,REVIEW,NONE
+1 cup Karela (Bitter Gourd/ Pavakkai) - chopped,1,cup,Karela (Bitter Gourd/ Pavakkai),chopped,R12790,ING00129,bitter gourd,Bitter Gourd,default,vegetable,MAPPED_VALIDATED,VALIDATED_MAPPING
 1 Tamarind - lemon sized,1,,Tamarind,lemon sized,R12790,ING00115,tamarind,Tamarind,default,condiment,MAPPED_VALIDATED,VALIDATED_MAPPING
 4 Dry Red Chillies,4,,Dry Red Chillies,,R12790,ING00051,dry red chilli,Dry Red Chilli,default,other,MAPPED_VALIDATED,VALIDATED_MAPPING
 Sesame (Gingelly) Oil - as required,,,Sesame (Gingelly) Oil,as required,R12790,ING00106,sesame,Sesame Oil,oil,oil,MAPPED_CANONICAL,CANONICAL_DATABASE

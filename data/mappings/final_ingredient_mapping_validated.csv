@@ -273,7 +273,7 @@ fresh pomegranate fruit kernels,38,,,,REVIEW,fresh pomegranate fruit kernels,UNC
 orange zest,38,,,,REVIEW,orange zest,UNCHANGED,orange zest,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 elephant yam,38,,,,REVIEW,elephant yam,UNCHANGED,elephant yam,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 tabasco original,38,,,,REVIEW,tabasco original,UNCHANGED,tabasco original,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
-karela,38,,,,REVIEW,karela,UNCHANGED,karela,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
+karela,38,,,,REVIEW,karela,UNCHANGED,karela,UNCHANGED,bitter gourd,default,AUTO,VALID,Validated automatic mapping
 sweet potato,37,,,,REVIEW,sweet potato,UNCHANGED,sweet potato,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 tortillas,37,,,,REVIEW,tortillas,UNCHANGED,tortillas,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 sev,37,,,,REVIEW,sev,UNCHANGED,sev,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
@@ -752,7 +752,7 @@ canned cherries,7,,,,REVIEW,canned cherries,UNCHANGED,canned cherries,UNCHANGED,
 dried green peas,7,,,,REVIEW,dried green peas,UNCHANGED,dried green peas,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 -6 curry leaves,7,,,,REVIEW,-6 curry leaves,UNCHANGED,-6 curry leaves,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 wheat noodles,7,,,,REVIEW,wheat noodles,UNCHANGED,wheat noodles,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
-bitter gourd,7,,,,REVIEW,bitter gourd,UNCHANGED,bitter gourd,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
+bitter gourd,7,,,,REVIEW,bitter gourd,UNCHANGED,bitter gourd,UNCHANGED,bitter gourd,default,AUTO,VALID,Validated automatic mapping
 arborio rice,7,,,,REVIEW,arborio rice,UNCHANGED,arborio rice,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 pizza seasoning,7,,,,REVIEW,pizza seasoning,UNCHANGED,pizza seasoning,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 chiroti rava,7,,,,REVIEW,chiroti rava,UNCHANGED,chiroti rava,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
@@ -3145,7 +3145,7 @@ vanilla extract -,1,,,,REVIEW,vanilla extract -,UNCHANGED,vanilla extract -,UNCH
 बड़े चमच्च पिस्ता,1,,,,REVIEW,बड़े चमच्च पिस्ता,UNCHANGED,बड़े चमच्च पिस्ता,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 butternut squash,1,,,,REVIEW,butternut squash,UNCHANGED,butternut squash,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 falsa,1,,,,REVIEW,falsa,UNCHANGED,falsa,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
-to 3 tablespoons karela,1,,,,REVIEW,to 3 tablespoons karela,UNCHANGED,to 3 tablespoons karela,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
+to 3 tablespoons karela,1,,,,REVIEW,to 3 tablespoons karela,UNCHANGED,karela,UNCHANGED,bitter gourd,default,AUTO,VALID,Validated automatic mapping
 bean paste,1,,,,REVIEW,bean paste,UNCHANGED,bean paste,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 roasted chana lentils,1,,,,REVIEW,chana lentils,CLEANED,chana lentils,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review
 goond,1,,,,REVIEW,goond,UNCHANGED,goond,UNCHANGED,,,REVIEW,REVIEW,Requires ingredient mapping review

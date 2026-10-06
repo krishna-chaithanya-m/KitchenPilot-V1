@@ -32,6 +32,70 @@
             <p style="color: var(--text-muted);">Configure your available pantry items, dietary restrictions, and nutritional goals for deterministic hybrid recommendations.</p>
         </div>
 
+        <!-- Controlled Pilot Session & Profile Management (Stage J) -->
+        <section class="card-filter" id="pilot-session-card" style="margin-bottom: 1.75rem; border-left: 4px solid var(--primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+                <div>
+                    <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--primary);">Controlled Pilot Onboarding</span>
+                    <h2 id="pilot-user-status" style="font-size: 1.15rem; margin: 0.15rem 0; font-weight: 700; color: var(--secondary);">Active Session: Visitor (Anonymous Mode)</h2>
+                    <p id="pilot-user-desc" style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Log in or register to synchronize pantry items, personalize recommendations, and record real-world interaction feedback.</p>
+                </div>
+                <div id="pilot-auth-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button type="button" id="btn-show-login" class="btn btn-secondary btn-sm">Log In</button>
+                    <button type="button" id="btn-show-register" class="btn btn-primary btn-sm">Register Pilot Account</button>
+                </div>
+            </div>
+
+            <!-- Inline Auth Form (Hidden by default) -->
+            <div id="pilot-auth-box" style="display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-end;">
+                    <div class="form-group" style="margin: 0; flex: 1; min-width: 180px;">
+                        <label for="auth-email" style="font-size: 0.8rem; font-weight: 600;">Email</label>
+                        <input type="email" id="auth-email" class="form-control" placeholder="user@example.com">
+                    </div>
+                    <div class="form-group" style="margin: 0; flex: 1; min-width: 180px;">
+                        <label for="auth-password" style="font-size: 0.8rem; font-weight: 600;">Password (min 8 chars)</label>
+                        <input type="password" id="auth-password" class="form-control" placeholder="••••••••">
+                    </div>
+                    <div class="form-group" id="group-display-name" style="margin: 0; flex: 1; min-width: 180px; display: none;">
+                        <label for="auth-display-name" style="font-size: 0.8rem; font-weight: 600;">Display Name</label>
+                        <input type="text" id="auth-display-name" class="form-control" placeholder="Chef Priya">
+                    </div>
+                    <div class="form-group" id="group-invite-code" style="margin: 0; flex: 1; min-width: 140px; display: none;">
+                        <label for="auth-invite-code" id="lbl-invite-code" style="font-size: 0.8rem; font-weight: 600;">Invite Code</label>
+                        <input type="text" id="auth-invite-code" class="form-control" placeholder="Enter invite code" autocomplete="off">
+                        <small id="help-invite-code" style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 2px;">Issued by pilot admin</small>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button type="button" id="btn-submit-auth" class="btn btn-primary btn-sm">Submit</button>
+                        <button type="button" id="btn-cancel-auth" class="btn btn-secondary btn-sm">Cancel</button>
+                    </div>
+                </div>
+                <div id="auth-error-msg" style="display: none; color: var(--danger); font-size: 0.85rem; margin-top: 0.5rem;"></div>
+            </div>
+
+            <!-- Authenticated Controls (shown when logged in) -->
+            <div id="pilot-user-controls" style="display: none; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed var(--border-color); display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+                <button type="button" id="btn-load-pantry" class="btn btn-secondary btn-sm">Sync From My Pantry</button>
+                <button type="button" id="btn-sync-prefs" class="btn btn-secondary btn-sm">Save Current Preferences</button>
+                <button type="button" id="btn-purge-data" class="btn btn-secondary btn-sm" style="color: var(--danger);">Purge My Data</button>
+                <button type="button" id="btn-deactivate-acct" class="btn btn-secondary btn-sm" style="color: var(--text-light);">Deactivate Participation</button>
+                <button type="button" id="btn-pilot-logout" class="btn btn-secondary btn-sm">Log Out</button>
+            </div>
+
+            <!-- Pilot Notice & Participant Consent Accordion -->
+            <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted);">
+                <details>
+                    <summary style="cursor: pointer; font-weight: 600; color: var(--primary);">📋 View Pilot Notice & Participant Consent</summary>
+                    <div style="margin-top: 0.5rem; padding: 0.75rem; background: var(--bg-subtle); border-radius: 6px; border: 1px solid var(--border-color); line-height: 1.45;">
+                        <p style="margin: 0 0 0.4rem 0;"><strong>Controlled Pilot:</strong> You are participating in an experimental evaluation of the KitchenPilot-V1 personalized kitchen prototype (Intel Unnati-3). Participation is voluntary.</p>
+                        <p style="margin: 0 0 0.4rem 0;"><strong>Medical Disclaimer:</strong> Nutritional data and recipe suggestions are for culinary and informational purposes only and do NOT constitute medical diagnosis or clinical dietary guidance.</p>
+                        <p style="margin: 0;"><strong>Data & Privacy:</strong> We store your preferences, pantry items, and explicit interaction feedback to evaluate recommendation quality. You may permanently erase your data at any time via <em>Purge My Data</em>.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
         <!-- Recommendation Form -->
         <section class="card-filter" style="margin-bottom: 2.5rem;">
             <form id="recommend-form">

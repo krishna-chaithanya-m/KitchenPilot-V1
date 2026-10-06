@@ -1,0 +1,80 @@
+{
+  "dataset_name": "ingredients",
+  "version": "0.1.0",
+  "dataset_type": "CANONICAL_ONTOLOGY_AND_RELATIONS",
+  "source": "Indian Recipe Corpus + Multi-stage Normalization & CNF Curation",
+  "source_mappings": "data/mappings/final_ingredient_mapping_validated.csv",
+  "production_files": {
+    "canonical_ingredients": "data/processed/ingredients.csv",
+    "recipe_ingredients_linked": "data/processed/recipe_ingredients_linked.csv",
+    "ingredient_aliases": "data/mappings/ingredients/ingredient_aliases.csv"
+  },
+  "license_status": "DERIVED_FROM_CORPUS",
+  "license": "CC BY 4.0 (derived)",
+  "row_counts": {
+    "canonical_ingredients": 128,
+    "recipe_ingredients_linked": 84246,
+    "ingredient_aliases": 833
+  },
+  "column_counts": {
+    "canonical_ingredients": 9,
+    "recipe_ingredients_linked": 13,
+    "ingredient_aliases": 7
+  },
+  "schemas": {
+    "canonical_ingredients": {
+      "ingredient_id": "object",
+      "canonical_name": "object",
+      "display_name": "object",
+      "ingredient_form": "object",
+      "category": "object",
+      "recipe_occurrence_count": "int64",
+      "candidate_variant_count": "int64",
+      "source": "object",
+      "mapping_status": "object"
+    },
+    "recipe_ingredients_linked": {
+      "original_ingredient": "object",
+      "quantity": "object",
+      "unit": "object",
+      "ingredient": "object",
+      "preparation": "object",
+      "recipe_id": "object",
+      "ingredient_id": "object",
+      "canonical_ingredient": "object",
+      "display_name": "object",
+      "ingredient_form": "object",
+      "category": "object",
+      "mapping_status": "object",
+      "mapping_source": "object"
+    },
+    "ingredient_aliases": {
+      "alias_id": "object",
+      "canonical_ingredient_id": "object",
+      "alias": "object",
+      "normalized_alias": "object",
+      "source": "object",
+      "confidence": "float64",
+      "review_status": "object"
+    }
+  },
+  "generation_date": "2026-10-03T11:32:30Z",
+  "producer_scripts": [
+    "src/cleaning/build_final_ingredient_mapping.py",
+    "src/cleaning/link_recipe_ingredients.py",
+    "src/ingredients/aliases.py"
+  ],
+  "checksums_sha256": {
+    "canonical_ingredients": "8d9d81a8ea9570709e4bde040d4d52bc1f3fcc4087e7dff6d60f76555f962fe8",
+    "recipe_ingredients_linked": "edc9ced314a1724330cef4c896b314d9f9614640ca5de39780192c69a89efb6c",
+    "ingredient_aliases": "79839b5163b137ffd4dc3f07292a4520ded1c3fdfbea4062842c414e0a3100a8"
+  },
+  "status": "PRODUCTION_VALIDATED",
+  "coverage": {
+    "mapped_percentage": 76.82,
+    "mapped_count": 64716,
+    "review_count": 19530,
+    "total_links": 84246
+  },
+  "notes": "128 canonical ingredients, 833 compiled aliases, 84,246 recipe-ingredient relations."
+}

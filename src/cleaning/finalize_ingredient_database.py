@@ -66,6 +66,7 @@ CATEGORY_RULES = {
     "pumpkin": "vegetable",
     "beetroot": "vegetable",
     "bottle gourd": "vegetable",
+    "bitter gourd": "vegetable",
     "radish": "vegetable",
     "bhindi": "vegetable",
     "drumstick": "vegetable",

@@ -173,6 +173,79 @@ class NutritionGoalsRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
+# ============================================================================
+# Stage E Constraint Engine Request Schemas
+# ============================================================================
+
+class DietaryConstraintsRequest(BaseModel):
+    """Dietary constraints with tri-state semantics (None=unspecified, True=required, False=permissive)."""
+    vegetarian: Optional[bool] = None
+    vegan: Optional[bool] = None
+    jain: Optional[bool] = None
+    satvik: Optional[bool] = None
+
+    model_config = ConfigDict(extra="forbid")
+
+
+class AllergenConstraintsRequest(BaseModel):
+    """Allergen exclusion constraints (HARD exclusions)."""
+    excluded_allergens: Optional[List[str]] = None
+
+    @field_validator("excluded_allergens", mode="before")
+    @classmethod
+    def validate_allergens(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "excluded_allergens")
+
+    model_config = ConfigDict(extra="forbid")
+
+
+class IngredientConstraintsRequest(BaseModel):
+    """Ingredient inclusion, exclusion, and pantry availability constraints."""
+    excluded_ingredients: Optional[List[str]] = None
+    required_ingredients: Optional[List[str]] = None
+    preferred_ingredients: Optional[List[str]] = None
+    available_ingredients: Optional[List[str]] = None
+    require_all_ingredients: bool = False
+
+    @field_validator("excluded_ingredients", mode="before")
+    @classmethod
+    def validate_excluded(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "excluded_ingredients")
+
+    @field_validator("required_ingredients", mode="before")
+    @classmethod
+    def validate_required(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "required_ingredients")
+
+    @field_validator("preferred_ingredients", mode="before")
+    @classmethod
+    def validate_preferred(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "preferred_ingredients")
+
+    @field_validator("available_ingredients", mode="before")
+    @classmethod
+    def validate_available(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "available_ingredients")
+
+    model_config = ConfigDict(extra="forbid")
+
+
+class NutritionConstraintsRequest(BaseModel):
+    """Nutritional boundary constraints (HARD boundaries when specified)."""
+    min_calories: Optional[float] = Field(None, ge=0.0)
+    max_calories: Optional[float] = Field(None, ge=0.0)
+    min_protein_g: Optional[float] = Field(None, ge=0.0)
+    max_protein_g: Optional[float] = Field(None, ge=0.0)
+    min_carbs_g: Optional[float] = Field(None, ge=0.0)
+    max_carbs_g: Optional[float] = Field(None, ge=0.0)
+    min_fat_g: Optional[float] = Field(None, ge=0.0)
+    max_fat_g: Optional[float] = Field(None, ge=0.0)
+    min_fiber_g: Optional[float] = Field(None, ge=0.0)
+    max_fiber_g: Optional[float] = Field(None, ge=0.0)
+
+    model_config = ConfigDict(extra="forbid")
+
+
 class RecommendRequest(BaseModel):
     """Main recommendation request schema."""
     query_recipe_id: Optional[str] = None
@@ -181,10 +254,41 @@ class RecommendRequest(BaseModel):
     nutrition_goals: Optional[NutritionGoalsRequest] = None
     top_k: int = Field(default=10, ge=1, le=50)
 
+    # Stage E Constraint Engine extensions
+    dietary_constraints: Optional[DietaryConstraintsRequest] = None
+    allergen_constraints: Optional[AllergenConstraintsRequest] = None
+    ingredient_constraints: Optional[IngredientConstraintsRequest] = None
+    nutrition_constraints: Optional[NutritionConstraintsRequest] = None
+    excluded_allergens: Optional[List[str]] = None
+    excluded_ingredients: Optional[List[str]] = None
+    required_ingredients: Optional[List[str]] = None
+    preferred_ingredients: Optional[List[str]] = None
+    require_all_ingredients: Optional[bool] = None
+
     @field_validator("available_ingredients", mode="before")
     @classmethod
     def validate_available(cls, v: Any) -> Optional[List[str]]:
         return _clean_str_list(v, "available_ingredients")
+
+    @field_validator("excluded_allergens", mode="before")
+    @classmethod
+    def validate_excluded_allergens(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "excluded_allergens")
+
+    @field_validator("excluded_ingredients", mode="before")
+    @classmethod
+    def validate_excluded_ingredients(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "excluded_ingredients")
+
+    @field_validator("required_ingredients", mode="before")
+    @classmethod
+    def validate_required_ingredients(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "required_ingredients")
+
+    @field_validator("preferred_ingredients", mode="before")
+    @classmethod
+    def validate_preferred_ingredients(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "preferred_ingredients")
 
     model_config = ConfigDict(extra="forbid")
 
@@ -196,11 +300,91 @@ class IngredientRecommendRequest(BaseModel):
     nutrition_goals: Optional[NutritionGoalsRequest] = None
     top_k: int = Field(default=10, ge=1, le=50)
 
+    # Stage E Constraint Engine extensions
+    dietary_constraints: Optional[DietaryConstraintsRequest] = None
+    allergen_constraints: Optional[AllergenConstraintsRequest] = None
+    ingredient_constraints: Optional[IngredientConstraintsRequest] = None
+    nutrition_constraints: Optional[NutritionConstraintsRequest] = None
+    excluded_allergens: Optional[List[str]] = None
+    excluded_ingredients: Optional[List[str]] = None
+    required_ingredients: Optional[List[str]] = None
+    preferred_ingredients: Optional[List[str]] = None
+    require_all_ingredients: Optional[bool] = None
+
     @field_validator("ingredients", mode="before")
     @classmethod
     def validate_ingredients(cls, v: Any) -> List[str]:
         cleaned = _clean_str_list(v, "ingredients")
         return cleaned if cleaned is not None else []
+
+    @field_validator("excluded_allergens", mode="before")
+    @classmethod
+    def validate_excluded_allergens(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "excluded_allergens")
+
+    @field_validator("excluded_ingredients", mode="before")
+    @classmethod
+    def validate_excluded_ingredients(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "excluded_ingredients")
+
+    @field_validator("required_ingredients", mode="before")
+    @classmethod
+    def validate_required_ingredients(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "required_ingredients")
+
+    @field_validator("preferred_ingredients", mode="before")
+    @classmethod
+    def validate_preferred_ingredients(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "preferred_ingredients")
+
+    model_config = ConfigDict(extra="forbid")
+
+
+class SemanticRecommendRequest(BaseModel):
+    """Semantic natural language recommendation request schema."""
+    query: str = Field(..., min_length=1, description="Natural language semantic search query")
+    user_preferences: Optional[UserPreferencesRequest] = None
+    nutrition_goals: Optional[NutritionGoalsRequest] = None
+    top_k: int = Field(default=10, ge=1, le=50)
+
+    # Stage E Constraint Engine extensions
+    dietary_constraints: Optional[DietaryConstraintsRequest] = None
+    allergen_constraints: Optional[AllergenConstraintsRequest] = None
+    ingredient_constraints: Optional[IngredientConstraintsRequest] = None
+    nutrition_constraints: Optional[NutritionConstraintsRequest] = None
+    excluded_allergens: Optional[List[str]] = None
+    excluded_ingredients: Optional[List[str]] = None
+    required_ingredients: Optional[List[str]] = None
+    preferred_ingredients: Optional[List[str]] = None
+    require_all_ingredients: Optional[bool] = None
+
+    @field_validator("query")
+    @classmethod
+    def validate_query(cls, v: str) -> str:
+        s = v.strip()
+        if not s:
+            raise ValueError("Query string cannot be empty or whitespace only.")
+        return s
+
+    @field_validator("excluded_allergens", mode="before")
+    @classmethod
+    def validate_excluded_allergens(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "excluded_allergens")
+
+    @field_validator("excluded_ingredients", mode="before")
+    @classmethod
+    def validate_excluded_ingredients(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "excluded_ingredients")
+
+    @field_validator("required_ingredients", mode="before")
+    @classmethod
+    def validate_required_ingredients(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "required_ingredients")
+
+    @field_validator("preferred_ingredients", mode="before")
+    @classmethod
+    def validate_preferred_ingredients(cls, v: Any) -> Optional[List[str]]:
+        return _clean_str_list(v, "preferred_ingredients")
 
     model_config = ConfigDict(extra="forbid")
 
@@ -232,3 +416,5 @@ class RecommendationResponse(BaseModel):
     query: Dict[str, Any]
     count: int
     recommendations: List[RecommendationItem]
+    message: Optional[str] = None
+    diagnostics: Optional[Dict[str, Any]] = None

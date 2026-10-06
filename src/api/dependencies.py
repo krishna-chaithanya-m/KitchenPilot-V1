@@ -74,8 +74,11 @@ def _calc_confidence(quality: Optional[str]) -> float:
     return 0.0
 
 
-class RecipeStore:
-    """In-memory indexed store for recipes and frozen nutrition records."""
+from src.data.repository import BaseRecipeStore, PostgresRecipeStore
+
+
+class RecipeStore(BaseRecipeStore):
+    """In-memory indexed store for recipes and frozen nutrition records (CSV Backend)."""
 
     def __init__(self) -> None:
         self.recipes_df: pd.DataFrame = pd.DataFrame()
@@ -181,6 +184,13 @@ class RecipeStore:
         """Fetch standalone nutrition detail."""
         return self._nutrition_by_id.get(recipe_id)
 
+    def get_recipe_ingredients(self, recipe_id: str) -> List[Dict[str, Any]]:
+        """Fetch parsed recipe ingredient lines."""
+        rec = self._recipes_by_id.get(recipe_id)
+        if rec and rec.get("ingredients"):
+            return [{"original_ingredient": ing} for ing in rec["ingredients"]]
+        return []
+
     def list_recipes(
         self,
         page: int = 1,
@@ -246,6 +256,17 @@ class RecipeStore:
         return summaries, total, total_pages
 
 
+def create_recipe_store(backend: Optional[str] = None) -> BaseRecipeStore:
+    """Factory to create appropriate RecipeStore backend based on configuration."""
+    import os
+    selected_backend = (backend or os.getenv("DATA_BACKEND", "csv")).lower().strip()
+    if selected_backend == "postgres":
+        logger.info("Initializing PostgreSQL RecipeStore backend...")
+        return PostgresRecipeStore()
+    logger.info("Initializing CSV RecipeStore backend (default)...")
+    return RecipeStore()
+
+
 # ============================================================================
 # Dependency Injection Callables
 # ============================================================================
@@ -261,7 +282,7 @@ def get_recommender(request: Request) -> KitchenPilotRecommender:
     return recommender
 
 
-def get_recipe_store(request: Request) -> RecipeStore:
+def get_recipe_store(request: Request) -> BaseRecipeStore:
     """FastAPI dependency to retrieve the pre-loaded RecipeStore instance."""
     store = getattr(request.app.state, "recipe_store", None)
     if store is None:
@@ -270,3 +291,82 @@ def get_recipe_store(request: Request) -> RecipeStore:
             detail="Recipe catalog store is not initialized.",
         )
     return store
+
+
+# ============================================================================
+# Stage G Authentication & Database Dependencies
+# ============================================================================
+
+from typing import Generator
+from fastapi import Depends
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from sqlalchemy.orm import Session
+from src.db.session import get_db_session
+from src.personalization.models import UserModel
+from src.personalization.security import decode_access_token
+from src.personalization.service import PersonalizationService
+
+security_bearer = HTTPBearer(auto_error=False)
+
+
+def get_db() -> Generator[Session, None, None]:
+    """FastAPI dependency yielding a transactional DB session."""
+    with get_db_session() as session:
+        yield session
+
+
+def get_current_user(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_bearer),
+    db: Session = Depends(get_db),
+) -> UserModel:
+    """FastAPI dependency requiring an authenticated active user via valid JWT."""
+    if not credentials or not credentials.credentials:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication credentials were not provided.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    payload = decode_access_token(credentials.credentials)
+    if not payload or "sub" not in payload:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid, expired, or malformed authentication token.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    try:
+        user_id = int(payload["sub"])
+    except (ValueError, TypeError):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token subject.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    user = PersonalizationService.get_user_by_id(db, user_id)
+    if not user or not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User account not found or is inactive.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return user
+
+
+def get_optional_current_user(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_bearer),
+    db: Session = Depends(get_db),
+) -> Optional[UserModel]:
+    """FastAPI dependency returning authenticated user if token present and valid, or None for anonymous."""
+    if not credentials or not credentials.credentials:
+        return None
+    payload = decode_access_token(credentials.credentials)
+    if not payload or "sub" not in payload:
+        return None
+    try:
+        user_id = int(payload["sub"])
+        user = PersonalizationService.get_user_by_id(db, user_id)
+        if user and user.is_active:
+            return user
+    except Exception:
+        return None
+    return None

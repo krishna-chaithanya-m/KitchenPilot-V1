@@ -202,3 +202,35 @@ def test_offline_evaluation_suite(recommender):
     assert 0.0 <= metrics["average_intra_list_diversity"] <= 1.0
     assert metrics["average_response_time_ms"] > 0.0
     assert metrics["is_deterministic"] is True
+
+
+def test_bitter_gourd_disliked_soft_penalty(recommender):
+    """Verify that disliked bitter gourd is detected in recipes like R10498 and causes a soft penalty."""
+    # Test matcher directly on R10498
+    matcher = recommender.ingredient_matcher
+    res_disliked = matcher.match_recipe("R10498", disliked_ingredients=["bitter gourd"])
+    res_normal = matcher.match_recipe("R10498", disliked_ingredients=[])
+
+    assert "bitter gourd" in res_disliked.disliked_found
+    assert res_disliked.match_score < res_normal.match_score
+    assert pytest.approx(res_disliked.match_score, 0.01) == 0.8
+    assert pytest.approx(res_normal.match_score, 0.01) == 1.0
+
+    # Also test via aliases
+    res_karela = matcher.match_recipe("R10498", disliked_ingredients=["karela"])
+    assert "bitter gourd" in res_karela.disliked_found
+    assert pytest.approx(res_karela.match_score, 0.01) == 0.8
+
+    res_pavakkai = matcher.match_recipe("R10498", disliked_ingredients=["pavakkai"])
+    assert "bitter gourd" in res_pavakkai.disliked_found
+    assert pytest.approx(res_pavakkai.match_score, 0.01) == 0.8
+
+    # Verify bitter-gourd recipes are not hard-filtered when disliked
+    prefs_dislike = UserPreferences(disliked_ingredients=["bitter gourd"])
+    recs = recommender.recommend(
+        query_recipe_id="R10498",
+        user_preferences=prefs_dislike,
+        top_k=5,
+        save_results=False,
+    )
+    assert len(recs) == 5
