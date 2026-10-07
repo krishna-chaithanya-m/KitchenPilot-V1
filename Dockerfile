@@ -58,4 +58,4 @@ HEALTHCHECK --interval=15s --timeout=5s --start-period=30s --retries=3 \
     CMD curl -f http://127.0.0.1:8000/api/v1/health || exit 1
 
 # Production ASGI server deployment without reload
-CMD ["python", "-m", "uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2", "--no-access-log"]
+CMD ["python", "-m", "uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1", "--no-access-log"]
