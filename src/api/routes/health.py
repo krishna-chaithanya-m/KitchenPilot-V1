@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import logging
+
 from fastapi import APIRouter, Response, status
 
 from src.api.config import (
@@ -25,6 +27,7 @@ from src.db.config import is_postgres_backend
 from src.db.session import check_db_connection
 
 router = APIRouter(prefix="/api/v1", tags=["Health & Readiness"])
+logger = logging.getLogger("kitchenpilot.api.health")
 
 
 @router.get(
@@ -60,7 +63,9 @@ def get_readiness(response: Response) -> ReadinessResponse:
     )
 
     if is_postgres_backend():
-        backend_ready, _ = check_db_connection(timeout_seconds=2)
+        backend_ready, db_err = check_db_connection(timeout_seconds=10)
+        if not backend_ready:
+            logger.warning("Readiness probe database check failed: %s", db_err)
     else:
         backend_ready = data_exists
 

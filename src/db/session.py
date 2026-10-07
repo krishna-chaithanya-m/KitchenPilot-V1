@@ -77,6 +77,6 @@ def check_db_connection(db_url: Optional[str] = None, timeout_seconds: int = 2) 
         test_engine.dispose()
         return True, None
     except Exception as exc:
-        logger.debug("Database connectivity check failed: %s", exc)
+        logger.warning("Database connectivity check failed: %s", exc)
         return False, str(exc)
 
