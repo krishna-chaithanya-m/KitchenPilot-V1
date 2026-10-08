@@ -10,7 +10,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --no-cache-dir -r requirements.txt
 
 
 # Stage 2: Production Runtime
@@ -28,8 +30,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN groupadd -g 10001 appgroup && \
     useradd -u 10001 -g appgroup -s /bin/bash -m appuser
 
-# Copy installed wheels/packages from builder
-COPY --from=builder /root/.local /home/appuser/.local
+# Copy virtual environment from builder
+COPY --from=builder /opt/venv /opt/venv
+
+# Backward-compatibility symlink for legacy paths targeting /home/appuser/.local/bin
+RUN mkdir -p /home/appuser/.local && \
+    ln -s /opt/venv/bin /home/appuser/.local/bin && \
+    chown -R appuser:appgroup /home/appuser
 
 # Copy application source, data, models, and database migrations
 COPY src/ /app/src/
@@ -41,7 +48,8 @@ COPY alembic.ini /app/
 COPY requirements.txt /app/
 
 # Environment configuration
-ENV PATH=/home/appuser/.local/bin:$PATH \
+ENV PATH="/opt/venv/bin:/home/appuser/.local/bin:$PATH" \
+    HOME=/home/appuser \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     ENVIRONMENT=production \

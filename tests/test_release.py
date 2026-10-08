@@ -112,3 +112,24 @@ def test_critical_module_imports():
 
     assert hasattr(src.api.main, "app"), "FastAPI 'app' missing in src.api.main"
     assert hasattr(src.recommendation.recommender, "KitchenPilotRecommender")
+
+
+def test_dockerfile_dependency_and_runtime_configuration():
+    """Verify Dockerfile uses virtual environment in /opt/venv for dependencies and non-root execution."""
+    dockerfile = ROOT_DIR / "Dockerfile"
+    assert dockerfile.is_file(), "Dockerfile missing from project root"
+    content = dockerfile.read_text(encoding="utf-8")
+
+    # Verify multi-stage python 3.12 builder and runner
+    assert "FROM python:3.12-slim AS builder" in content
+    assert "FROM python:3.12-slim AS runner" in content
+
+    # Verify virtualenv pattern in /opt/venv
+    assert "python -m venv /opt/venv" in content
+    assert "COPY --from=builder /opt/venv /opt/venv" in content
+    assert "/opt/venv/bin" in content
+
+    # Verify non-root user and single worker uvicorn
+    assert "USER appuser" in content
+    assert '--workers", "1"' in content
+    assert "EXPOSE 8000" in content
