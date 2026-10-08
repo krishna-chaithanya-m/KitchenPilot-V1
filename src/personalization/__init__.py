@@ -8,6 +8,9 @@ from src.personalization.features import (
 )
 from src.personalization.history import generate_session_id, log_recommendation_events
 from src.personalization.models import (
+    EmailVerificationTokenModel,
+    FederatedIdentityModel,
+    PasswordResetTokenModel,
     RecommendationHistoryModel,
     UserFeedbackModel,
     UserModel,
@@ -29,16 +32,24 @@ from src.personalization.schemas import (
     RecommendationHistoryItem,
     RecommendationHistoryResponse,
     RegisterRequest,
+    ResendVerificationRequest,
+    ResetPasswordRequest,
     UpdatePreferencesRequest,
     UserPreferenceResponse,
     UserProfileResponse,
     UserResponse,
+    VerifyEmailRequest,
+    ForgotPasswordRequest,
+    MessageResponse,
+    GoogleAuthRequest,
 )
 from src.personalization.scorer import PersonalizationScorer
 from src.personalization.security import (
     create_access_token,
     decode_access_token,
     hash_password,
+    hash_token,
+    verify_google_id_token,
     verify_password,
 )
 from src.personalization.service import PersonalizationService
@@ -56,10 +67,19 @@ __all__ = [
     "UserPantryModel",
     "UserFeedbackModel",
     "RecommendationHistoryModel",
+    "EmailVerificationTokenModel",
+    "PasswordResetTokenModel",
+    "FederatedIdentityModel",
     "FeedbackType",
     "PantryStatus",
     "RegisterRequest",
     "LoginRequest",
+    "GoogleAuthRequest",
+    "VerifyEmailRequest",
+    "ResendVerificationRequest",
+    "ForgotPasswordRequest",
+    "ResetPasswordRequest",
+    "MessageResponse",
     "UserResponse",
     "AuthResponse",
     "UserPreferenceResponse",
@@ -77,6 +97,8 @@ __all__ = [
     "PersonalizationService",
     "hash_password",
     "verify_password",
+    "hash_token",
+    "verify_google_id_token",
     "create_access_token",
     "decode_access_token",
 ]

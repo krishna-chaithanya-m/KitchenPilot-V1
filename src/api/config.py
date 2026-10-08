@@ -95,6 +95,37 @@ RECOMMENDATION_HISTORY_ENABLED: bool = (
     os.getenv("RECOMMENDATION_HISTORY_ENABLED", "true").lower().strip() in ("true", "1", "yes")
 )
 
+# Stage 2 — Email Verification & Password Recovery Configuration
+EMAIL_ENABLED: bool = os.getenv("EMAIL_ENABLED", "false").lower().strip() in ("true", "1", "yes")
+EMAIL_BACKEND: str = os.getenv("EMAIL_BACKEND", "console").lower().strip()  # 'console' or 'smtp'
+SMTP_HOST: str = os.getenv("SMTP_HOST", "localhost")
+SMTP_PORT: int = int(os.getenv("SMTP_PORT", "587"))
+SMTP_USER: str = os.getenv("SMTP_USER", "")
+SMTP_PASSWORD: str = os.getenv("SMTP_PASSWORD", "")
+SMTP_USE_TLS: bool = os.getenv("SMTP_USE_TLS", "true").lower().strip() in ("true", "1", "yes")
+EMAIL_FROM_ADDRESS: str = os.getenv("EMAIL_FROM_ADDRESS", "noreply@kitchenpilot.local")
+EMAIL_FROM_NAME: str = os.getenv("EMAIL_FROM_NAME", "KitchenPilot")
+FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:5500")
+EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES: int = int(
+    os.getenv("EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES", str(60 * 24))
+)  # 24 hours
+PASSWORD_RESET_TOKEN_EXPIRE_MINUTES: int = int(
+    os.getenv("PASSWORD_RESET_TOKEN_EXPIRE_MINUTES", "15")
+)  # 15 minutes
+REQUIRE_EMAIL_VERIFICATION_FOR_LOGIN: bool = (
+    os.getenv("REQUIRE_EMAIL_VERIFICATION_FOR_LOGIN", "false").lower().strip()
+    in ("true", "1", "yes")
+)
+
+# Stage 3 — Google OAuth & OpenID Connect (OIDC) Configuration
+GOOGLE_AUTH_ENABLED: bool = (
+    os.getenv("GOOGLE_AUTH_ENABLED", "false").lower().strip() in ("true", "1", "yes")
+)
+GOOGLE_CLIENT_ID: str = os.getenv("GOOGLE_CLIENT_ID", "")
+GOOGLE_CLIENT_SECRET: str = os.getenv("GOOGLE_CLIENT_SECRET", "")
+
+
+
 # Stage H — Production Hardening, Observability & Rate Limiting Configuration
 RATE_LIMIT_ENABLED: bool = (
     os.getenv("RATE_LIMIT_ENABLED", "false").lower().strip() in ("true", "1", "yes")
@@ -103,6 +134,16 @@ RATE_LIMIT_AUTH_RPM: int = int(os.getenv("RATE_LIMIT_AUTH_RPM", "20"))
 RATE_LIMIT_RECOMMEND_RPM: int = int(os.getenv("RATE_LIMIT_RECOMMEND_RPM", "60"))
 RATE_LIMIT_FEEDBACK_RPM: int = int(os.getenv("RATE_LIMIT_FEEDBACK_RPM", "60"))
 RATE_LIMIT_GLOBAL_RPM: int = int(os.getenv("RATE_LIMIT_GLOBAL_RPM", "120"))
+
+# Stage 4 — Dedicated Authentication Endpoint Rate Limits
+RATE_LIMIT_AUTH_VERIFY_EMAIL_RPM: int = int(os.getenv("RATE_LIMIT_AUTH_VERIFY_EMAIL_RPM", "10"))
+RATE_LIMIT_AUTH_RESEND_VERIFICATION_RPH: int = int(os.getenv("RATE_LIMIT_AUTH_RESEND_VERIFICATION_RPH", "3"))
+RATE_LIMIT_AUTH_FORGOT_PASSWORD_RPH: int = int(os.getenv("RATE_LIMIT_AUTH_FORGOT_PASSWORD_RPH", "3"))
+RATE_LIMIT_AUTH_RESET_PASSWORD_RPM: int = int(os.getenv("RATE_LIMIT_AUTH_RESET_PASSWORD_RPM", "5"))
+RATE_LIMIT_AUTH_GOOGLE_RPM: int = int(os.getenv("RATE_LIMIT_AUTH_GOOGLE_RPM", "10"))
+
+# Reverse Proxy & Ingress Security
+TRUSTED_PROXIES: str = os.getenv("TRUSTED_PROXIES", "")
 
 STRUCTURED_LOGGING: bool = (
     os.getenv("STRUCTURED_LOGGING", "false" if ENVIRONMENT == "development" else "true")

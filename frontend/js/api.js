@@ -31,11 +31,12 @@ function getApiBaseUrl() {
  * Custom error class for KitchenPilot API exceptions.
  */
 class ApiError extends Error {
-    constructor(message, status = 0, detail = null) {
+    constructor(message, status = 0, detail = null, retryAfter = null) {
         super(message);
         this.name = "ApiError";
         this.status = status;
         this.detail = detail;
+        this.retryAfter = retryAfter;
     }
 }
 
@@ -86,6 +87,16 @@ async function request(endpoint, options = {}) {
             let message = `API request failed with status ${response.status}`;
             let detail = null;
 
+            // Extract Retry-After header if present (standard for HTTP 429)
+            let retryAfter = null;
+            const retryHeader = response.headers.get("retry-after") || response.headers.get("Retry-After");
+            if (retryHeader) {
+                const parsed = parseInt(retryHeader, 10);
+                if (!isNaN(parsed) && parsed > 0) {
+                    retryAfter = parsed;
+                }
+            }
+
             if (data && data.detail) {
                 detail = data.detail;
                 if (typeof data.detail === "string") {
@@ -94,15 +105,29 @@ async function request(endpoint, options = {}) {
                     // Pydantic validation errors
                     message = data.detail.map(e => `${e.loc ? e.loc.join('.') : 'field'}: ${e.msg}`).join("; ");
                 }
+            } else if (response.status === 400) {
+                message = "Bad request. Please verify your submission.";
+            } else if (response.status === 401) {
+                message = "Invalid credentials or session expired. Please sign in again.";
+            } else if (response.status === 403) {
+                message = "Access forbidden.";
             } else if (response.status === 404) {
                 message = "The requested resource was not found.";
+            } else if (response.status === 409) {
+                message = "A conflict occurred with existing data.";
+            } else if (response.status === 422) {
+                message = "Input validation failed. Please check the provided fields.";
+            } else if (response.status === 429) {
+                message = retryAfter
+                    ? `Too many requests. Please wait ${retryAfter} second${retryAfter === 1 ? '' : 's'} before trying again.`
+                    : "Rate limit exceeded. Please wait a moment before trying again.";
             } else if (response.status === 503) {
-                message = "The recommendation engine or dataset is currently unavailable.";
+                message = "The service is temporarily unavailable. Please try again shortly.";
             } else if (response.status >= 500) {
                 message = "An unexpected server error occurred. Please try again later.";
             }
 
-            throw new ApiError(message, response.status, detail);
+            throw new ApiError(message, response.status, detail, retryAfter);
         }
 
         return data;
@@ -265,6 +290,118 @@ async function login(email, password) {
 
 function logout() {
     clearAuthToken();
+}
+
+/**
+ * Verify email address with single-use verification token.
+ * POST /api/v1/auth/verify-email
+ * @param {string} token
+ */
+async function verifyEmail(token) {
+    if (!token) {
+        throw new ApiError("Verification token is required.", 400);
+    }
+    return request("/auth/verify-email", {
+        method: "POST",
+        body: JSON.stringify({ token }),
+    });
+}
+
+/**
+ * Resend verification email to unverified account.
+ * POST /api/v1/auth/resend-verification
+ * @param {string} email
+ */
+async function resendVerification(email) {
+    if (!email) {
+        throw new ApiError("Email address is required.", 400);
+    }
+    return request("/auth/resend-verification", {
+        method: "POST",
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+    });
+}
+
+/**
+ * Request password reset instructions (anti-enumeration safe).
+ * POST /api/v1/auth/forgot-password
+ * @param {string} email
+ */
+async function forgotPassword(email) {
+    if (!email) {
+        throw new ApiError("Email address is required.", 400);
+    }
+    return request("/auth/forgot-password", {
+        method: "POST",
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+    });
+}
+
+/**
+ * Reset account password using token from reset email.
+ * POST /api/v1/auth/reset-password
+ * @param {string} token
+ * @param {string} newPassword
+ */
+async function resetPassword(token, newPassword) {
+    if (!token || !newPassword) {
+        throw new ApiError("Reset token and new password are required.", 400);
+    }
+    return request("/auth/reset-password", {
+        method: "POST",
+        body: JSON.stringify({ token, new_password: newPassword }),
+    });
+}
+
+/**
+ * Sign in or link account with Google OIDC ID token.
+ * POST /api/v1/auth/google
+ * @param {string} idToken
+ * @param {string|null} inviteCode
+ */
+async function loginWithGoogle(idToken, inviteCode = null) {
+    if (!idToken) {
+        throw new ApiError("Google ID token is required.", 400);
+    }
+    const payload = { id_token: idToken };
+    if (inviteCode) {
+        payload.invite_code = inviteCode;
+    }
+    const data = await request("/auth/google", {
+        method: "POST",
+        body: JSON.stringify(payload),
+    });
+    if (data && data.access_token) {
+        setAuthToken(data.access_token);
+        if (typeof localStorage !== "undefined" && data.user) {
+            localStorage.setItem("kitchenpilot_user", JSON.stringify(data.user));
+        }
+    }
+    return data;
+}
+
+/**
+ * Retrieve cached authenticated user from local storage.
+ * @returns {object|null}
+ */
+function getCurrentUser() {
+    if (typeof localStorage === "undefined") return null;
+    const userStr = localStorage.getItem("kitchenpilot_user");
+    if (!userStr) return null;
+    try {
+        return JSON.parse(userStr);
+    } catch (e) {
+        return null;
+    }
+}
+
+/**
+ * Check if the currently authenticated user is marked verified.
+ * @returns {boolean}
+ */
+function isEmailVerified() {
+    const user = getCurrentUser();
+    return user ? Boolean(user.is_verified) : false;
 }
 
 async function getUserProfile() {
@@ -468,4 +605,11 @@ window.KitchenPilotApi = {
     getPilotStatus,
     getUserPilotStatus,
     deactivateAccount,
+    verifyEmail,
+    resendVerification,
+    forgotPassword,
+    resetPassword,
+    loginWithGoogle,
+    getCurrentUser,
+    isEmailVerified,
 };

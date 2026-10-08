@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email — KitchenPilot-V1</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <span>🍳 KitchenPilot</span>
+                <span class="brand-badge">V1</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="recommendations.html">Recommendations</a></li>
+                    <li><a href="auth.html">Sign In</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Verification Container -->
+    <main class="auth-page-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-header-icon">✉️</div>
+                <h1 id="auth-card-title">Email Verification</h1>
+                <p id="auth-card-subtitle">Confirming your email address for secure access and account recovery.</p>
+            </div>
+
+            <!-- Global Alert Container -->
+            <div id="auth-global-alert" style="display: none;"></div>
+
+            <!-- Verification Status Content -->
+            <div id="view-verify" class="auth-view" style="display: block;">
+                <input type="hidden" id="verify-token">
+
+                <div id="verify-status-box" style="margin-bottom: 1.5rem;">
+                    <div class="spinner" style="width: 36px; height: 36px; margin: 1.5rem auto;"></div>
+                    <p style="text-align: center; color: var(--text-muted); font-size: 0.95rem;">
+                        Verifying your email token with the KitchenPilot backend...
+                    </p>
+                </div>
+
+                <div style="padding-top: 1.25rem; border-top: 1px solid var(--border-color);">
+                    <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.4rem;">
+                        Resend Verification Email
+                    </h3>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+                        Link expired or did not arrive? Enter your email address to request a new link:
+                    </p>
+
+                    <form id="form-resend-verification" novalidate>
+                        <div class="auth-form-group">
+                            <label for="resend-email">Account Email</label>
+                            <input type="email" id="resend-email" class="form-control" placeholder="name@example.com" autocomplete="email" required>
+                        </div>
+                        <button type="submit" id="btn-resend-submit" class="btn btn-secondary auth-btn-block">
+                            Resend Verification Link
+                        </button>
+                    </form>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem;">
+                    <a href="auth.html#login" class="auth-link">← Return to Sign In</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>KitchenPilot-V1 — Deterministic, Explainable Indian Recipe Recommendation Engine & Backend API.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

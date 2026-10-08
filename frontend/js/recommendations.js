@@ -58,8 +58,33 @@ async function setupPilotControls() {
     const btnDeactivateAcct = document.getElementById("btn-deactivate-acct");
     const authBox = document.getElementById("pilot-auth-box");
     const groupDisplayName = document.getElementById("group-display-name");
+    const groupConfirmPassword = document.getElementById("group-confirm-password");
     const groupInviteCode = document.getElementById("group-invite-code");
     const authErrorMsg = document.getElementById("auth-error-msg");
+    const btnBannerResend = document.getElementById("btn-banner-resend-verification");
+    const bannerResendStatus = document.getElementById("banner-resend-status");
+
+    if (btnBannerResend) {
+        btnBannerResend.addEventListener("click", async () => {
+            const user = window.KitchenPilotApi.getCurrentUser();
+            if (!user || !user.email) return;
+            try {
+                btnBannerResend.disabled = true;
+                await window.KitchenPilotApi.resendVerification(user.email);
+                if (bannerResendStatus) {
+                    bannerResendStatus.textContent = "Sent! Check inbox.";
+                    bannerResendStatus.style.display = "inline-block";
+                    setTimeout(() => {
+                        bannerResendStatus.style.display = "none";
+                        btnBannerResend.disabled = false;
+                    }, 5000);
+                }
+            } catch (err) {
+                alert(err.message || "Failed to resend verification link.");
+                btnBannerResend.disabled = false;
+            }
+        });
+    }
 
     let pilotStatusInfo = null;
 
@@ -107,6 +132,7 @@ async function setupPilotControls() {
         btnShowLogin.addEventListener("click", () => {
             currentAuthMode = "login";
             if (groupDisplayName) groupDisplayName.style.display = "none";
+            if (groupConfirmPassword) groupConfirmPassword.style.display = "none";
             if (groupInviteCode) groupInviteCode.style.display = "none";
             authErrorMsg.style.display = "none";
             authBox.style.display = "block";
@@ -117,6 +143,7 @@ async function setupPilotControls() {
         btnShowRegister.addEventListener("click", async () => {
             currentAuthMode = "register";
             if (groupDisplayName) groupDisplayName.style.display = "block";
+            if (groupConfirmPassword) groupConfirmPassword.style.display = "block";
             if (groupInviteCode) groupInviteCode.style.display = "block";
             authErrorMsg.style.display = "none";
             authBox.style.display = "block";
@@ -134,6 +161,7 @@ async function setupPilotControls() {
         btnSubmitAuth.addEventListener("click", async () => {
             const email = document.getElementById("auth-email").value.trim();
             const password = document.getElementById("auth-password").value;
+            const confirmPassword = document.getElementById("auth-confirm-password") ? document.getElementById("auth-confirm-password").value : "";
             const displayName = document.getElementById("auth-display-name") ? document.getElementById("auth-display-name").value.trim() : "";
             const inviteCode = document.getElementById("auth-invite-code") ? document.getElementById("auth-invite-code").value.trim() : "";
 
@@ -142,6 +170,23 @@ async function setupPilotControls() {
                 authErrorMsg.textContent = "Email and password are required.";
                 authErrorMsg.style.display = "block";
                 return;
+            }
+
+            if (currentAuthMode === "register") {
+                if (password !== confirmPassword) {
+                    authErrorMsg.textContent = "Passwords do not match.";
+                    authErrorMsg.style.display = "block";
+                    return;
+                }
+                const hasUpper = /[A-Z]/.test(password);
+                const hasLower = /[a-z]/.test(password);
+                const hasDigit = /[0-9]/.test(password);
+                const hasSymbol = /[^A-Za-z0-9]/.test(password);
+                if (password.length < 8 || !hasUpper || !hasLower || !hasDigit || !hasSymbol) {
+                    authErrorMsg.textContent = "Password must have at least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 symbol.";
+                    authErrorMsg.style.display = "block";
+                    return;
+                }
             }
 
             if (currentAuthMode === "register" && pilotStatusInfo && pilotStatusInfo.invite_code_required && !inviteCode) {
@@ -153,6 +198,7 @@ async function setupPilotControls() {
             try {
                 if (currentAuthMode === "register") {
                     await window.KitchenPilotApi.register(email, password, displayName || null, inviteCode || null);
+                    alert("Account created! A verification link has been sent to your email. Please check your inbox.");
                 } else {
                     await window.KitchenPilotApi.login(email, password);
                 }
@@ -316,18 +362,51 @@ async function updatePilotUI() {
     const userDesc = document.getElementById("pilot-user-desc");
     const authActions = document.getElementById("pilot-auth-actions");
     const userControls = document.getElementById("pilot-user-controls");
+    const unverifiedBanner = document.getElementById("unverified-email-banner");
+    const navAuthLink = document.getElementById("nav-auth-link");
 
     if (isAuthed) {
-        if (userStatus) userStatus.textContent = "Active Session: Authenticated Pilot Participant";
+        const user = window.KitchenPilotApi.getCurrentUser();
+        if (userStatus) {
+            const name = (user && user.display_name) ? ` (${user.display_name})` : "";
+            userStatus.textContent = `Active Session: Authenticated Pilot Participant${name}`;
+        }
         if (userDesc) userDesc.textContent = "Personalization active. Feedback and queries are securely linked to your isolated pilot profile.";
         if (authActions) authActions.style.display = "none";
         if (userControls) userControls.style.display = "flex";
+
+        // Non-blocking unverified email warning banner (Stage 5)
+        if (unverifiedBanner) {
+            if (user && user.is_verified === false) {
+                unverifiedBanner.style.display = "flex";
+            } else {
+                unverifiedBanner.style.display = "none";
+            }
+        }
+
+        if (navAuthLink) {
+            navAuthLink.textContent = "Sign Out";
+            navAuthLink.href = "#";
+            navAuthLink.onclick = (e) => {
+                e.preventDefault();
+                window.KitchenPilotApi.logout();
+                updatePilotUI();
+            };
+        }
+
         await loadUserPreferencesIntoForm();
     } else {
         if (userStatus) userStatus.textContent = "Active Session: Visitor (Anonymous Mode)";
         if (userDesc) userDesc.textContent = "Log in or register to synchronize pantry items, personalize recommendations, and record real-world interaction feedback.";
         if (authActions) authActions.style.display = "flex";
         if (userControls) userControls.style.display = "none";
+        if (unverifiedBanner) unverifiedBanner.style.display = "none";
+
+        if (navAuthLink) {
+            navAuthLink.textContent = "Sign In";
+            navAuthLink.href = "auth.html";
+            navAuthLink.onclick = null;
+        }
     }
 }
 

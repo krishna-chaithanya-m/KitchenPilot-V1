@@ -32,6 +32,8 @@ class UserModel(Base):
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     display_name: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    is_verified: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    auth_provider: Mapped[str] = mapped_column(String(32), nullable=False, default="local")
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
@@ -64,6 +66,16 @@ class UserModel(Base):
     qualitative_feedback: Mapped[List[QualitativeFeedbackModel]] = relationship(
         "QualitativeFeedbackModel", back_populates="user", cascade="all, delete-orphan"
     )
+    email_verification_tokens: Mapped[List[EmailVerificationTokenModel]] = relationship(
+        "EmailVerificationTokenModel", back_populates="user", cascade="all, delete-orphan"
+    )
+    password_reset_tokens: Mapped[List[PasswordResetTokenModel]] = relationship(
+        "PasswordResetTokenModel", back_populates="user", cascade="all, delete-orphan"
+    )
+    federated_identities: Mapped[List[FederatedIdentityModel]] = relationship(
+        "FederatedIdentityModel", back_populates="user", cascade="all, delete-orphan"
+    )
+
 
 
 class UserPreferenceModel(Base):
@@ -268,3 +280,83 @@ class QualitativeFeedbackModel(Base):
     )
 
     user: Mapped[UserModel] = relationship("UserModel", back_populates="qualitative_feedback")
+
+
+class EmailVerificationTokenModel(Base):
+    """Time-bounded single-use token for verifying user email ownership.
+
+    Stores only the SHA-256 digest of the raw token.
+    """
+
+    __tablename__ = "email_verification_tokens"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True, nullable=False, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+    )
+    used_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+
+    user: Mapped[UserModel] = relationship("UserModel", back_populates="email_verification_tokens")
+
+
+class PasswordResetTokenModel(Base):
+    """Time-bounded single-use cryptographic token for password recovery.
+
+    Stores only the SHA-256 digest of the raw token.
+    """
+
+    __tablename__ = "password_reset_tokens"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True, nullable=False, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+    )
+    used_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+
+    user: Mapped[UserModel] = relationship("UserModel", back_populates="password_reset_tokens")
+
+
+class FederatedIdentityModel(Base):
+    """Federated identity provider mapping (e.g. Google OIDC) linked to a user account."""
+
+    __tablename__ = "federated_identities"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    provider: Mapped[str] = mapped_column(String(32), nullable=False)
+    provider_user_id: Mapped[str] = mapped_column(String(255), nullable=False)
+    email: Mapped[str] = mapped_column(String(255), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
+
+    user: Mapped[UserModel] = relationship("UserModel", back_populates="federated_identities")
+
+    __table_args__ = (
+        UniqueConstraint("provider", "provider_user_id", name="uq_federated_provider_user"),
+        UniqueConstraint("user_id", "provider", name="uq_federated_user_provider"),
+    )

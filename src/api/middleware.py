@@ -273,35 +273,68 @@ class InMemoryRateLimiter:
         # Map: (ip, route_key) -> list of timestamp floats
         self._history: Dict[Tuple[str, str], List[float]] = defaultdict(list)
 
-    def check_rate_limit(self, client_ip: str, path: str) -> Tuple[bool, int]:
-        """Check if request exceeds rate limit. Returns (is_allowed, retry_after_seconds)."""
-        now = time.time()
-        window_size = 60.0  # 1 minute
+    def reset(self) -> None:
+        """Reset all rate limiter state (used in testing)."""
+        self._history.clear()
 
-        # Determine limit by route family
-        if "/api/v1/auth" in path:
-            limit = RATE_LIMIT_AUTH_RPM
+    def check_rate_limit(
+        self, client_ip: str, path: str, method: str = "GET"
+    ) -> Tuple[bool, int]:
+        """Check if request exceeds rate limit. Returns (is_allowed, retry_after_seconds)."""
+        import src.api.config as config
+
+        now = time.time()
+        norm_path = path.rstrip("/")
+        method_upper = method.upper() if method else "GET"
+
+        # Dedicated Stage 4 Authentication Endpoint Rate Limits
+        if norm_path == "/api/v1/auth/verify-email" and method_upper == "POST":
+            limit = config.RATE_LIMIT_AUTH_VERIFY_EMAIL_RPM
+            window_size = 60.0
+            route_key = "auth_verify_email"
+        elif norm_path == "/api/v1/auth/resend-verification" and method_upper == "POST":
+            limit = config.RATE_LIMIT_AUTH_RESEND_VERIFICATION_RPH
+            window_size = 3600.0
+            route_key = "auth_resend_verification"
+        elif norm_path == "/api/v1/auth/forgot-password" and method_upper == "POST":
+            limit = config.RATE_LIMIT_AUTH_FORGOT_PASSWORD_RPH
+            window_size = 3600.0
+            route_key = "auth_forgot_password"
+        elif norm_path == "/api/v1/auth/reset-password" and method_upper == "POST":
+            limit = config.RATE_LIMIT_AUTH_RESET_PASSWORD_RPM
+            window_size = 60.0
+            route_key = "auth_reset_password"
+        elif norm_path == "/api/v1/auth/google" and method_upper == "POST":
+            limit = config.RATE_LIMIT_AUTH_GOOGLE_RPM
+            window_size = 60.0
+            route_key = "auth_google"
+        elif "/api/v1/auth" in norm_path:
+            limit = config.RATE_LIMIT_AUTH_RPM
+            window_size = 60.0
             route_key = "auth"
-        elif "/api/v1/recommend" in path:
-            limit = RATE_LIMIT_RECOMMEND_RPM
+        elif "/api/v1/recommend" in norm_path:
+            limit = config.RATE_LIMIT_RECOMMEND_RPM
+            window_size = 60.0
             route_key = "recommend"
-        elif "/api/v1/user/feedback" in path:
-            limit = RATE_LIMIT_FEEDBACK_RPM
+        elif "/api/v1/user/feedback" in norm_path:
+            limit = config.RATE_LIMIT_FEEDBACK_RPM
+            window_size = 60.0
             route_key = "feedback"
         else:
-            limit = RATE_LIMIT_GLOBAL_RPM
+            limit = config.RATE_LIMIT_GLOBAL_RPM
+            window_size = 60.0
             route_key = "global"
 
         key = (client_ip, route_key)
         timestamps = self._history[key]
-        # Prune events older than 60s
+        # Prune events older than window_size
         cutoff = now - window_size
         valid = [t for t in timestamps if t > cutoff]
         self._history[key] = valid
 
         if len(valid) >= limit:
             oldest = valid[0]
-            retry_after = int(max(1.0, 60.0 - (now - oldest)))
+            retry_after = int(max(1.0, window_size - (now - oldest)))
             return False, retry_after
 
         self._history[key].append(now)
@@ -314,6 +347,24 @@ rate_limiter = InMemoryRateLimiter()
 class RequestCorrelationAndSecurityMiddleware(BaseHTTPMiddleware):
     """Handles Request ID correlation, security headers, structured logging, and rate limiting."""
 
+    @staticmethod
+    def get_client_ip(request: Request) -> str:
+        """Extract client IP, validating proxy headers against TRUSTED_PROXIES."""
+        remote_ip = request.client.host if request.client else "127.0.0.1"
+
+        from src.api.config import TRUSTED_PROXIES
+
+        if TRUSTED_PROXIES:
+            trusted_list = [p.strip() for p in TRUSTED_PROXIES.split(",") if p.strip()]
+            if remote_ip in trusted_list or "*" in trusted_list:
+                forwarded_for = request.headers.get("X-Forwarded-For")
+                if forwarded_for:
+                    client_candidates = [ip.strip() for ip in forwarded_for.split(",") if ip.strip()]
+                    if client_candidates:
+                        return client_candidates[0]
+
+        return remote_ip
+
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         start_time = time.perf_counter()
 
@@ -324,9 +375,14 @@ class RequestCorrelationAndSecurityMiddleware(BaseHTTPMiddleware):
         request.state.request_id = request_id
 
         # 2. Rate limiting check
-        client_ip = request.client.host if request.client else "127.0.0.1"
+        client_ip = self.get_client_ip(request)
+        from src.api.config import RATE_LIMIT_ENABLED
         if RATE_LIMIT_ENABLED and not request.url.path.startswith("/api/v1/health"):
-            allowed, retry_after = rate_limiter.check_rate_limit(client_ip, request.url.path)
+            allowed, retry_after = rate_limiter.check_rate_limit(
+                client_ip=client_ip,
+                path=request.url.path,
+                method=request.method,
+            )
             if not allowed:
                 return JSONResponse(
                     status_code=status.HTTP_429_TOO_MANY_REQUESTS,

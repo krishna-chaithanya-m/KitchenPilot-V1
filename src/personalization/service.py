@@ -2,15 +2,29 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import logging
+import secrets
 from typing import Any, Dict, List, Optional, Set, Tuple
 
 from sqlalchemy import delete, func, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from src.api.config import (
+    EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES,
+    ENVIRONMENT,
+    PASSWORD_RESET_TOKEN_EXPIRE_MINUTES,
+    PILOT_INVITE_CODE,
+    PILOT_MAX_USERS,
+    PILOT_MODE,
+    REQUIRE_EMAIL_VERIFICATION_FOR_LOGIN,
+)
 from src.personalization.features import UserPersonalizationContext
 from src.personalization.models import (
+    EmailVerificationTokenModel,
+    FederatedIdentityModel,
+    PasswordResetTokenModel,
     QualitativeFeedbackModel,
     RecommendationHistoryModel,
     UserFeedbackModel,
@@ -30,7 +44,13 @@ from src.personalization.schemas import (
     RegisterRequest,
     UpdatePreferencesRequest,
 )
-from src.personalization.security import hash_password, verify_password
+from src.personalization.security import (
+    hash_password,
+    hash_token,
+    verify_google_id_token,
+    verify_password,
+)
+
 
 logger = logging.getLogger("kitchenpilot.personalization.service")
 
@@ -51,8 +71,16 @@ def get_cached_ontology():
     return _ontology_instance if _ontology_instance is not False else None
 
 
+def _normalize_utc(dt: datetime) -> datetime:
+    """Ensure datetime is offset-aware in UTC (normalizes SQLite naive datetimes)."""
+    if dt.tzinfo is None:
+        return dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
+
+
 class PersonalizationService:
     """Core domain service for user personalization, pantry, and explicit feedback."""
+
 
     @staticmethod
     def register_user(db: Session, req: RegisterRequest) -> UserModel:
@@ -116,10 +144,372 @@ class PersonalizationService:
         if not verify_password(req.password, user.password_hash):
             return None
 
+        if REQUIRE_EMAIL_VERIFICATION_FOR_LOGIN and not user.is_verified:
+            logger.warning("Authentication rejected: unverified user <%s>.", user.email)
+            return None
+
         user.last_login_at = datetime.now(timezone.utc)
         db.commit()
         db.refresh(user)
         return user
+
+    @staticmethod
+    def create_email_verification_token(db: Session, user_id: int) -> str:
+        """Generate a cryptographically random verification token and store its SHA-256 hash.
+
+        Invalidates previous unused verification tokens for the user.
+        Returns the raw token string to be dispatched via email.
+        """
+        now = datetime.now(timezone.utc)
+        # Invalidate prior unused verification tokens for this user
+        db.execute(
+            delete(EmailVerificationTokenModel).where(
+                EmailVerificationTokenModel.user_id == user_id,
+                EmailVerificationTokenModel.used_at.is_(None),
+            )
+        )
+
+        raw_token = secrets.token_urlsafe(32)
+        token_hash = hash_token(raw_token)
+        expires_at = now + timedelta(minutes=EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES)
+
+        token_record = EmailVerificationTokenModel(
+            user_id=user_id,
+            token_hash=token_hash,
+            expires_at=expires_at,
+            created_at=now,
+            used_at=None,
+        )
+        db.add(token_record)
+        db.commit()
+        return raw_token
+
+    @staticmethod
+    def verify_email_token(db: Session, raw_token: str) -> UserModel:
+        """Validate an email verification token and mark the user verified.
+
+        Rejects invalid, expired, or already-used tokens.
+        """
+        if not raw_token or not isinstance(raw_token, str):
+            raise ValueError("Invalid verification token.")
+
+        token_hash = hash_token(raw_token)
+        now = datetime.now(timezone.utc)
+
+        token_record = db.execute(
+            select(EmailVerificationTokenModel).where(
+                EmailVerificationTokenModel.token_hash == token_hash
+            )
+        ).scalar_one_or_none()
+
+        if not token_record or token_record.used_at is not None:
+            raise ValueError("Invalid or already used verification token.")
+
+        if now > _normalize_utc(token_record.expires_at):
+            raise ValueError("Verification token has expired. Please request a new verification email.")
+
+
+        user = db.get(UserModel, token_record.user_id)
+        if not user or not user.is_active:
+            raise ValueError("User account not found or is inactive.")
+
+        user.is_verified = True
+        user.updated_at = now
+        token_record.used_at = now
+        db.commit()
+        db.refresh(user)
+        logger.info("User <%s> email successfully verified.", user.email)
+        return user
+
+    @staticmethod
+    def request_resend_verification(db: Session, email: str) -> Optional[Tuple[UserModel, str]]:
+        """Prepare fresh verification token if user exists and is unverified.
+
+        Anti-enumeration safe: Returns None if user not found or already verified,
+        allowing the API route to emit a uniform success message without account leakage.
+        """
+        clean_email = email.strip().lower()
+        user = db.execute(
+            select(UserModel).where(UserModel.email == clean_email)
+        ).scalar_one_or_none()
+
+        if not user or not user.is_active or user.is_verified:
+            return None
+
+        raw_token = PersonalizationService.create_email_verification_token(db, user.id)
+        return user, raw_token
+
+    @staticmethod
+    def request_password_reset(db: Session, email: str) -> Optional[Tuple[UserModel, str]]:
+        """Generate a time-bounded password reset token if user exists.
+
+        Anti-enumeration safe: Returns None if user not found or inactive,
+        allowing caller to emit uniform success message without account leakage.
+        Stores only the SHA-256 digest in the database.
+        """
+        clean_email = email.strip().lower()
+        user = db.execute(
+            select(UserModel).where(UserModel.email == clean_email)
+        ).scalar_one_or_none()
+
+        if not user or not user.is_active:
+            return None
+
+        now = datetime.now(timezone.utc)
+        # Invalidate prior unused reset tokens for this user
+        db.execute(
+            delete(PasswordResetTokenModel).where(
+                PasswordResetTokenModel.user_id == user.id,
+                PasswordResetTokenModel.used_at.is_(None),
+            )
+        )
+
+        raw_token = secrets.token_urlsafe(32)
+        token_hash = hash_token(raw_token)
+        expires_at = now + timedelta(minutes=PASSWORD_RESET_TOKEN_EXPIRE_MINUTES)
+
+        token_record = PasswordResetTokenModel(
+            user_id=user.id,
+            token_hash=token_hash,
+            expires_at=expires_at,
+            created_at=now,
+            used_at=None,
+        )
+        db.add(token_record)
+        db.commit()
+        return user, raw_token
+
+    @staticmethod
+    def create_password_reset_token(db: Session, email: str) -> Optional[Tuple[UserModel, str]]:
+        """Alias for request_password_reset."""
+        return PersonalizationService.request_password_reset(db, email)
+
+    @staticmethod
+    def reset_password_with_token(db: Session, raw_token: str, new_password: str) -> UserModel:
+
+        """Validate password reset token and update password using Argon2id.
+
+        Rejects invalid, expired, or already-used tokens.
+        Immediately revokes the reset token upon successful password update.
+        """
+        if not raw_token or not isinstance(raw_token, str):
+            raise ValueError("Invalid password reset token.")
+
+        token_hash = hash_token(raw_token)
+        now = datetime.now(timezone.utc)
+
+        token_record = db.execute(
+            select(PasswordResetTokenModel).where(
+                PasswordResetTokenModel.token_hash == token_hash
+            )
+        ).scalar_one_or_none()
+
+        if not token_record or token_record.used_at is not None:
+            raise ValueError("Invalid or already used password reset token.")
+
+        if now > _normalize_utc(token_record.expires_at):
+            raise ValueError("Password reset token has expired. Please request a new reset link.")
+
+
+        user = db.get(UserModel, token_record.user_id)
+        if not user or not user.is_active:
+            raise ValueError("User account not found or is inactive.")
+
+        # Update password hash using existing production Argon2id parameters
+        user.password_hash = hash_password(new_password)
+        user.updated_at = now
+        token_record.used_at = now
+
+        # Revoke any other unexpired reset tokens for this user
+        db.execute(
+            delete(PasswordResetTokenModel).where(
+                PasswordResetTokenModel.user_id == user.id,
+                PasswordResetTokenModel.id != token_record.id,
+            )
+        )
+
+        db.commit()
+        db.refresh(user)
+        logger.info("Password successfully reset for user <%s>.", user.email)
+        return user
+
+    @staticmethod
+    def authenticate_google_user(
+        db: Session,
+        id_token_str: str,
+        invite_code: Optional[str] = None,
+    ) -> Tuple[UserModel, bool]:
+        """Authenticate or provision a user via Google OAuth/OIDC ID token.
+
+        Features:
+        A. Existing federated identity:
+           If the Google subject (sub) is already linked, authenticates that user.
+        B. Existing local account with matching verified email:
+           Safely links the Google identity to the existing account.
+           Preserves existing user ID, pantry, preferences, feedback, and history.
+           Marks the user's email as verified.
+        C. New Google user:
+           Enforces pilot mode, capacity, and invite restrictions before provisioning.
+           Creates a new user with verified email and default preferences/targets.
+        D. Identity conflict rejection:
+           Rejects attempts to link one Google identity to multiple users or a user to multiple Google identities.
+           Safely handles race conditions via transaction rollback.
+
+        Returns:
+            Tuple[UserModel, bool]: (authenticated_user, is_newly_created)
+        """
+        payload = verify_google_id_token(id_token_str)
+        sub = str(payload["sub"])
+        email = payload["email"].strip().lower()
+        now = datetime.now(timezone.utc)
+
+        # A. Check if Google subject (sub) is already linked to an existing user
+        fed = db.execute(
+            select(FederatedIdentityModel).where(
+                FederatedIdentityModel.provider == "google",
+                FederatedIdentityModel.provider_user_id == sub,
+            )
+        ).scalar_one_or_none()
+
+        if fed:
+            user = db.execute(select(UserModel).where(UserModel.id == fed.user_id)).scalar_one_or_none()
+            if not user or not user.is_active:
+                raise ValueError("User account is inactive or disabled.")
+
+            # Check if token email conflicts with another user account
+            if user.email != email:
+                conflict_user = db.execute(select(UserModel).where(UserModel.email == email)).scalar_one_or_none()
+                if conflict_user and conflict_user.id != user.id:
+                    raise ValueError("Identity conflict: Google identity already linked to a different account.")
+
+            user.is_verified = True
+            user.last_login_at = now
+            db.commit()
+            db.refresh(user)
+            logger.info("Google authentication successful for existing linked user <%s>.", user.email)
+            return user, False
+
+        # B. Check if a local account exists with the same verified email
+        existing_user = db.execute(select(UserModel).where(UserModel.email == email)).scalar_one_or_none()
+        if existing_user:
+            if not existing_user.is_active:
+                raise ValueError("User account is inactive or disabled.")
+
+            # Check if this user already has a DIFFERENT Google identity linked
+            existing_user_fed = db.execute(
+                select(FederatedIdentityModel).where(
+                    FederatedIdentityModel.user_id == existing_user.id,
+                    FederatedIdentityModel.provider == "google",
+                )
+            ).scalar_one_or_none()
+            if existing_user_fed and existing_user_fed.provider_user_id != sub:
+                raise ValueError("Identity conflict: User account is already linked to a different Google account.")
+
+            # Create federated link to existing account
+            new_fed = FederatedIdentityModel(
+                user_id=existing_user.id,
+                provider="google",
+                provider_user_id=sub,
+                email=email,
+                created_at=now,
+                updated_at=now,
+            )
+            db.add(new_fed)
+            existing_user.is_verified = True
+            existing_user.last_login_at = now
+            existing_user.updated_at = now
+
+            try:
+                db.commit()
+                db.refresh(existing_user)
+                logger.info("Linked Google identity to existing user <%s> (id=%s).", existing_user.email, existing_user.id)
+                return existing_user, False
+            except IntegrityError:
+                db.rollback()
+                raise ValueError("Identity conflict during Google account linking.")
+
+        # C. New Google user provisioning: Enforce pilot mode admission controls first
+        from src.api.config import (
+            ENVIRONMENT,
+            PILOT_INVITE_CODE,
+            PILOT_MAX_USERS,
+            PILOT_MODE,
+        )
+
+        if ENVIRONMENT == "production" and not PILOT_MODE:
+            raise PermissionError("Pilot onboarding is currently paused. Please check back later.")
+
+        if PILOT_MODE:
+            user_count = db.query(func.count(UserModel.id)).scalar() or 0
+            if user_count >= PILOT_MAX_USERS:
+                raise PermissionError(f"Controlled pilot cohort capacity reached ({PILOT_MAX_USERS} max users).")
+            if PILOT_INVITE_CODE:
+                if not invite_code or invite_code.strip() != PILOT_INVITE_CODE:
+                    raise PermissionError("Invalid or missing pilot invite code.")
+
+        # Provision new Google user
+        random_secret = secrets.token_urlsafe(32)
+        pw_hash = hash_password(random_secret)
+
+        raw_name = payload.get("name") or payload.get("given_name")
+        display_name = raw_name.strip()[:128] if raw_name and isinstance(raw_name, str) else None
+
+        new_user = UserModel(
+            email=email,
+            password_hash=pw_hash,
+            display_name=display_name,
+            is_active=True,
+            is_verified=True,
+            auth_provider="google",
+            created_at=now,
+            updated_at=now,
+            last_login_at=now,
+        )
+        db.add(new_user)
+        db.flush()
+
+        # Initialize default user preferences and nutrition targets
+        prefs = UserPreferenceModel(
+            user_id=new_user.id,
+            vegetarian=False,
+            vegan=False,
+            jain=False,
+            satvik=False,
+            preferred_cuisines=[],
+            preferred_regions=[],
+            preferred_meal_types=[],
+            preferred_categories=[],
+            preferred_ingredients=[],
+            disliked_ingredients=[],
+            created_at=now,
+            updated_at=now,
+        )
+        targets = UserNutritionTargetModel(
+            user_id=new_user.id,
+            created_at=now,
+            updated_at=now,
+        )
+        fed_record = FederatedIdentityModel(
+            user_id=new_user.id,
+            provider="google",
+            provider_user_id=sub,
+            email=email,
+            created_at=now,
+            updated_at=now,
+        )
+        db.add(prefs)
+        db.add(targets)
+        db.add(fed_record)
+
+        try:
+            db.commit()
+            db.refresh(new_user)
+            logger.info("Successfully provisioned new Google user <%s> (id=%s).", new_user.email, new_user.id)
+            return new_user, True
+        except IntegrityError:
+            db.rollback()
+            raise ValueError("Identity conflict or concurrent registration detected.")
+
 
     @staticmethod
     def get_user_by_id(db: Session, user_id: int) -> Optional[UserModel]:

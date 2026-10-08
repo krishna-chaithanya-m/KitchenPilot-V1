@@ -76,6 +76,8 @@ class UserResponse(BaseModel):
     email: str
     display_name: Optional[str] = None
     is_active: bool
+    is_verified: bool = False
+    auth_provider: str = "local"
     created_at: datetime
     last_login_at: Optional[datetime] = None
 
@@ -86,6 +88,74 @@ class AuthResponse(BaseModel):
     token_type: str = "bearer"
     expires_in: int
     user: UserResponse
+
+
+class MessageResponse(BaseModel):
+    """Standard message response schema for operations."""
+    message: str
+    success: bool = True
+
+
+class VerifyEmailRequest(BaseModel):
+    """Email verification payload."""
+    token: str = Field(..., min_length=16, max_length=256, description="Cryptographic verification token")
+
+
+class ResendVerificationRequest(BaseModel):
+    """Resend email verification payload."""
+    email: str = Field(..., description="Registered account email address")
+
+    @field_validator("email")
+    @classmethod
+    def clean_email(cls, v: str) -> str:
+        clean = v.strip().lower()
+        email_regex = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
+        if not re.match(email_regex, clean):
+            raise ValueError("Invalid email address format.")
+        return clean
+
+
+class ForgotPasswordRequest(BaseModel):
+    """Forgot password request payload."""
+    email: str = Field(..., description="Registered account email address")
+
+    @field_validator("email")
+    @classmethod
+    def clean_email(cls, v: str) -> str:
+        clean = v.strip().lower()
+        email_regex = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
+        if not re.match(email_regex, clean):
+            raise ValueError("Invalid email address format.")
+        return clean
+
+
+class ResetPasswordRequest(BaseModel):
+    """Password reset payload with new password."""
+    token: str = Field(..., min_length=16, max_length=256, description="Cryptographic password reset token")
+    new_password: str = Field(
+        ...,
+        min_length=8,
+        max_length=128,
+        description="New secure password (min 8 characters)",
+    )
+
+    @field_validator("new_password")
+    @classmethod
+    def validate_password_strength(cls, v: str) -> str:
+        if len(v) < 8:
+            raise ValueError("Password must be at least 8 characters long.")
+        if not re.search(r"[A-Za-z]", v):
+            raise ValueError("Password must contain at least one letter.")
+        if not re.search(r"[0-9!@#$%^&*(),.?\":{}|<>]", v):
+            raise ValueError("Password must contain at least one digit or special character.")
+        return v
+
+
+class GoogleAuthRequest(BaseModel):
+    """Google OAuth/OIDC authentication payload."""
+    id_token: str = Field(..., min_length=10, description="Cryptographic Google OIDC ID token")
+    invite_code: Optional[str] = Field(None, max_length=64, description="Optional pilot invite code")
+
 
 
 # --- Preference Schemas ---

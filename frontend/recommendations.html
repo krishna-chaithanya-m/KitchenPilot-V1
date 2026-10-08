@@ -20,6 +20,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="recipes.html">Recipes</a></li>
                     <li><a href="recommendations.html" class="active">Recommendations</a></li>
+                    <li><a href="auth.html" id="nav-auth-link">Sign In</a></li>
                 </ul>
             </nav>
         </div>
@@ -30,6 +31,23 @@
         <div style="margin-bottom: 1.75rem;">
             <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--secondary);">Find Recipes by Ingredients & Nutrition</h1>
             <p style="color: var(--text-muted);">Configure your available pantry items, dietary restrictions, and nutritional goals for deterministic hybrid recommendations.</p>
+        </div>
+
+        <!-- Non-Blocking Unverified Email Warning Banner (Stage 5) -->
+        <div id="unverified-email-banner" class="unverified-warning-banner" style="display: none;">
+            <div class="unverified-warning-content">
+                <span style="font-size: 1.35rem;">✉️</span>
+                <div>
+                    <strong>Email Address Not Verified:</strong>
+                    <span>Your account email is unverified. Please verify your email to enable account recovery.</span>
+                </div>
+            </div>
+            <div class="unverified-warning-actions">
+                <button type="button" id="btn-banner-resend-verification" class="btn btn-secondary btn-sm" style="font-size: 0.8rem; background-color: #ffffff;">
+                    Resend Verification Link
+                </button>
+                <span id="banner-resend-status" style="font-size: 0.8rem; color: var(--accent-emerald); font-weight: 600; display: none;"></span>
+            </div>
         </div>
 
         <!-- Controlled Pilot Session & Profile Management (Stage J) -->
@@ -43,6 +61,7 @@
                 <div id="pilot-auth-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                     <button type="button" id="btn-show-login" class="btn btn-secondary btn-sm">Log In</button>
                     <button type="button" id="btn-show-register" class="btn btn-primary btn-sm">Register Pilot Account</button>
+                    <a href="auth.html" class="btn btn-outline btn-sm">All Sign-In Options →</a>
                 </div>
             </div>
 
@@ -56,6 +75,10 @@
                     <div class="form-group" style="margin: 0; flex: 1; min-width: 180px;">
                         <label for="auth-password" style="font-size: 0.8rem; font-weight: 600;">Password (min 8 chars)</label>
                         <input type="password" id="auth-password" class="form-control" placeholder="••••••••">
+                    </div>
+                    <div class="form-group" id="group-confirm-password" style="margin: 0; flex: 1; min-width: 180px; display: none;">
+                        <label for="auth-confirm-password" style="font-size: 0.8rem; font-weight: 600;">Confirm Password</label>
+                        <input type="password" id="auth-confirm-password" class="form-control" placeholder="••••••••">
                     </div>
                     <div class="form-group" id="group-display-name" style="margin: 0; flex: 1; min-width: 180px; display: none;">
                         <label for="auth-display-name" style="font-size: 0.8rem; font-weight: 600;">Display Name</label>
@@ -71,7 +94,13 @@
                         <button type="button" id="btn-cancel-auth" class="btn btn-secondary btn-sm">Cancel</button>
                     </div>
                 </div>
-                <div id="auth-error-msg" style="display: none; color: var(--danger); font-size: 0.85rem; margin-top: 0.5rem;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; flex-wrap: wrap;">
+                    <div id="auth-error-msg" style="display: none; color: var(--danger); font-size: 0.85rem;"></div>
+                    <div style="font-size: 0.8rem; margin-top: 0.25rem;">
+                        <a href="auth.html#forgot" class="auth-link">Forgot password?</a> |
+                        <a href="auth.html" class="auth-link">Google sign-in</a>
+                    </div>
+                </div>
             </div>
 
             <!-- Authenticated Controls (shown when logged in) -->

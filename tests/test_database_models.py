@@ -117,8 +117,8 @@ def test_alembic_migration_chain_is_linear():
             revisions[rev] = mf.name
             down_revisions[rev] = down
 
-    # Verify head is 003_qualitative_feedback_schema and down revision chain leads back to None
-    curr = "003_qualitative_feedback_schema"
+    # Verify head is 004_authentication_upgrade_schema and down revision chain leads back to None
+    curr = "004_authentication_upgrade_schema"
     assert curr in revisions
     visited = []
     while curr is not None:
@@ -126,8 +126,95 @@ def test_alembic_migration_chain_is_linear():
         curr = down_revisions.get(curr)
 
     assert visited == [
+        "004_authentication_upgrade_schema",
         "003_qualitative_feedback_schema",
         "9ee7090d2edc",
         "002_user_personalization_schema",
         "001_initial_schema",
     ]
+
+
+def test_authentication_upgrade_models_structure_and_constraints():
+    """Verify Stage 1 authentication upgrade models: columns, FKs, and unique constraints."""
+    from src.personalization.models import (
+        UserModel,
+        EmailVerificationTokenModel,
+        PasswordResetTokenModel,
+        FederatedIdentityModel,
+    )
+
+    # 1. UserModel extensions
+    user_table = UserModel.__table__
+    assert "is_verified" in user_table.c
+    assert not user_table.c.is_verified.nullable
+    assert "auth_provider" in user_table.c
+    assert not user_table.c.auth_provider.nullable
+
+    # 2. EmailVerificationTokenModel
+    evt_table = EmailVerificationTokenModel.__table__
+    assert evt_table.c.id.primary_key
+    assert not evt_table.c.user_id.nullable
+    assert not evt_table.c.token_hash.nullable
+    assert not evt_table.c.expires_at.nullable
+    assert evt_table.c.used_at.nullable
+    evt_fks = {fk.target_fullname for fk in evt_table.foreign_keys}
+    assert "users.id" in evt_fks
+
+    # 3. PasswordResetTokenModel
+    prt_table = PasswordResetTokenModel.__table__
+    assert prt_table.c.id.primary_key
+    assert not prt_table.c.user_id.nullable
+    assert not prt_table.c.token_hash.nullable
+    assert not prt_table.c.expires_at.nullable
+    assert prt_table.c.used_at.nullable
+    prt_fks = {fk.target_fullname for fk in prt_table.foreign_keys}
+    assert "users.id" in prt_fks
+
+    # 4. FederatedIdentityModel
+    fid_table = FederatedIdentityModel.__table__
+    assert fid_table.c.id.primary_key
+    assert not fid_table.c.user_id.nullable
+    assert not fid_table.c.provider.nullable
+    assert not fid_table.c.provider_user_id.nullable
+    assert not fid_table.c.email.nullable
+    fid_fks = {fk.target_fullname for fk in fid_table.foreign_keys}
+    assert "users.id" in fid_fks
+
+    # Check unique constraints on federated_identities
+    uq_names = {c.name for c in fid_table.constraints if hasattr(c, "columns") and len(c.columns) > 1}
+    assert "uq_federated_provider_user" in uq_names
+    assert "uq_federated_user_provider" in uq_names
+
+
+def test_token_hashing_security_properties():
+    """Verify hash_token produces deterministic SHA-256 digests and guards against invalid input."""
+    import hashlib
+    from src.personalization.security import hash_token
+
+    sample = "test_verification_token_secret_12345"
+    expected = hashlib.sha256(sample.encode("utf-8")).hexdigest()
+
+    digest1 = hash_token(sample)
+    digest2 = hash_token(sample)
+
+    assert digest1 == expected
+    assert digest1 == digest2
+    assert len(digest1) == 64
+    assert digest1 != sample  # Raw token must not equal digest
+
+    # Determinism across different tokens
+    diff_digest = hash_token("different_token_value_67890")
+    assert diff_digest != digest1
+
+    # Empty or non-string input validation
+    with pytest.raises(ValueError):
+        hash_token("")
+    with pytest.raises(ValueError):
+        hash_token(None)  # type: ignore
+
+
+def test_authentication_upgrade_tables_registered_in_metadata():
+    """Verify that email_verification_tokens, password_reset_tokens, and federated_identities are in Base.metadata."""
+    table_names = set(Base.metadata.tables.keys())
+    expected = {"email_verification_tokens", "password_reset_tokens", "federated_identities"}
+    assert expected.issubset(table_names), f"Missing tables: {expected - table_names}"

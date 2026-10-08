@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication — KitchenPilot-V1</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <span>🍳 KitchenPilot</span>
+                <span class="brand-badge">V1</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="recommendations.html">Recommendations</a></li>
+                    <li><a href="auth.html" class="active">Sign In</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Auth Container -->
+    <main class="auth-page-container">
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <div class="auth-header-icon">🍳</div>
+                <h1 id="auth-card-title">Welcome Back</h1>
+                <p id="auth-card-subtitle">Sign in to access your saved recipes, pantry, and personalized recommendations.</p>
+            </div>
+
+            <!-- Global Alert Container (Errors, Success, Rate Limiting countdowns) -->
+            <div id="auth-global-alert" style="display: none;"></div>
+
+            <!-- Segmented Control Tabs (Login / Register / Forgot) -->
+            <div class="auth-tabs" id="auth-main-tabs">
+                <button type="button" class="auth-tab-btn active" data-mode="login">Sign In</button>
+                <button type="button" class="auth-tab-btn" data-mode="register">Register</button>
+                <button type="button" class="auth-tab-btn" data-mode="forgot">Recovery</button>
+            </div>
+
+            <!-- VIEW 1: LOGIN -->
+            <div id="view-login" class="auth-view">
+                <form id="form-login" novalidate>
+                    <div class="auth-form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" class="form-control" placeholder="name@example.com" autocomplete="email" required>
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label for="login-password">
+                            <span>Password</span>
+                            <a href="#forgot" class="auth-link" data-switch-mode="forgot">Forgot password?</a>
+                        </label>
+                        <input type="password" id="login-password" class="form-control" placeholder="••••••••" autocomplete="current-password" required>
+                    </div>
+
+                    <button type="submit" id="btn-login-submit" class="btn btn-primary auth-btn-block">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="auth-divider">
+                    <span>or continue with</span>
+                </div>
+
+                <div class="google-btn-wrapper">
+                    <div class="google-signin-btn-container"></div>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: var(--text-muted);">
+                    Don't have an account?
+                    <a href="#register" class="auth-link" data-switch-mode="register" style="font-weight: 700;">Create Pilot Account</a>
+                </div>
+            </div>
+
+            <!-- VIEW 2: REGISTRATION -->
+            <div id="view-register" class="auth-view" style="display: none;">
+                <form id="form-register" novalidate>
+                    <div class="auth-form-group">
+                        <label for="reg-email">Email Address</label>
+                        <input type="email" id="reg-email" class="form-control" placeholder="name@example.com" autocomplete="email" required>
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label for="reg-display-name">Display Name (Optional)</label>
+                        <input type="text" id="reg-display-name" class="form-control" placeholder="Chef Priya" autocomplete="name">
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" class="form-control" placeholder="Create password" autocomplete="new-password" required>
+
+                        <!-- Live Password Requirements Checklist -->
+                        <div id="reg-password-requirements" class="password-requirements-box">
+                            <div class="password-requirements-title">Password Requirements</div>
+                            <ul class="req-list">
+                                <li class="req-item unmet" data-req="length">
+                                    <span class="req-icon">○</span> At least 8 characters
+                                </li>
+                                <li class="req-item unmet" data-req="uppercase">
+                                    <span class="req-icon">○</span> At least 1 uppercase letter (A-Z)
+                                </li>
+                                <li class="req-item unmet" data-req="lowercase">
+                                    <span class="req-icon">○</span> At least 1 lowercase letter (a-z)
+                                </li>
+                                <li class="req-item unmet" data-req="number">
+                                    <span class="req-icon">○</span> At least 1 number (0-9)
+                                </li>
+                                <li class="req-item unmet" data-req="symbol">
+                                    <span class="req-icon">○</span> At least 1 special character (!@#$%^&*)
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label for="reg-confirm-password">Confirm Password</label>
+                        <input type="password" id="reg-confirm-password" class="form-control" placeholder="Re-enter password" autocomplete="new-password" required>
+                    </div>
+
+                    <div class="auth-form-group" id="group-reg-invite">
+                        <label for="reg-invite-code" id="lbl-reg-invite">Pilot Invite Code</label>
+                        <input type="text" id="reg-invite-code" class="form-control" placeholder="Enter invite code" autocomplete="off">
+                        <small style="font-size: 0.75rem; color: var(--text-light); margin-top: 2px;">Issued by study coordinator or pilot administrator.</small>
+                    </div>
+
+                    <button type="submit" id="btn-register-submit" class="btn btn-primary auth-btn-block">
+                        Create Pilot Account
+                    </button>
+                </form>
+
+                <div class="auth-divider">
+                    <span>or continue with</span>
+                </div>
+
+                <div class="google-btn-wrapper">
+                    <div class="google-signin-btn-container"></div>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem; color: var(--text-muted);">
+                    Already registered?
+                    <a href="#login" class="auth-link" data-switch-mode="login" style="font-weight: 700;">Sign In</a>
+                </div>
+            </div>
+
+            <!-- VIEW 3: FORGOT PASSWORD -->
+            <div id="view-forgot" class="auth-view" style="display: none;">
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.5;">
+                    Enter the email address associated with your KitchenPilot account. We will send you instructions to securely reset your password.
+                </p>
+
+                <form id="form-forgot" novalidate>
+                    <div class="auth-form-group">
+                        <label for="forgot-email">Account Email</label>
+                        <input type="email" id="forgot-email" class="form-control" placeholder="name@example.com" autocomplete="email" required>
+                    </div>
+
+                    <button type="submit" id="btn-forgot-submit" class="btn btn-primary auth-btn-block">
+                        Send Reset Instructions
+                    </button>
+                </form>
+
+                <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem;">
+                    <a href="#login" class="auth-link" data-switch-mode="login">← Back to Sign In</a>
+                </div>
+            </div>
+
+            <!-- VIEW 4: RESET PASSWORD (Targeted via token in link) -->
+            <div id="view-reset" class="auth-view" style="display: none;">
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.5;">
+                    Enter and confirm your new password below.
+                </p>
+
+                <form id="form-reset" novalidate>
+                    <input type="hidden" id="reset-token">
+
+                    <div class="auth-form-group">
+                        <label for="reset-password">New Password</label>
+                        <input type="password" id="reset-password" class="form-control" placeholder="New password" autocomplete="new-password" required>
+
+                        <!-- Live Password Requirements Checklist -->
+                        <div id="reset-password-requirements" class="password-requirements-box">
+                            <div class="password-requirements-title">Password Requirements</div>
+                            <ul class="req-list">
+                                <li class="req-item unmet" data-req="length">
+                                    <span class="req-icon">○</span> At least 8 characters
+                                </li>
+                                <li class="req-item unmet" data-req="uppercase">
+                                    <span class="req-icon">○</span> At least 1 uppercase letter (A-Z)
+                                </li>
+                                <li class="req-item unmet" data-req="lowercase">
+                                    <span class="req-icon">○</span> At least 1 lowercase letter (a-z)
+                                </li>
+                                <li class="req-item unmet" data-req="number">
+                                    <span class="req-icon">○</span> At least 1 number (0-9)
+                                </li>
+                                <li class="req-item unmet" data-req="symbol">
+                                    <span class="req-icon">○</span> At least 1 special character (!@#$%^&*)
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="auth-form-group">
+                        <label for="reset-confirm-password">Confirm New Password</label>
+                        <input type="password" id="reset-confirm-password" class="form-control" placeholder="Re-enter new password" autocomplete="new-password" required>
+                    </div>
+
+                    <button type="submit" id="btn-reset-submit" class="btn btn-primary auth-btn-block">
+                        Update Password
+                    </button>
+                </form>
+
+                <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem;">
+                    <a href="#login" class="auth-link" data-switch-mode="login">← Return to Sign In</a>
+                </div>
+            </div>
+
+            <!-- VIEW 5: EMAIL VERIFICATION -->
+            <div id="view-verify" class="auth-view" style="display: none;">
+                <input type="hidden" id="verify-token">
+
+                <div id="verify-status-box" style="margin-bottom: 1.5rem;">
+                    <!-- Populated dynamically by triggerEmailVerification -->
+                    <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+                        Checking email verification status...
+                    </p>
+                </div>
+
+                <div style="padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.5rem;">
+                        Resend Verification Email
+                    </h3>
+                    <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+                        Did not receive your verification link or has it expired? Enter your account email to request a new link:
+                    </p>
+
+                    <form id="form-resend-verification" novalidate>
+                        <div class="auth-form-group">
+                            <label for="resend-email">Email Address</label>
+                            <input type="email" id="resend-email" class="form-control" placeholder="name@example.com" autocomplete="email" required>
+                        </div>
+                        <button type="submit" id="btn-resend-submit" class="btn btn-secondary auth-btn-block">
+                            Resend Verification Link
+                        </button>
+                    </form>
+                </div>
+
+                <div style="text-align: center; margin-top: 1.5rem; font-size: 0.88rem;">
+                    <a href="#login" class="auth-link" data-switch-mode="login">← Back to Sign In</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>KitchenPilot-V1 — Deterministic, Explainable Indian Recipe Recommendation Engine & Backend API.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

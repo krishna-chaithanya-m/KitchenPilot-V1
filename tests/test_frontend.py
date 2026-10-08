@@ -24,10 +24,14 @@ def test_frontend_files_exist():
         FRONTEND_DIR / "recipes.html",
         FRONTEND_DIR / "recipe.html",
         FRONTEND_DIR / "recommendations.html",
+        FRONTEND_DIR / "auth.html",
+        FRONTEND_DIR / "verify-email.html",
+        FRONTEND_DIR / "reset-password.html",
         FRONTEND_DIR / "css" / "style.css",
         FRONTEND_DIR / "js" / "config.js",
         FRONTEND_DIR / "js" / "api.js",
         FRONTEND_DIR / "js" / "app.js",
+        FRONTEND_DIR / "js" / "auth.js",
         FRONTEND_DIR / "js" / "recipes.js",
         FRONTEND_DIR / "js" / "recipe.js",
         FRONTEND_DIR / "js" / "recommendations.js",
@@ -37,7 +41,15 @@ def test_frontend_files_exist():
 
 
 def test_html_script_and_css_links():
-    html_pages = ["index.html", "recipes.html", "recipe.html", "recommendations.html"]
+    html_pages = [
+        "index.html",
+        "recipes.html",
+        "recipe.html",
+        "recommendations.html",
+        "auth.html",
+        "verify-email.html",
+        "reset-password.html",
+    ]
     for page in html_pages:
         content = (FRONTEND_DIR / page).read_text(encoding="utf-8")
         assert 'href="css/style.css"' in content, f"style.css not linked in {page}"
@@ -58,6 +70,15 @@ def test_api_js_configuration():
     assert "updateUserNutritionTargets" in api_js_content
     assert "syncUserPantry" in api_js_content
     assert "syncPantry" in api_js_content
+    # Stage 5 authentication helpers
+    assert "verifyEmail" in api_js_content
+    assert "resendVerification" in api_js_content
+    assert "forgotPassword" in api_js_content
+    assert "resetPassword" in api_js_content
+    assert "loginWithGoogle" in api_js_content
+    assert "getCurrentUser" in api_js_content
+    assert "isEmailVerified" in api_js_content
+    assert "retryAfter" in api_js_content
 
 
 def test_environment_configuration():
