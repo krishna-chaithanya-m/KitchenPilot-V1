@@ -25,6 +25,7 @@ def test_frontend_files_exist():
         FRONTEND_DIR / "recipe.html",
         FRONTEND_DIR / "recommendations.html",
         FRONTEND_DIR / "css" / "style.css",
+        FRONTEND_DIR / "js" / "config.js",
         FRONTEND_DIR / "js" / "api.js",
         FRONTEND_DIR / "js" / "app.js",
         FRONTEND_DIR / "js" / "recipes.js",
@@ -40,6 +41,7 @@ def test_html_script_and_css_links():
     for page in html_pages:
         content = (FRONTEND_DIR / page).read_text(encoding="utf-8")
         assert 'href="css/style.css"' in content, f"style.css not linked in {page}"
+        assert 'src="js/config.js"' in content, f"config.js not linked in {page}"
         assert 'src="js/api.js"' in content, f"api.js not linked in {page}"
 
 
@@ -47,6 +49,8 @@ def test_api_js_configuration():
     api_js_content = (FRONTEND_DIR / "js" / "api.js").read_text(encoding="utf-8")
     assert 'const API_BASE_URL = "http://127.0.0.1:8000/api/v1"' in api_js_content
     assert "KitchenPilotApi" in api_js_content
+    assert "getApiBaseUrl" in api_js_content
+    assert "setApiBaseUrl" in api_js_content
     assert "getRecommendationsByIngredients" in api_js_content
     assert "updatePreferences" in api_js_content
     assert "updateUserPreferences" in api_js_content
@@ -54,6 +58,15 @@ def test_api_js_configuration():
     assert "updateUserNutritionTargets" in api_js_content
     assert "syncUserPantry" in api_js_content
     assert "syncPantry" in api_js_content
+
+
+def test_environment_configuration():
+    config_js_content = (FRONTEND_DIR / "js" / "config.js").read_text(encoding="utf-8")
+    azure_prod = "https://kitchenpilot-api.whitestone-ffca5e6e.malaysiawest.azurecontainerapps.io/api/v1"
+    assert azure_prod in config_js_content
+    assert "http://127.0.0.1:8000/api/v1" in config_js_content
+    assert "setKitchenPilotEnvironment" in config_js_content
+    assert "resetKitchenPilotEnvironment" in config_js_content
 
 
 def test_section_14_target_recommendation_contract():

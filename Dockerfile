@@ -31,11 +31,13 @@ RUN groupadd -g 10001 appgroup && \
 # Copy installed wheels/packages from builder
 COPY --from=builder /root/.local /home/appuser/.local
 
-# Copy application source, data, and models
+# Copy application source, data, models, and database migrations
 COPY src/ /app/src/
 COPY data/ /app/data/
 COPY models/ /app/models/
 COPY frontend/ /app/frontend/
+COPY alembic/ /app/alembic/
+COPY alembic.ini /app/
 COPY requirements.txt /app/
 
 # Environment configuration

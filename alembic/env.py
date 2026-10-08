@@ -16,6 +16,8 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from src.db.base import Base
+import src.db.models  # noqa: F401
+import src.personalization.models  # noqa: F401
 from src.db.config import get_database_url
 from src.db.session import get_engine
 

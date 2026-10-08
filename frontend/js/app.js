@@ -24,7 +24,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     } catch (err) {
         statusDot.style.background = "var(--danger)";
-        statusText.textContent = "Backend Offline (FastAPI not reachable on port 8000)";
+        const target = (typeof window.KitchenPilotApi !== "undefined" && window.KitchenPilotApi.getApiBaseUrl)
+            ? window.KitchenPilotApi.getApiBaseUrl()
+            : "FastAPI server";
+        statusText.textContent = `Backend Offline (${target} not reachable)`;
         statusText.style.color = "var(--danger)";
     }
 });

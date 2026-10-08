@@ -18,6 +18,12 @@ function getApiBaseUrl() {
     if (typeof window !== "undefined" && window.KITCHENPILOT_API_BASE_URL) {
         return window.KITCHENPILOT_API_BASE_URL;
     }
+    if (typeof localStorage !== "undefined") {
+        const stored = localStorage.getItem("kitchenpilot_api_base_url");
+        if (stored && stored.trim()) {
+            return stored.trim().replace(/\/+$/, "");
+        }
+    }
     return API_BASE_URL;
 }
 
@@ -106,7 +112,7 @@ async function request(endpoint, options = {}) {
         }
         // Network connection error / CORS / Server not running
         throw new ApiError(
-            "Cannot connect to the KitchenPilot backend. Please ensure the FastAPI server is running on http://127.0.0.1:8000.",
+            `Cannot connect to the KitchenPilot backend (${getApiBaseUrl()}). Please ensure the API server is running and reachable.`,
             0,
             err.message
         );
@@ -414,6 +420,18 @@ async function getUserQualitativeFeedback(recipeId = null, issueType = null) {
 window.KitchenPilotApi = {
     API_BASE_URL,
     getApiBaseUrl,
+    setApiBaseUrl: (url) => {
+        if (typeof window !== "undefined" && typeof window.setKitchenPilotEnvironment === "function") {
+            return window.setKitchenPilotEnvironment(url);
+        }
+        if (typeof localStorage !== "undefined") {
+            localStorage.setItem("kitchenpilot_api_base_url", url);
+        }
+        if (typeof window !== "undefined") {
+            window.KITCHENPILOT_API_BASE_URL = url;
+        }
+        return url;
+    },
     ApiError,
     checkHealth,
     checkReadiness,

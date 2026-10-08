@@ -24,6 +24,7 @@ KitchenPilot-V1 is an offline-capable, deterministic, personalized recipe recomm
 - `recipe.html`: Comprehensive recipe detail view displaying instructions, ingredients, and calculated macro/micronutrient breakdown.
 - `recommendations.html`: Interactive recommendation generator supporting pantry ingredient inputs, dietary constraints, and macro goals.
 - `css/style.css`: Responsive, accessible custom styling.
+- `js/config.js`: Dynamic API environment configuration supporting development and Azure production/pilot targets.
 - `js/api.js`: Unified API client supporting configurable API base URL and reverse-proxy deployment.
 
 ### 2.2 Application Backend (`src/api/`)
@@ -75,13 +76,16 @@ KitchenPilot-V1 is an offline-capable, deterministic, personalized recipe recomm
 - `scripts/train_production_ranker.py`: Stage I controlled offline candidate training pipeline.
 - `scripts/model_registry_cli.py`: Stage I Model Registry CLI for candidate inspection, promotion, and rollback.
 
-### 2.8 Stages D through I Extended Systems
+### 2.8 Stages D through L Extended Systems
 - **Stage D (Dense Semantic Retrieval)**: `BAAI/bge-small-en-v1.5` embeddings (6,871 x 384) with deterministic fallback.
 - **Stage E (Constraint Engine)**: Deterministic pre-ranking dietary, allergen, nutrition, and pantry constraints.
 - **Stage F (GBDT Ranking)**: XGBoost `rank:ndcg` ranker (`xgb_ranker_v0.1.0`) with 30-feature schema.
 - **Stage G (Personalization & Feedback)**: Argon2id + JWT authentication, user pantry, feedback, and audit history.
 - **Stage H (Production Hardening & Observability)**: Correlation IDs (`X-Request-ID`), rate limiting, security headers, structured logging, `/metrics`, and Dockerized deployment.
 - **Stage I (Controlled ML Lifecycle)**: Local Model Registry, data sufficiency gates, chronological query splitting, explicit promotion, and instant rollback.
+- **Stage J (Controlled Pilot Cohort)**: Capacity limits (`PILOT_MAX_USERS`), optional invite codes, and pilot onboarding toggle.
+- **Stage K (Pilot Safety Invariants)**: Continuous monitor verifying zero cross-user data leakage and hard constraint enforcement.
+- **Stage L (Participant Feedback & Audit)**: Qualitative feedback separation from ranking interactions and engagement KPI reporting.
 
 ---
 
@@ -92,3 +96,4 @@ KitchenPilot-V1 is an offline-capable, deterministic, personalized recipe recomm
 - Hard constraints always execute before ranking and personalization.
 - Personalization adjustments can never bypass dietary or allergen hard constraints.
 - All recommendation results remain deterministic and reproducible.
+- **Pilot Data Status**: Software and deployment gates are fully complete and operational. Longitudinal real-world pilot data (20+ users, 200+ interaction events, 7+ days) is intentionally PENDING live pilot participant collection.

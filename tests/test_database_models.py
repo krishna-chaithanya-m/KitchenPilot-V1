@@ -80,3 +80,54 @@ def test_dataset_manifest_metadata_model():
     assert table.c.id.primary_key
     assert not table.c.dataset_name.nullable
     assert not table.c.dataset_version.nullable
+
+
+def test_qualitative_feedback_and_personalization_models():
+    """Verify qualitative feedback and user models are registered and structurally sound."""
+    from src.personalization.models import QualitativeFeedbackModel, UserModel
+    table = QualitativeFeedbackModel.__table__
+    assert table.c.id.primary_key
+    assert not table.c.user_id.nullable
+    assert not table.c.issue_type.nullable
+    user_fks = {fk.target_fullname for fk in table.foreign_keys}
+    assert "users.id" in user_fks
+    assert "recipes.recipe_id" in user_fks
+
+
+def test_alembic_migration_chain_is_linear():
+    """Verify that Alembic migrations form an unbroken linear revision chain."""
+    from pathlib import Path
+    import importlib.util
+
+    versions_dir = Path(__file__).resolve().parent.parent / "alembic" / "versions"
+    migration_files = list(versions_dir.glob("*.py"))
+    assert len(migration_files) >= 3
+
+    revisions = {}
+    down_revisions = {}
+    for mf in migration_files:
+        if mf.name.startswith("__"):
+            continue
+        spec = importlib.util.spec_from_file_location(mf.stem, mf)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        rev = getattr(mod, "revision", None)
+        down = getattr(mod, "down_revision", None)
+        if rev:
+            revisions[rev] = mf.name
+            down_revisions[rev] = down
+
+    # Verify head is 003_qualitative_feedback_schema and down revision chain leads back to None
+    curr = "003_qualitative_feedback_schema"
+    assert curr in revisions
+    visited = []
+    while curr is not None:
+        visited.append(curr)
+        curr = down_revisions.get(curr)
+
+    assert visited == [
+        "003_qualitative_feedback_schema",
+        "9ee7090d2edc",
+        "002_user_personalization_schema",
+        "001_initial_schema",
+    ]

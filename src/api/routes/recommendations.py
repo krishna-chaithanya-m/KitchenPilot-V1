@@ -255,7 +255,7 @@ def generate_recommendations(
         conflicts = recommender.constraint_engine.validate_request(constraint_req)
         if conflicts:
             raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                 detail=f"Constraint conflict: {'; '.join(conflicts)}",
             )
 
@@ -382,7 +382,7 @@ def recommend_by_ingredients(
         conflicts = recommender.constraint_engine.validate_request(constraint_req)
         if conflicts:
             raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                 detail=f"Constraint conflict: {'; '.join(conflicts)}",
             )
 
@@ -500,7 +500,7 @@ def recommend_semantic(
         conflicts = recommender.constraint_engine.validate_request(constraint_req)
         if conflicts:
             raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
                 detail=f"Constraint conflict: {'; '.join(conflicts)}",
             )
 
