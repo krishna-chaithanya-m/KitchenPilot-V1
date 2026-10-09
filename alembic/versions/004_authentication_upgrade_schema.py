@@ -1,6 +1,6 @@
 """Add email verification, password reset, and federated identity schemas.
 
-Revision ID: 004_authentication_upgrade_schema
+Revision ID: 004_auth_upgrade_schema
 Revises: 003_qualitative_feedback_schema
 Create Date: 2026-10-08 18:30:00.000000
 
@@ -13,7 +13,7 @@ from alembic import op
 import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
-revision: str = "004_authentication_upgrade_schema"
+revision: str = "004_auth_upgrade_schema"
 down_revision: Union[str, None] = "003_qualitative_feedback_schema"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None

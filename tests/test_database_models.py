@@ -117,8 +117,8 @@ def test_alembic_migration_chain_is_linear():
             revisions[rev] = mf.name
             down_revisions[rev] = down
 
-    # Verify head is 004_authentication_upgrade_schema and down revision chain leads back to None
-    curr = "004_authentication_upgrade_schema"
+    # Verify head is 004_auth_upgrade_schema and down revision chain leads back to None
+    curr = "004_auth_upgrade_schema"
     assert curr in revisions
     visited = []
     while curr is not None:
@@ -126,7 +126,7 @@ def test_alembic_migration_chain_is_linear():
         curr = down_revisions.get(curr)
 
     assert visited == [
-        "004_authentication_upgrade_schema",
+        "004_auth_upgrade_schema",
         "003_qualitative_feedback_schema",
         "9ee7090d2edc",
         "002_user_personalization_schema",
