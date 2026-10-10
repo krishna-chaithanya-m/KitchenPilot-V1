@@ -115,7 +115,8 @@ def test_pagination_contract(client: TestClient):
     assert len(data1["recipes"]) == 3
     assert data1["page"] == 1
     assert data1["page_size"] == 3
-    assert data1["total"] > 6000
+    assert data1["total"] < 6871
+    assert data1["total"] > 4000
 
     r2 = client.get("/api/v1/recipes?page=2&page_size=3")
     assert r2.status_code == 200

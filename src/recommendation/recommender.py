@@ -18,6 +18,7 @@ from src.ranking.features import RankingContext
 from src.ranking.xgboost_ranker import XGBoostRanker
 from src.personalization.features import UserPersonalizationContext
 from src.personalization.scorer import PersonalizationScorer
+from src.data.cuisine_policy import is_indian_cuisine
 from src.recommendation.config import RecommendationConfig
 from src.recommendation.explainability import ExplanationGenerator
 from src.recommendation.hybrid_ranker import HybridRanker, ScoredCandidate
@@ -152,7 +153,13 @@ class KitchenPilotRecommender:
         if self.tfidf_model.tfidf_matrix is None:
             raise RuntimeError("TF-IDF model artifacts not loaded. Please build the model first.")
 
-        all_rids = self.tfidf_model.recipe_ids
+        # Only approved Indian-cuisine recipes are eligible for recommendations.
+        all_rids = [
+            rid for rid in self.tfidf_model.recipe_ids
+            if is_indian_cuisine(
+                self._recipe_metadata.get(rid, {}).get("cuisine")
+            )
+        ]
         prefs = user_preferences or UserPreferences()
         goals = nutrition_goals or NutritionGoals()
 
@@ -222,7 +229,7 @@ class KitchenPilotRecommender:
             query_vec = self.tfidf_model.transform_text(query_text)
             sim_scores_all = self.tfidf_model.compute_similarity_scores(query_vec)
         else:
-            sim_scores_all = np.zeros(len(all_rids), dtype=float)
+            sim_scores_all = np.zeros(len(self.tfidf_model.recipe_ids), dtype=float)
 
         # Map candidate scores
         recipe_to_row = self.tfidf_model.recipe_to_row
@@ -233,8 +240,13 @@ class KitchenPilotRecommender:
         total_avail = len(available_ingredients) if available_ingredients else 0
 
         for rid in candidates_rids:
-            row_idx = recipe_to_row[rid]
-            sim_score = float(sim_scores_all[row_idx])
+            if not is_indian_cuisine(self._recipe_metadata.get(rid, {}).get("cuisine")):
+                continue
+            row_idx = recipe_to_row.get(rid)
+            if row_idx is not None and 0 <= row_idx < len(sim_scores_all):
+                sim_score = float(sim_scores_all[row_idx])
+            else:
+                sim_score = 0.0
 
             # Pillar 2: Ingredient match
             ing_res = self.ingredient_matcher.match_recipe(
@@ -385,13 +397,35 @@ class KitchenPilotRecommender:
                 disliked_ingredients=list(combined_disliked),
             )
 
-        # 1. Semantic retrieval for top candidate_k recipes
-        semantic_results = self.semantic_retriever.retrieve(query=query, top_k=candidate_k)
+        # 1. Semantic retrieval with bounded initial batch (avoiding full-corpus scan unless needed)
+        total_corpus = len(self.semantic_retriever.recipe_ids) if self.semantic_retriever.recipe_ids else candidate_k
+        initial_k = min(total_corpus, max(candidate_k * 2, 100))
+        semantic_results = self.semantic_retriever.retrieve(query=query, top_k=initial_k)
         if not semantic_results:
             return pd.DataFrame(columns=RECOMMENDATION_COLUMNS)
 
-        # 2. Hard filter candidates
-        candidate_map = {r.recipe_id: r.score for r in semantic_results}
+        # 2. Hard filter candidates strictly to approved Indian cuisine in descending similarity order
+        candidate_map: Dict[str, float] = {}
+        for r in semantic_results:
+            cuisine = self._recipe_metadata.get(r.recipe_id, {}).get("cuisine")
+            if is_indian_cuisine(cuisine):
+                candidate_map[r.recipe_id] = r.score
+                if len(candidate_map) >= candidate_k:
+                    break
+
+        # Fallback expansion: if the bounded batch yielded fewer than candidate_k approved recipes,
+        # expand retrieval across the full corpus to ensure sufficient eligible candidates
+        if len(candidate_map) < candidate_k and initial_k < total_corpus:
+            expanded_results = self.semantic_retriever.retrieve(query=query, top_k=total_corpus)
+            for r in expanded_results[initial_k:]:
+                cuisine = self._recipe_metadata.get(r.recipe_id, {}).get("cuisine")
+                if is_indian_cuisine(cuisine):
+                    candidate_map[r.recipe_id] = r.score
+                    if len(candidate_map) >= candidate_k:
+                        break
+
+        if not candidate_map:
+            return pd.DataFrame(columns=RECOMMENDATION_COLUMNS)
         eval_map: Dict[str, Any] = {}
 
         if constraint_request is not None and getattr(self.config, "constraint_engine_enabled", True):
@@ -417,6 +451,9 @@ class KitchenPilotRecommender:
         # 3. Score passing candidates across pillars
         scored_candidates: List[ScoredCandidate] = []
         for rid in passing_rids:
+            # Conservative defense-in-depth: ensure recipe cuisine is approved
+            if not is_indian_cuisine(self._recipe_metadata.get(rid, {}).get("cuisine")):
+                continue
             sim_score = candidate_map[rid]
             ing_res = self.ingredient_matcher.match_recipe(
                 recipe_id=rid,

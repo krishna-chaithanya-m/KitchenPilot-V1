@@ -22,6 +22,8 @@ from src.db.models import (
     RecipeNutritionModel,
 )
 from src.db.session import get_db_session
+from src.data.cuisine_policy import INDIAN_CUISINES, is_indian_cuisine, normalize_cuisine
+
 
 logger = logging.getLogger("kitchenpilot.repository")
 
@@ -94,18 +96,18 @@ class PostgresRecipeStore(BaseRecipeStore):
     """Production PostgreSQL-backed implementation of BaseRecipeStore."""
 
     def exists(self, recipe_id: str) -> bool:
-        """Check existence of a recipe in PostgreSQL."""
+        """Check whether an approved Indian recipe exists in PostgreSQL."""
         with get_db_session() as session:
-            stmt = select(func.count()).select_from(RecipeModel).where(RecipeModel.recipe_id == recipe_id)
-            count = session.scalar(stmt) or 0
-            return count > 0
+            stmt = select(RecipeModel.cuisine).where(RecipeModel.recipe_id == recipe_id)
+            cuisine = session.scalar(stmt)
+            return is_indian_cuisine(cuisine)
 
     def get_recipe(self, recipe_id: str) -> Optional[RecipeDetailResponse]:
         """Fetch recipe detail with embedded nutrition from PostgreSQL."""
         with get_db_session() as session:
             stmt = select(RecipeModel).where(RecipeModel.recipe_id == recipe_id)
             recipe = session.scalar(stmt)
-            if not recipe:
+            if not recipe or not is_indian_cuisine(recipe.cuisine):
                 return None
 
             nut_detail: Optional[RecipeNutritionDetail] = None
@@ -164,7 +166,16 @@ class PostgresRecipeStore(BaseRecipeStore):
     def get_nutrition(self, recipe_id: str) -> Optional[RecipeNutritionDetail]:
         """Fetch standalone nutrition detail from PostgreSQL."""
         with get_db_session() as session:
-            stmt = select(RecipeNutritionModel).where(RecipeNutritionModel.recipe_id == recipe_id)
+            recipe_stmt = select(RecipeModel.cuisine).where(
+                RecipeModel.recipe_id == recipe_id
+            )
+            cuisine = session.scalar(recipe_stmt)
+            if not is_indian_cuisine(cuisine):
+                return None
+
+            stmt = select(RecipeNutritionModel).where(
+                RecipeNutritionModel.recipe_id == recipe_id
+            )
             n = session.scalar(stmt)
             if not n:
                 return None
@@ -205,11 +216,22 @@ class PostgresRecipeStore(BaseRecipeStore):
         jain: Optional[bool] = None,
         satvik: Optional[bool] = None,
     ) -> Tuple[List[RecipeSummary], int, int]:
-        """Paginated, filtered list of recipe summaries from PostgreSQL."""
+        """Paginated list restricted to approved Indian-cuisine recipes."""
         with get_db_session() as session:
-            stmt = select(RecipeModel)
-            if cuisine:
-                stmt = stmt.where(func.lower(RecipeModel.cuisine) == cuisine.lower().strip())
+            # Push approved Indian cuisine allow-list directly into SQL query
+            # Normalizes mixed case, leading/trailing whitespace, and repeated internal whitespace
+            normalized_cuisine_expr = func.trim(
+                func.regexp_replace(func.lower(RecipeModel.cuisine), r"\s+", " ", "g")
+            )
+            stmt = select(RecipeModel).where(
+                normalized_cuisine_expr.in_(list(INDIAN_CUISINES))
+            )
+            if cuisine is not None:
+                if is_indian_cuisine(cuisine):
+                    norm_cuisine = normalize_cuisine(cuisine)
+                    stmt = stmt.where(normalized_cuisine_expr == norm_cuisine)
+                else:
+                    stmt = stmt.where(RecipeModel.recipe_id == "__NO_MATCH__")
             if region:
                 stmt = stmt.where(func.lower(RecipeModel.region) == region.lower().strip())
             if meal_type:
@@ -225,11 +247,13 @@ class PostgresRecipeStore(BaseRecipeStore):
             if satvik is not None:
                 stmt = stmt.where(RecipeModel.satvik == satvik)
 
+            # Total count computed in SQL without pulling rows into Python
             count_stmt = select(func.count()).select_from(stmt.subquery())
             total = session.scalar(count_stmt) or 0
             total_pages = max(1, math.ceil(total / page_size)) if total > 0 else 1
 
-            offset = (page - 1) * page_size
+            # Bounded SQL-level pagination
+            offset = max(0, (page - 1) * page_size)
             records_stmt = stmt.order_by(RecipeModel.recipe_id).offset(offset).limit(page_size)
             results = session.scalars(records_stmt).all()
 
@@ -254,10 +278,16 @@ class PostgresRecipeStore(BaseRecipeStore):
                 for r in results
             ]
             return summaries, total, total_pages
-
     def get_recipe_ingredients(self, recipe_id: str) -> List[Dict[str, Any]]:
         """Fetch parsed recipe ingredient lines for a recipe from PostgreSQL."""
         with get_db_session() as session:
+            recipe_stmt = select(RecipeModel.cuisine).where(
+                RecipeModel.recipe_id == recipe_id
+            )
+            cuisine = session.scalar(recipe_stmt)
+            if not is_indian_cuisine(cuisine):
+                return []
+
             stmt = (
                 select(RecipeIngredientModel)
                 .where(RecipeIngredientModel.recipe_id == recipe_id)

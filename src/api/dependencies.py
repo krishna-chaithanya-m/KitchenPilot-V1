@@ -75,6 +75,7 @@ def _calc_confidence(quality: Optional[str]) -> float:
 
 
 from src.data.repository import BaseRecipeStore, PostgresRecipeStore
+from src.data.cuisine_policy import is_indian_cuisine, normalize_cuisine
 
 
 class RecipeStore(BaseRecipeStore):
@@ -98,8 +99,24 @@ class RecipeStore(BaseRecipeStore):
             return
 
         logger.info("Loading recipe catalog and nutrition data into RecipeStore...")
-        self.recipes_df = pd.read_csv(RECIPES_PATH, low_memory=False)
-        self.nutrition_df = pd.read_csv(RECIPE_NUTRITION_PATH, low_memory=False)
+        all_recipes_df = pd.read_csv(RECIPES_PATH, low_memory=False)
+        original_count = len(all_recipes_df)
+
+        self.recipes_df = all_recipes_df[
+            all_recipes_df["cuisine"].apply(is_indian_cuisine)
+        ].copy()
+        eligible_ids = set(self.recipes_df["recipe_id"].astype(str).str.strip())
+
+        all_nutrition_df = pd.read_csv(RECIPE_NUTRITION_PATH, low_memory=False)
+        self.nutrition_df = all_nutrition_df[
+            all_nutrition_df["recipe_id"].astype(str).str.strip().isin(eligible_ids)
+        ].copy()
+
+        logger.info(
+            "Indian-only catalog filter: %d eligible recipes; %d excluded.",
+            len(self.recipes_df),
+            original_count - len(self.recipes_df),
+        )
 
         # Index nutrition by recipe_id
         for _, row in self.nutrition_df.iterrows():
@@ -207,8 +224,12 @@ class RecipeStore(BaseRecipeStore):
         """Paginated, filtered list of recipe summaries."""
         filtered = self.recipes_df
 
-        if cuisine:
-            filtered = filtered[filtered["cuisine"].astype(str).str.lower() == cuisine.lower().strip()]
+        if cuisine is not None:
+            if is_indian_cuisine(cuisine):
+                norm_cuisine = normalize_cuisine(cuisine)
+                filtered = filtered[filtered["cuisine"].apply(normalize_cuisine) == norm_cuisine]
+            else:
+                filtered = filtered.iloc[0:0]
         if region:
             filtered = filtered[filtered["region"].astype(str).str.lower() == region.lower().strip()]
         if meal_type:

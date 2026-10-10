@@ -29,6 +29,7 @@ from src.recommendation import (
     RecommendationConfig,
     UserPreferences,
 )
+from src.data.cuisine_policy import is_indian_cuisine
 from src.evaluation import RecommendationMetricsEvaluator
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -234,3 +235,240 @@ def test_bitter_gourd_disliked_soft_penalty(recommender):
         save_results=False,
     )
     assert len(recs) == 5
+
+
+def test_standard_recommendations_enforce_indian_only_and_handle_high_row_indices(recommender):
+    """Verify standard recommendations return only approved Indian recipes and handle TF-IDF indices > 4724."""
+    # Test Mode A with non-Indian seed recipe 'R00008'
+    recs_a = recommender.recommend(query_recipe_id="R00008", top_k=10, save_results=False)
+    assert len(recs_a) == 10
+    assert "R00008" not in recs_a["recipe_id"].values
+    for rid in recs_a["recipe_id"]:
+        cuisine = recommender._recipe_metadata.get(rid, {}).get("cuisine")
+        assert is_indian_cuisine(cuisine), f"Non-Indian recipe returned in Mode A: {rid} ({cuisine})"
+
+    # Test Mode B with ingredients and dietary preferences
+    recs_b = recommender.recommend(
+        available_ingredients=["paneer", "onion", "tomato"],
+        user_preferences=UserPreferences(vegetarian=True),
+        top_k=10,
+        save_results=False,
+    )
+    assert len(recs_b) == 10
+    for rid in recs_b["recipe_id"]:
+        cuisine = recommender._recipe_metadata.get(rid, {}).get("cuisine")
+        assert is_indian_cuisine(cuisine), f"Non-Indian recipe returned in Mode B: {rid} ({cuisine})"
+
+    # Test empty ingredients zero-similarity path (specifically testing candidates with row_idx > 4724)
+    recs_empty = recommender.recommend(available_ingredients=[], top_k=20, save_results=False)
+    assert len(recs_empty) == 20
+    # Check that high row-index recipes exist in candidate pool and don't cause IndexError
+    high_index_rids = [
+        rid for rid in recommender.tfidf_model.recipe_ids
+        if recommender.tfidf_model.recipe_to_row.get(rid, 0) >= 4724
+        and is_indian_cuisine(recommender._recipe_metadata.get(rid, {}).get("cuisine"))
+    ]
+    assert len(high_index_rids) > 0, "Expected approved Indian recipes with original TF-IDF row index >= 4724"
+    # Ensure recipe 4922 specifically exists in TF-IDF index
+    recipe_4922 = recommender.tfidf_model.row_to_recipe.get(4922)
+    assert recipe_4922 is not None
+
+
+def test_semantic_recommendations_enforce_indian_only(recommender):
+    """Verify semantic recommendations return only approved Indian recipes even for international queries."""
+    # South Indian query
+    recs_south = recommender.recommend_semantic(
+        query="vegetarian South Indian breakfast with lentils",
+        top_k=5,
+        save_results=False,
+    )
+    assert len(recs_south) == 5
+    for rid in recs_south["recipe_id"]:
+        cuisine = recommender._recipe_metadata.get(rid, {}).get("cuisine")
+        assert is_indian_cuisine(cuisine), f"Non-Indian recipe in semantic search: {rid} ({cuisine})"
+
+    # International query (e.g. pasta) - ensure returned items are approved Indian dishes
+    recs_pasta = recommender.recommend_semantic(
+        query="spaghetti pasta bolognese",
+        top_k=5,
+        save_results=False,
+    )
+    assert len(recs_pasta) > 0
+    for rid in recs_pasta["recipe_id"]:
+        cuisine = recommender._recipe_metadata.get(rid, {}).get("cuisine")
+        assert is_indian_cuisine(cuisine), f"Non-Indian recipe in pasta query: {rid} ({cuisine})"
+
+
+def test_non_indian_and_missing_cuisine_metadata_strictly_excluded(recommender):
+    """Verify that recipes with missing, empty, or unapproved cuisine metadata are never recommended."""
+    # Known non-Indian recipes in corpus
+    non_indian_sample = {"R00008", "R00011", "R00012", "R00019", "R00023"}
+    for seed in ["R00001", "R00006"]:
+        recs = recommender.recommend(query_recipe_id=seed, top_k=20, save_results=False)
+        for rid in recs["recipe_id"]:
+            assert rid not in non_indian_sample, f"Non-Indian recipe {rid} leaked into recommendations"
+            meta = recommender._recipe_metadata.get(rid, {})
+            assert is_indian_cuisine(meta.get("cuisine")), f"Recipe {rid} has unapproved cuisine: {meta.get('cuisine')}"
+
+    # Verify that a recipe with empty or missing cuisine metadata is excluded
+    dummy_rid = "MOCK_UNKNOWN_RID_99999"
+    # Even if present in tfidf_model.recipe_ids, absence of approved metadata excludes it
+    assert is_indian_cuisine(recommender._recipe_metadata.get(dummy_rid, {}).get("cuisine")) is False
+
+
+def test_candidate_pool_recipe_with_missing_or_unapproved_metadata_cannot_be_recommended(recommender):
+    """Verify that any recipe in the candidate pool with missing or unapproved cuisine metadata cannot be recommended."""
+    # 1. Standard recommendation (Mode A): Take a top candidate and corrupt its metadata
+    base_recs = recommender.recommend(query_recipe_id="R00001", top_k=5, save_results=False)
+    assert len(base_recs) > 0
+    target_rid = base_recs["recipe_id"].iloc[0]
+    orig_meta = recommender._recipe_metadata[target_rid].copy()
+
+    try:
+        # A. Unapproved international cuisine
+        recommender._recipe_metadata[target_rid]["cuisine"] = "Mexican"
+        recs = recommender.recommend(query_recipe_id="R00001", top_k=5, save_results=False)
+        assert target_rid not in recs["recipe_id"].values
+
+        # B. None cuisine
+        recommender._recipe_metadata[target_rid]["cuisine"] = None
+        recs = recommender.recommend(query_recipe_id="R00001", top_k=5, save_results=False)
+        assert target_rid not in recs["recipe_id"].values
+
+        # C. Empty string cuisine
+        recommender._recipe_metadata[target_rid]["cuisine"] = ""
+        recs = recommender.recommend(query_recipe_id="R00001", top_k=5, save_results=False)
+        assert target_rid not in recs["recipe_id"].values
+
+        # D. Completely missing metadata entry
+        del recommender._recipe_metadata[target_rid]
+        recs = recommender.recommend(query_recipe_id="R00001", top_k=5, save_results=False)
+        assert target_rid not in recs["recipe_id"].values
+    finally:
+        recommender._recipe_metadata[target_rid] = orig_meta
+
+    # 2. Semantic retrieval candidate pool injection:
+    # Directly inject candidate with unapproved and missing cuisine into retriever output
+    from src.retrieval.base import RetrievalResult
+
+    real_retrieve = recommender.semantic_retriever.retrieve
+
+    unapproved_id = "MOCK_UNAPPROVED_CANDIDATE"
+    missing_id = "MOCK_MISSING_CANDIDATE"
+    recommender._recipe_metadata[unapproved_id] = {
+        "recipe_name": "Unapproved Burrito",
+        "cuisine": "Mexican",
+        "vegetarian": True,
+        "vegan": False,
+        "jain": False,
+        "satvik": False,
+    }
+    # missing_id is intentionally not in _recipe_metadata at all
+
+    def mock_retrieve_with_injected(query, top_k):
+        raw = real_retrieve(query, top_k)
+        # Inject at the very top with 1.0 similarity score
+        return [
+            RetrievalResult(unapproved_id, 1.0, 1, "semantic"),
+            RetrievalResult(missing_id, 0.99, 2, "semantic"),
+        ] + list(raw)
+
+    try:
+        recommender.semantic_retriever.retrieve = mock_retrieve_with_injected
+        sem_recs = recommender.recommend_semantic(query="paneer tikka", top_k=5, save_results=False)
+        assert unapproved_id not in sem_recs["recipe_id"].values
+        assert missing_id not in sem_recs["recipe_id"].values
+        for r_id in sem_recs["recipe_id"]:
+            cuisine = recommender._recipe_metadata.get(r_id, {}).get("cuisine")
+            assert is_indian_cuisine(cuisine)
+    finally:
+        recommender.semantic_retriever.retrieve = real_retrieve
+        recommender._recipe_metadata.pop(unapproved_id, None)
+
+
+def test_semantic_recommendations_bounded_retrieval_and_candidate_limit(recommender):
+    """Verify semantic retrieval retrieves candidates in bounded batches without full-corpus scan when possible."""
+    real_retrieve = recommender.semantic_retriever.retrieve
+    call_log = []
+
+    def mock_retrieve(query, top_k):
+        call_log.append(top_k)
+        return real_retrieve(query, top_k)
+
+    try:
+        recommender.semantic_retriever.retrieve = mock_retrieve
+        recs = recommender.recommend_semantic(
+            query="South Indian sambar and idli",
+            top_k=5,
+            candidate_k=20,
+            save_results=False,
+        )
+        assert len(recs) == 5
+        # Total corpus has thousands of recipes (e.g. 6871)
+        total_corpus = len(recommender.semantic_retriever.recipe_ids)
+        assert total_corpus > 1000
+
+        # Initial call should be bounded: min(total_corpus, max(20 * 2, 100)) = 100
+        assert len(call_log) == 1
+        assert call_log[0] == 100
+        assert call_log[0] < total_corpus
+
+        for rid in recs["recipe_id"]:
+            assert is_indian_cuisine(recommender._recipe_metadata.get(rid, {}).get("cuisine"))
+    finally:
+        recommender.semantic_retriever.retrieve = real_retrieve
+
+
+def test_semantic_recommendations_fallback_expansion(recommender):
+    """Verify fallback expansion triggers when initial bounded batch yields insufficient approved recipes."""
+    from src.retrieval.base import RetrievalResult
+
+    real_retrieve = recommender.semantic_retriever.retrieve
+    call_log = []
+
+    # Get real Indian recipe IDs
+    indian_ids = [
+        rid for rid in recommender.semantic_retriever.recipe_ids
+        if is_indian_cuisine(recommender._recipe_metadata.get(rid, {}).get("cuisine"))
+    ][:10]
+
+    def mock_retrieve(query, top_k):
+        call_log.append(top_k)
+        if len(call_log) == 1:
+            # First bounded call: return mostly non-Indian results and only 1 Indian result
+            fake_results = [
+                RetrievalResult(f"NON_INDIAN_{i}", 0.95 - (i * 0.001), i + 1, "semantic")
+                for i in range(top_k - 1)
+            ]
+            fake_results.append(RetrievalResult(indian_ids[0], 0.96, top_k, "semantic"))
+            # Set metadata for fake non-Indian
+            for f in fake_results[:-1]:
+                recommender._recipe_metadata[f.recipe_id] = {"cuisine": "Continental", "vegetarian": True}
+            return fake_results
+        else:
+            # Fallback expanded call: return full corpus with real retriever
+            return real_retrieve(query, top_k)
+
+    try:
+        recommender.semantic_retriever.retrieve = mock_retrieve
+        recs = recommender.recommend_semantic(
+            query="traditional breakfast",
+            top_k=5,
+            candidate_k=5,
+            save_results=False,
+        )
+        # Should have called retrieve twice: first bounded, then fallback expanded
+        assert len(call_log) == 2
+        assert call_log[0] == 100
+        assert call_log[1] == len(recommender.semantic_retriever.recipe_ids)
+
+        assert len(recs) == 5
+        for rid in recs["recipe_id"]:
+            assert is_indian_cuisine(recommender._recipe_metadata.get(rid, {}).get("cuisine"))
+            assert not rid.startswith("NON_INDIAN_")
+    finally:
+        recommender.semantic_retriever.retrieve = real_retrieve
+        # Clean up any temporary fake metadata
+        for k in list(recommender._recipe_metadata.keys()):
+            if k.startswith("NON_INDIAN_"):
+                del recommender._recipe_metadata[k]

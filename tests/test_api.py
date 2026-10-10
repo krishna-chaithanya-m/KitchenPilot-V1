@@ -81,8 +81,9 @@ def test_recipe_listing(client: TestClient) -> None:
     data = response.json()
     assert data["page"] == 1
     assert data["page_size"] == 10
-    assert data["total"] > 6000
-    assert data["total_pages"] >= 600
+    assert data["total"] < 6871
+    assert data["total"] > 4000
+    assert data["total_pages"] >= 400
     assert len(data["recipes"]) == 10
     first = data["recipes"][0]
     assert "recipe_id" in first
