@@ -23,7 +23,37 @@ CANONICAL_FILE_PATH = Path("data/processed/ingredients.csv")
 CNF_CURATION_PATH = Path("data/mappings/cnf_ingredient_mapping_curated.csv")
 
 # Dietary and allergen rule inference based on category and canonical name
-NON_VEGETARIAN_NAMES = {"chicken", "mutton", "fish", "prawn", "egg", "meat", "pork", "beef"}
+NON_VEGETARIAN_NAMES = {
+    "chicken",
+    "mutton",
+    "fish",
+    "prawn",
+    "prawns",
+    "shrimp",
+    "shrimps",
+    "crab",
+    "crabs",
+    "lobster",
+    "egg",
+    "eggs",
+    "meat",
+    "pork",
+    "beef",
+    "lamb",
+    "bacon",
+    "ham",
+    "seafood",
+    "squid",
+    "keema",
+    "kheema",
+    "gosht",
+    "maach",
+    "machh",
+    "machli",
+    "murgh",
+    "murg",
+    "baida",
+}
 NON_VEGAN_CATEGORIES = {"dairy", "meat", "egg"}
 NON_VEGAN_NAMES = {"milk", "curd", "yogurt", "paneer", "ghee", "butter", "cheese", "cream", "honey", "egg", "chicken"}
 

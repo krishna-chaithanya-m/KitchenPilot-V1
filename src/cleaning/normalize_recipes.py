@@ -46,13 +46,27 @@ def normalize_diet(diet):
     """Convert dataset diet labels into standardized flags."""
     diet = clean_text(diet).lower()
 
+    is_non_veg = (
+        "non" in diet
+        or "eggetarian" in diet
+        or "meat" in diet
+        or "fish" in diet
+        or "chicken" in diet
+        or "seafood" in diet
+    )
+    is_vegan = "vegan" in diet
+    is_satvik = (
+        "sattvic" in diet or "satvik" in diet or "no onion no garlic" in diet
+    )
+    is_veg = not is_non_veg and (
+        "vegetarian" in diet or is_vegan or is_satvik
+    )
+
     return {
-        "vegetarian": "vegetarian" in diet,
-        "vegan": "vegan" in diet,
+        "vegetarian": is_veg,
+        "vegan": is_vegan and not is_non_veg,
         "jain": False,
-        "satvik": (
-            "sattvic" in diet or "satvik" in diet or "no onion no garlic" in diet
-        ),
+        "satvik": is_satvik and not is_non_veg,
     }
 
 

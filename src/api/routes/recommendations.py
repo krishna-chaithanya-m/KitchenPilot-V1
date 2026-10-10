@@ -115,23 +115,18 @@ def _build_constraint_request(
 
     # Dietary
     diet = DietaryConstraints()
-    if getattr(request, "dietary_constraints", None) is not None:
-        dc = request.dietary_constraints
-        diet.vegetarian = dc.vegetarian
-        diet.vegan = dc.vegan
-        diet.jain = dc.jain
-        diet.satvik = dc.satvik
-    elif getattr(request, "user_preferences", None) is not None:
-        up = request.user_preferences
-        diet.vegetarian = up.vegetarian
-        diet.vegan = up.vegan
-        diet.jain = up.jain
-        diet.satvik = up.satvik
-    elif user_context is not None:
-        diet.vegetarian = getattr(user_context, "vegetarian", None)
-        diet.vegan = getattr(user_context, "vegan", None)
-        diet.jain = getattr(user_context, "jain", None)
-        diet.satvik = getattr(user_context, "satvik", None)
+    dc = getattr(request, "dietary_constraints", None)
+    up = getattr(request, "user_preferences", None)
+
+    for field in ("vegetarian", "vegan", "jain", "satvik"):
+        val = None
+        if dc is not None and getattr(dc, field, None) is not None:
+            val = getattr(dc, field)
+        elif up is not None and getattr(up, field, None) is not None:
+            val = getattr(up, field)
+        elif user_context is not None and getattr(user_context, field, None) is not None:
+            val = getattr(user_context, field)
+        setattr(diet, field, val)
 
     # Allergens
     allergens_list = []

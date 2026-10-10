@@ -13,6 +13,8 @@ from typing import Dict, List, Optional, Set, Tuple, Union
 
 import pandas as pd
 
+from src.constraints.dietary import DietaryRuleEngine
+from src.constraints.models import DietaryConstraints
 from src.recommendation.config import RecommendationConfig
 from src.recommendation.ingredient_matcher import IngredientMatcher
 
@@ -46,6 +48,7 @@ class PreferenceFilter:
         self.config = config or RecommendationConfig()
         self._recipes_metadata: Dict[str, Dict[str, any]] = {}
         self._load_recipes_metadata()
+        self._dietary_engine = DietaryRuleEngine(recipes_path=self.config.recipes_path)
 
     def _load_recipes_metadata(self) -> None:
         """Load recipe metadata relevant to dietary filtering and preferences."""
@@ -86,30 +89,21 @@ class PreferenceFilter:
         if not meta:
             return False
 
-        rname_lower = meta["recipe_name"].lower()
-        diet_lower = meta["diet_type"].lower()
-
-        # 1. Vegetarian
-        if preferences.vegetarian is True:
-            if not meta["vegetarian"]:
-                return False
-
-        # 2. Vegan
-        if preferences.vegan is True:
-            is_vegan = meta["vegan"] or ("vegan" in diet_lower) or ("vegan" in rname_lower)
-            if not is_vegan:
-                return False
-
-        # 3. Jain
-        if preferences.jain is True:
-            is_jain = meta["jain"] or ("jain" in diet_lower) or ("jain" in rname_lower)
-            if not is_jain:
-                return False
-
-        # 4. Satvik
-        if preferences.satvik is True:
-            is_satvik = meta["satvik"] or ("sattvic" in diet_lower) or ("satvik" in diet_lower)
-            if not is_satvik:
+        # 1-4. Dietary constraints (Vegetarian, Vegan, Jain, Satvik) evaluated via canonical rule engine
+        if any([
+            preferences.vegetarian is True,
+            preferences.vegan is True,
+            preferences.jain is True,
+            preferences.satvik is True,
+        ]):
+            diet_c = DietaryConstraints(
+                vegetarian=preferences.vegetarian,
+                vegan=preferences.vegan,
+                jain=preferences.jain,
+                satvik=preferences.satvik,
+            )
+            passed, _, _ = self._dietary_engine.evaluate_dietary_compliance(recipe_id, diet_c)
+            if not passed:
                 return False
 
         # 5. Total time limit
