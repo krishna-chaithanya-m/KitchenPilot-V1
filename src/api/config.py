@@ -56,6 +56,10 @@ RECIPE_INDEX_PATH = RECOMMENDATION_MODELS_DIR / "recipe_index.csv"
 SEMANTIC_RETRIEVAL_ENABLED: bool = (
     os.getenv("SEMANTIC_RETRIEVAL_ENABLED", "false").lower().strip() in ("true", "1", "yes")
 )
+SEMANTIC_INFERENCE_BACKEND: str = os.getenv("SEMANTIC_INFERENCE_BACKEND", "onnx").lower().strip()
+SEMANTIC_ONNX_MODEL_PATH: Optional[Path] = (
+    Path(os.getenv("SEMANTIC_ONNX_MODEL_PATH")) if os.getenv("SEMANTIC_ONNX_MODEL_PATH") else None
+)
 SEMANTIC_MODEL_NAME: str = os.getenv("SEMANTIC_MODEL_NAME", "BAAI/bge-small-en-v1.5")
 SEMANTIC_TOP_K: int = int(os.getenv("SEMANTIC_TOP_K", "50"))
 TFIDF_TOP_K: int = int(os.getenv("TFIDF_TOP_K", "50"))

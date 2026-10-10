@@ -21,11 +21,15 @@ from src.api.config import (
     CORS_ALLOW_CREDENTIALS,
     ENVIRONMENT,
     LOG_LEVEL,
+    SEMANTIC_INFERENCE_BACKEND,
+    SEMANTIC_ONNX_MODEL_PATH,
+    SEMANTIC_RETRIEVAL_ENABLED,
     validate_production_configuration,
 )
 from src.api.dependencies import RecipeStore, create_recipe_store
 from src.api.middleware import RequestCorrelationAndSecurityMiddleware
 from src.api.routes import auth, health, recipes, recommendations, user
+from src.recommendation.config import RecommendationConfig
 from src.recommendation.recommender import KitchenPilotRecommender
 
 # Configure server-side logging with configurable level
@@ -52,9 +56,29 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
             raise RuntimeError(f"Production configuration validation failed: {'; '.join(config_errors)}")
 
     try:
-        # Load recommendation engine once
-        recommender = KitchenPilotRecommender()
+        # Load recommendation engine once with configured semantic settings
+        rec_config = RecommendationConfig(
+            semantic_retrieval_enabled=SEMANTIC_RETRIEVAL_ENABLED,
+            semantic_inference_backend=SEMANTIC_INFERENCE_BACKEND,
+            semantic_onnx_model_path=SEMANTIC_ONNX_MODEL_PATH,
+        )
+        recommender = KitchenPilotRecommender(config=rec_config)
         app.state.recommender = recommender
+
+        # Pre-warm semantic retriever at startup if explicitly enabled
+        if SEMANTIC_RETRIEVAL_ENABLED:
+            try:
+                recommender._load_semantic_retriever()
+                logger.info(
+                    "Semantic retriever pre-warmed at startup (backend: %s).",
+                    SEMANTIC_INFERENCE_BACKEND,
+                )
+            except Exception as exc:
+                logger.warning(
+                    "Semantic retriever pre-warming failed at startup: %s. Endpoint will return 503.",
+                    exc,
+                )
+                recommender.semantic_retriever = None
 
         # Load indexed recipe and nutrition catalog once via repository abstraction
         recipe_store = create_recipe_store()

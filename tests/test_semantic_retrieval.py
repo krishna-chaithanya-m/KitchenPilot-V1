@@ -374,25 +374,48 @@ def test_failure_handling_corrupted_dimension(tmp_path: Path):
 # ============================================================================
 
 def test_api_recommend_semantic_success():
-    """Verify POST /api/v1/recommend/semantic returns valid 200 response with recommendations."""
+    """Verify POST /api/v1/recommend/semantic returns valid 200 response with recommendations when enabled."""
     with TestClient(app) as client:
-        payload = {
-            "query": "vegetarian South Indian breakfast with lentils",
-            "top_k": 5,
-            "user_preferences": {"vegetarian": True},
-        }
-        response = client.post("/api/v1/recommend/semantic", json=payload)
-        assert response.status_code == 200
-        data = response.json()
-        assert data["count"] == 5
-        assert len(data["recommendations"]) == 5
-        rec0 = data["recommendations"][0]
-        assert "recipe_id" in rec0
-        assert "recipe_name" in rec0
-        assert "hybrid_score" in rec0
-        assert "similarity_score" in rec0
-        assert "explanation" in rec0
-        assert "embedding" not in rec0
+        orig_flag = getattr(app.state.recommender.config, "semantic_retrieval_enabled", False)
+        app.state.recommender.config.semantic_retrieval_enabled = True
+        try:
+            payload = {
+                "query": "vegetarian South Indian breakfast with lentils",
+                "top_k": 5,
+                "user_preferences": {"vegetarian": True},
+            }
+            response = client.post("/api/v1/recommend/semantic", json=payload)
+            assert response.status_code == 200
+            data = response.json()
+            assert data["count"] == 5
+            assert len(data["recommendations"]) == 5
+            rec0 = data["recommendations"][0]
+            assert "recipe_id" in rec0
+            assert "recipe_name" in rec0
+            assert "hybrid_score" in rec0
+            assert "similarity_score" in rec0
+            assert "explanation" in rec0
+            assert "embedding" not in rec0
+        finally:
+            app.state.recommender.config.semantic_retrieval_enabled = orig_flag
+
+
+def test_api_recommend_semantic_disabled_returns_503():
+    """Verify POST /api/v1/recommend/semantic returns 503 Service Unavailable when feature is disabled."""
+    with TestClient(app) as client:
+        orig_flag = getattr(app.state.recommender.config, "semantic_retrieval_enabled", False)
+        app.state.recommender.config.semantic_retrieval_enabled = False
+        try:
+            payload = {
+                "query": "vegetarian South Indian breakfast with lentils",
+                "top_k": 5,
+            }
+            response = client.post("/api/v1/recommend/semantic", json=payload)
+            assert response.status_code == 503
+            data = response.json()
+            assert "disabled" in data["detail"].lower()
+        finally:
+            app.state.recommender.config.semantic_retrieval_enabled = orig_flag
 
 
 def test_api_recommend_semantic_validation_error():
@@ -400,3 +423,171 @@ def test_api_recommend_semantic_validation_error():
     with TestClient(app) as client:
         response = client.post("/api/v1/recommend/semantic", json={"query": "   ", "top_k": 5})
         assert response.status_code == 422
+
+
+# ============================================================================
+# 11. ONNX Backend & Parity Tests
+# ============================================================================
+
+def test_bge_embedder_onnx_backend():
+    """Verify BGEEmbedder loads via ONNX runtime, generates 384-d normalized vector deterministically."""
+    embedder = BGEEmbedder(backend="onnx")
+    assert embedder.backend == "onnx"
+
+    vec = embedder.encode_text("crispy masala dosa with sambar")
+    assert isinstance(vec, np.ndarray)
+    assert vec.shape == (384,)
+    assert vec.dtype == np.float32
+
+    # L2 unit norm
+    norm = float(np.linalg.norm(vec))
+    assert abs(norm - 1.0) < 1e-4
+
+    # Determinism
+    vec2 = embedder.encode_text("crispy masala dosa with sambar")
+    np.testing.assert_allclose(vec, vec2, atol=1e-6)
+
+    # Batch encoding
+    batch = embedder.encode_batch(["recipe one", "recipe two"], batch_size=2)
+    assert batch.shape == (2, 384)
+    for row in batch:
+        assert abs(float(np.linalg.norm(row)) - 1.0) < 1e-4
+
+
+def test_onnx_pytorch_parity():
+    """Verify mathematical parity between ONNX Runtime and PyTorch embeddings."""
+    embedder_onnx = BGEEmbedder(backend="onnx")
+    embedder_torch = BGEEmbedder(backend="torch")
+
+    test_queries = [
+        "crispy masala dosa with sambar",
+        "fish soup Bengali style",
+        "paneer butter masala with naan",
+        "healthy sprouts salad",
+    ]
+
+    for q in test_queries:
+        v_onnx = embedder_onnx.encode_text(q)
+        v_torch = embedder_torch.encode_text(q)
+
+        # High cosine similarity (>= 0.9999) between float representations
+        cos_sim = float(np.dot(v_onnx, v_torch))
+        assert cos_sim >= 0.9999, f"Low cosine similarity ({cos_sim}) for query '{q}'"
+        assert abs(float(np.linalg.norm(v_onnx)) - 1.0) < 1e-4
+        assert abs(float(np.linalg.norm(v_torch)) - 1.0) < 1e-4
+
+
+def test_bge_embedder_invalid_backend():
+    """Verify that configuring an invalid or empty inference backend raises ValueError."""
+    with pytest.raises(ValueError, match="Unsupported semantic inference backend"):
+        BGEEmbedder(backend="tensorflow")
+
+    with pytest.raises(ValueError, match="Invalid semantic inference backend"):
+        BGEEmbedder(backend="")
+
+    with pytest.raises(ValueError, match="Invalid semantic inference backend"):
+        BGEEmbedder(backend=None)
+
+
+def test_bge_embedder_onnx_initialization_failure_does_not_fallback(monkeypatch):
+    """Verify ONNX initialization failure raises sanitized RuntimeError and does NOT fall back to PyTorch."""
+    embedder = BGEEmbedder(backend="onnx")
+
+    def mock_fail():
+        raise RuntimeError("Low-level ONNX engine memory failure")
+
+    monkeypatch.setattr(embedder, "_load_onnx_model", mock_fail)
+
+    with pytest.raises(RuntimeError, match="Failed to initialize ONNX semantic inference engine"):
+        embedder.load_model()
+
+    assert embedder._active_backend != "torch", "Silent fallback to PyTorch occurred!"
+    assert embedder.is_loaded is False
+
+
+def test_bge_embedder_explicit_pytorch_backend():
+    """Verify that PyTorch is loaded only when explicitly configured."""
+    embedder = BGEEmbedder(backend="torch")
+    assert embedder.backend == "torch"
+    embedder.load_model()
+    assert embedder._active_backend == "torch"
+    vec = embedder.encode_text("tasty sambar with idli")
+    assert vec.shape == (384,)
+    assert abs(float(np.linalg.norm(vec)) - 1.0) < 1e-4
+
+
+def test_bge_embedder_torch_initialization_failure(monkeypatch):
+    """Verify that PyTorch initialization failure raises sanitized RuntimeError."""
+    embedder = BGEEmbedder(backend="torch")
+
+    def mock_fail():
+        raise RuntimeError("PyTorch runtime out-of-memory")
+
+    monkeypatch.setattr(embedder, "_load_torch_model", mock_fail)
+
+    with pytest.raises(RuntimeError, match="Failed to initialize PyTorch semantic inference engine"):
+        embedder.load_model()
+
+    assert embedder.is_loaded is False
+
+
+def test_api_recommend_semantic_initialization_failure_sanitized_503(monkeypatch):
+    """Verify that semantic retrieval failure returns 503 without leaking local filesystem paths."""
+    with TestClient(app) as client:
+        orig_flag = getattr(app.state.recommender.config, "semantic_retrieval_enabled", False)
+        app.state.recommender.config.semantic_retrieval_enabled = True
+
+        def mock_load():
+            raise FileNotFoundError("C:\\Python\\KitchenPilot-V1\\models\\secret\\weights.npy not found")
+
+        monkeypatch.setattr(app.state.recommender, "_load_semantic_retriever", mock_load)
+        orig_retriever = app.state.recommender.semantic_retriever
+        app.state.recommender.semantic_retriever = None
+
+        try:
+            payload = {"query": "biryani", "top_k": 5}
+            response = client.post("/api/v1/recommend/semantic", json=payload)
+            assert response.status_code == 503
+            detail = response.json().get("detail", "")
+            # Ensure no local file paths or drive letters are exposed
+            assert "C:\\" not in detail
+            assert "secret" not in detail
+            assert "weights.npy" not in detail
+            assert detail == "Semantic retrieval model artifacts are missing or unreadable."
+        finally:
+            app.state.recommender.config.semantic_retrieval_enabled = orig_flag
+            app.state.recommender.semantic_retriever = orig_retriever
+
+
+def test_semantic_retriever_initialization_failure_handling():
+    """Verify that initialization failure raises FileNotFoundError/RuntimeError safely."""
+    rec_cfg = RecommendationConfig(
+        semantic_retrieval_enabled=True,
+        semantic_embeddings_path=Path("non_existent_path.npy"),
+    )
+    with pytest.raises(FileNotFoundError):
+        KitchenPilotRecommender(config=rec_cfg)
+
+
+def test_satvik_dietary_compliance_with_onnx_backend():
+    """Verify Satvik dietary filtering strictly rejects R00014 (Bengali fish soup) using ONNX backend."""
+    cfg = RecommendationConfig(
+        semantic_retrieval_enabled=True,
+        semantic_inference_backend="onnx",
+    )
+    rec = KitchenPilotRecommender(config=cfg)
+
+    from src.constraints import ConstraintRequest, DietaryConstraints
+    req = ConstraintRequest(dietary=DietaryConstraints(satvik=True))
+
+    results = rec.recommend_semantic(
+        query="fish soup Bengali style",
+        top_k=5,
+        constraint_request=req,
+    )
+
+    if not results.empty:
+        rids = results["recipe_id"].tolist()
+        assert "R00014" not in rids, "R00014 (fish soup) leaked through ONNX Satvik recommendation!"
+        for name in results["recipe_name"].tolist():
+            assert "fish" not in name.lower(), f"Fish recipe leaked: {name}"

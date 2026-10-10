@@ -84,6 +84,8 @@ class RecommendationConfig:
 
     # Stage D Semantic Retrieval Configuration
     semantic_retrieval_enabled: bool = False
+    semantic_inference_backend: str = "onnx"  # "onnx" or "torch"
+    semantic_onnx_model_path: Optional[Path] = None
     semantic_model_name: str = "BAAI/bge-small-en-v1.5"
     semantic_top_k: int = 50
     tfidf_top_k: int = 50

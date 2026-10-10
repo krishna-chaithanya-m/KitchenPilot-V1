@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Any, Dict, Optional, Union
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+
+logger = logging.getLogger("kitchenpilot.api.recommendations")
 
 from src.api.config import RECOMMENDATION_HISTORY_ENABLED
 from src.api.dependencies import (
@@ -513,6 +516,28 @@ def recommend_semantic(
             disliked_ingredients=list(user_context.disliked_ingredients or []),
         )
 
+    if not getattr(recommender.config, "semantic_retrieval_enabled", False):
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Semantic recommendation service is currently disabled in configuration.",
+        )
+
+    if recommender.semantic_retriever is None:
+        try:
+            recommender._load_semantic_retriever()
+        except FileNotFoundError as e:
+            logger.error("Semantic retrieval model files missing: %s", e)
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Semantic retrieval model artifacts are missing or unreadable.",
+            )
+        except Exception as e:
+            logger.error("Semantic retrieval initialization error: %s", e)
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Semantic recommendation service is temporarily unavailable due to an initialization error.",
+            )
+
     try:
         results_df = recommender.recommend_semantic(
             query=request.query,
@@ -523,15 +548,17 @@ def recommend_semantic(
             constraint_request=constraint_req,
             user_context=user_context,
         )
-    except FileNotFoundError as e:
+    except (RuntimeError, FileNotFoundError) as e:
+        logger.error("Semantic retrieval runtime error: %s", e)
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail=f"Semantic retrieval model artifacts missing: {e}",
+            detail="Semantic recommendation service is temporarily unavailable.",
         )
     except Exception as e:
+        logger.exception("Semantic retrieval unexpected error: %s", e)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Semantic retrieval error: {e}",
+            detail="An unexpected error occurred during semantic recommendation processing.",
         )
 
     items = _format_recommendations_from_df(results_df)

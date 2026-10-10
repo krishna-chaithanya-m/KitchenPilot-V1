@@ -41,6 +41,45 @@ def recommender():
     return KitchenPilotRecommender(config)
 
 
+class MockSemanticRetriever:
+    """Lightweight mock semantic retriever for recommendation tests without loading ONNX or PyTorch."""
+
+    def __init__(self, recipe_ids: list[str]) -> None:
+        self.recipe_ids = list(recipe_ids)
+        self.recipe_to_row = {rid: i for i, rid in enumerate(self.recipe_ids)}
+
+    def retrieve(self, query: str, top_k: int = 50):
+        from src.retrieval.base import RetrievalResult
+
+        limit = min(top_k, len(self.recipe_ids))
+        return [
+            RetrievalResult(
+                recipe_id=self.recipe_ids[i],
+                score=max(0.0, 0.98 - (i * 0.0001)),
+                rank=i + 1,
+                retrieval_method="semantic",
+            )
+            for i in range(limit)
+        ]
+
+
+@pytest.fixture
+def semantic_recommender(recommender):
+    """Explicitly enables semantic retrieval with a lightweight mock retriever for semantic tests."""
+    orig_flag = recommender.config.semantic_retrieval_enabled
+    orig_retriever = recommender.semantic_retriever
+
+    recommender.config.semantic_retrieval_enabled = True
+    if orig_retriever is None:
+        recommender.semantic_retriever = MockSemanticRetriever(recommender.tfidf_model.recipe_ids)
+
+    try:
+        yield recommender
+    finally:
+        recommender.config.semantic_retrieval_enabled = orig_flag
+        recommender.semantic_retriever = orig_retriever
+
+
 def test_tfidf_artifacts_exist(recommender):
     """Verify that TF-IDF model artifacts are generated and indexed correctly."""
     assert recommender.config.tfidf_vectorizer_path.is_file()
@@ -274,8 +313,9 @@ def test_standard_recommendations_enforce_indian_only_and_handle_high_row_indice
     assert recipe_4922 is not None
 
 
-def test_semantic_recommendations_enforce_indian_only(recommender):
+def test_semantic_recommendations_enforce_indian_only(semantic_recommender):
     """Verify semantic recommendations return only approved Indian recipes even for international queries."""
+    recommender = semantic_recommender
     # South Indian query
     recs_south = recommender.recommend_semantic(
         query="vegetarian South Indian breakfast with lentils",
@@ -316,8 +356,9 @@ def test_non_indian_and_missing_cuisine_metadata_strictly_excluded(recommender):
     assert is_indian_cuisine(recommender._recipe_metadata.get(dummy_rid, {}).get("cuisine")) is False
 
 
-def test_candidate_pool_recipe_with_missing_or_unapproved_metadata_cannot_be_recommended(recommender):
+def test_candidate_pool_recipe_with_missing_or_unapproved_metadata_cannot_be_recommended(semantic_recommender):
     """Verify that any recipe in the candidate pool with missing or unapproved cuisine metadata cannot be recommended."""
+    recommender = semantic_recommender
     # 1. Standard recommendation (Mode A): Take a top candidate and corrupt its metadata
     base_recs = recommender.recommend(query_recipe_id="R00001", top_k=5, save_results=False)
     assert len(base_recs) > 0
@@ -386,8 +427,9 @@ def test_candidate_pool_recipe_with_missing_or_unapproved_metadata_cannot_be_rec
         recommender._recipe_metadata.pop(unapproved_id, None)
 
 
-def test_semantic_recommendations_bounded_retrieval_and_candidate_limit(recommender):
+def test_semantic_recommendations_bounded_retrieval_and_candidate_limit(semantic_recommender):
     """Verify semantic retrieval retrieves candidates in bounded batches without full-corpus scan when possible."""
+    recommender = semantic_recommender
     real_retrieve = recommender.semantic_retriever.retrieve
     call_log = []
 
@@ -419,8 +461,9 @@ def test_semantic_recommendations_bounded_retrieval_and_candidate_limit(recommen
         recommender.semantic_retriever.retrieve = real_retrieve
 
 
-def test_semantic_recommendations_fallback_expansion(recommender):
+def test_semantic_recommendations_fallback_expansion(semantic_recommender):
     """Verify fallback expansion triggers when initial bounded batch yields insufficient approved recipes."""
+    recommender = semantic_recommender
     from src.retrieval.base import RetrievalResult
 
     real_retrieve = recommender.semantic_retriever.retrieve

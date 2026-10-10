@@ -255,22 +255,27 @@ def test_both_constraint_engine_and_legacy_paths_enforce_dietary_rules():
 # ============================================================================
 def test_semantic_recommendation_enforces_satvik_and_cuisine_rules(client: TestClient):
     """Verify semantic recommendation endpoint strictly rejects non-satvik recipes like fish soup."""
-    payload = {
-        "query": "fish soup Bengali style",
-        "dietary_constraints": {
-            "satvik": True
-        },
-        "top_k": 5
-    }
-    resp = client.post("/api/v1/recommend/semantic", json=payload)
-    assert resp.status_code == 200
-    data = resp.json()
-    recs = data.get("recommendations", [])
+    orig_flag = getattr(app.state.recommender.config, "semantic_retrieval_enabled", False)
+    app.state.recommender.config.semantic_retrieval_enabled = True
+    try:
+        payload = {
+            "query": "fish soup Bengali style",
+            "dietary_constraints": {
+                "satvik": True
+            },
+            "top_k": 5
+        }
+        resp = client.post("/api/v1/recommend/semantic", json=payload)
+        assert resp.status_code == 200
+        data = resp.json()
+        recs = data.get("recommendations", [])
 
-    # None of the returned recommendations can be R00014 or contain fish
-    for item in recs:
-        assert item["recipe_id"] != "R00014", "R00014 leaked through semantic Satvik recommendations!"
-        assert "fish" not in item["recipe_name"].lower(), f"Fish recipe leaked: {item['recipe_name']}"
+        # None of the returned recommendations can be R00014 or contain fish
+        for item in recs:
+            assert item["recipe_id"] != "R00014", "R00014 leaked through semantic Satvik recommendations!"
+            assert "fish" not in item["recipe_name"].lower(), f"Fish recipe leaked: {item['recipe_name']}"
+    finally:
+        app.state.recommender.config.semantic_retrieval_enabled = orig_flag
 
 
 # ============================================================================

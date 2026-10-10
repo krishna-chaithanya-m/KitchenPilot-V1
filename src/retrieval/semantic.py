@@ -29,11 +29,21 @@ class SemanticRetriever:
         index_path: Path,
         metadata_path: Optional[Path] = None,
         embedder: Optional[BGEEmbedder] = None,
+        backend: Optional[str] = None,
+        onnx_model_path: Optional[Path] = None,
     ) -> None:
         self.embeddings_path = Path(embeddings_path)
         self.index_path = Path(index_path)
         self.metadata_path = Path(metadata_path) if metadata_path else None
-        self.embedder = embedder or BGEEmbedder()
+        if embedder is not None:
+            self.embedder = embedder
+        else:
+            kwargs = {}
+            if backend:
+                kwargs["backend"] = backend
+            if onnx_model_path:
+                kwargs["onnx_model_path"] = onnx_model_path
+            self.embedder = BGEEmbedder(**kwargs)
 
         self.embeddings: Optional[np.ndarray] = None
         self.recipe_ids: List[str] = []

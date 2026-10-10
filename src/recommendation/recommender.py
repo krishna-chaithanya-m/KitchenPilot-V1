@@ -46,7 +46,11 @@ RECOMMENDATION_COLUMNS = [
 class KitchenPilotRecommender:
     """Production Recommendation Engine for KitchenPilot-V1."""
 
-    def __init__(self, config: Optional[RecommendationConfig] = None) -> None:
+    def __init__(
+        self,
+        config: Optional[RecommendationConfig] = None,
+        semantic_retriever: Optional[Any] = None,
+    ) -> None:
         self.config = config or RecommendationConfig()
         self.tfidf_model = TFIDFModel(self.config)
         self.ingredient_matcher = IngredientMatcher(self.config)
@@ -82,8 +86,8 @@ class KitchenPilotRecommender:
             self.tfidf_model.load_artifacts()
 
         # Stage D: Semantic Retriever (loaded only if explicitly enabled)
-        self.semantic_retriever = None
-        if getattr(self.config, "semantic_retrieval_enabled", False):
+        self.semantic_retriever = semantic_retriever
+        if self.semantic_retriever is None and getattr(self.config, "semantic_retrieval_enabled", False):
             self._load_semantic_retriever()
 
     def _load_semantic_retriever(self) -> None:
@@ -101,10 +105,22 @@ class KitchenPilotRecommender:
                 "Run `python scripts/build_semantic_index.py` first."
             )
 
+        backend = getattr(self.config, "semantic_inference_backend", "onnx")
+        onnx_path = getattr(self.config, "semantic_onnx_model_path", None)
+        model_name = getattr(self.config, "semantic_model_name", "BAAI/bge-small-en-v1.5")
+        from src.retrieval.embeddings import BGEEmbedder
+
+        embedder = BGEEmbedder(
+            model_name=model_name,
+            backend=backend,
+            onnx_model_path=onnx_path,
+        )
+
         self.semantic_retriever = SemanticRetriever(
             embeddings_path=self.config.semantic_embeddings_path,
             index_path=self.config.semantic_index_path,
             metadata_path=getattr(self.config, "semantic_metadata_path", None),
+            embedder=embedder,
         )
         self.semantic_retriever.load_artifacts()
 
@@ -373,6 +389,9 @@ class KitchenPilotRecommender:
         hard dietary/constraint filters, scores candidates on the 4 pillars (using semantic similarity),
         and ranks via the existing HybridRanker.
         """
+        if not getattr(self.config, "semantic_retrieval_enabled", False):
+            raise RuntimeError("Semantic retrieval is disabled in configuration.")
+
         if self.semantic_retriever is None:
             self._load_semantic_retriever()
 
