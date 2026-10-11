@@ -591,3 +591,275 @@ def test_satvik_dietary_compliance_with_onnx_backend():
         assert "R00014" not in rids, "R00014 (fish soup) leaked through ONNX Satvik recommendation!"
         for name in results["recipe_name"].tolist():
             assert "fish" not in name.lower(), f"Fish recipe leaked: {name}"
+
+
+# ============================================================================
+# 12. TF-IDF Natural-Language Query Fallback Tests
+# ============================================================================
+
+def test_tfidf_fallback_disabled_by_default():
+    """Verify fallback defaults to disabled and raises RuntimeError / returns 503."""
+    cfg = RecommendationConfig(
+        semantic_retrieval_enabled=False,
+        semantic_fallback_to_tfidf=False,
+    )
+    assert cfg.semantic_fallback_to_tfidf is False
+    rec = KitchenPilotRecommender(config=cfg)
+
+    with pytest.raises(RuntimeError, match="Semantic retrieval is disabled in configuration"):
+        rec.recommend_semantic("paneer butter masala")
+
+    with TestClient(app) as client:
+        orig_sem = getattr(app.state.recommender.config, "semantic_retrieval_enabled", False)
+        orig_fb = getattr(app.state.recommender.config, "semantic_fallback_to_tfidf", False)
+        app.state.recommender.config.semantic_retrieval_enabled = False
+        app.state.recommender.config.semantic_fallback_to_tfidf = False
+        try:
+            res = client.post("/api/v1/recommend/semantic", json={"query": "paneer", "top_k": 5})
+            assert res.status_code == 503
+            assert "disabled" in res.json()["detail"].lower()
+        finally:
+            app.state.recommender.config.semantic_retrieval_enabled = orig_sem
+            app.state.recommender.config.semantic_fallback_to_tfidf = orig_fb
+
+
+def test_tfidf_fallback_enabled_natural_language_retrieval():
+    """Verify TF-IDF fallback enables natural-language query recommendations without dense neural models."""
+    cfg = RecommendationConfig(
+        semantic_retrieval_enabled=False,
+        semantic_fallback_to_tfidf=True,
+    )
+    rec = KitchenPilotRecommender(config=cfg)
+
+    results = rec.recommend_semantic("crispy dosa with chutney", top_k=5)
+    assert not results.empty
+    assert len(results) == 5
+    assert "recipe_id" in results.columns
+    assert "hybrid_score" in results.columns
+    assert "similarity_score" in results.columns
+
+    for _, row in results.iterrows():
+        assert 0.0 <= row["hybrid_score"] <= 1.0
+        assert 0.0 <= row["similarity_score"] <= 1.0
+        assert row["recipe_id"].startswith("R")
+
+    # Verify through API endpoint
+    with TestClient(app) as client:
+        orig_sem = getattr(app.state.recommender.config, "semantic_retrieval_enabled", False)
+        orig_fb = getattr(app.state.recommender.config, "semantic_fallback_to_tfidf", False)
+        app.state.recommender.config.semantic_retrieval_enabled = False
+        app.state.recommender.config.semantic_fallback_to_tfidf = True
+        try:
+            res = client.post("/api/v1/recommend/semantic", json={"query": "crispy dosa with chutney", "top_k": 5})
+            assert res.status_code == 200
+            data = res.json()
+            assert data["count"] == 5
+            assert data["query"]["mode"] == "tfidf_fallback"
+            assert len(data["recommendations"]) == 5
+            for item in data["recommendations"]:
+                assert item["recipe_id"].startswith("R")
+                assert item["similarity_score"] > 0.0
+        finally:
+            app.state.recommender.config.semantic_retrieval_enabled = orig_sem
+            app.state.recommender.config.semantic_fallback_to_tfidf = orig_fb
+
+
+def test_tfidf_fallback_satvik_dietary_compliance_rejects_fish_soup():
+    """Verify Satvik dietary constraints strictly reject R00014 (fish soup) and return valid Satvik recipes under TF-IDF fallback."""
+    cfg = RecommendationConfig(
+        semantic_retrieval_enabled=False,
+        semantic_fallback_to_tfidf=True,
+    )
+    rec = KitchenPilotRecommender(config=cfg)
+
+    from src.constraints import ComplianceStatus, ConstraintRequest, DietaryConstraints
+    req = ConstraintRequest(dietary=DietaryConstraints(satvik=True))
+
+    # 1. Negative query test: Fish soup query must NEVER return R00014
+    results = rec.recommend_semantic(
+        query="fish soup Bengali style",
+        top_k=10,
+        constraint_request=req,
+    )
+
+    if not results.empty:
+        rids = results["recipe_id"].tolist()
+        assert "R00014" not in rids, "R00014 (Bengali fish soup) leaked through TF-IDF Satvik fallback!"
+        for rid in rids:
+            ev = rec.constraint_engine.evaluate_candidate(rid, req)
+            assert ev.passed, f"Recipe {rid} failed Satvik constraint: {ev.hard_failures}"
+            assert ev.dietary_results.get("satvik") == ComplianceStatus.COMPLIANT
+        for name in results["recipe_name"].tolist():
+            assert "fish" not in name.lower(), f"Fish recipe leaked: {name}"
+
+    # Also test via API
+    with TestClient(app) as client:
+        orig_sem = getattr(app.state.recommender.config, "semantic_retrieval_enabled", False)
+        orig_fb = getattr(app.state.recommender.config, "semantic_fallback_to_tfidf", False)
+        app.state.recommender.config.semantic_retrieval_enabled = False
+        app.state.recommender.config.semantic_fallback_to_tfidf = True
+        try:
+            payload = {
+                "query": "fish soup Bengali style",
+                "top_k": 10,
+                "dietary_constraints": {"satvik": True},
+            }
+            res = client.post("/api/v1/recommend/semantic", json=payload)
+            assert res.status_code == 200
+            data = res.json()
+            rec_rids = [r["recipe_id"] for r in data["recommendations"]]
+            assert "R00014" not in rec_rids
+            for r in data["recommendations"]:
+                assert "fish" not in r["recipe_name"].lower()
+                ev = app.state.recommender.constraint_engine.evaluate_candidate(r["recipe_id"], req)
+                assert ev.passed, f"API recipe {r['recipe_id']} failed Satvik constraint"
+                assert ev.dietary_results.get("satvik") == ComplianceStatus.COMPLIANT
+
+            # 2. Positive query test: A suitable Satvik query returns eligible Satvik recipes
+            satvik_query = "cabbage poriyal coconut"
+            satvik_results = rec.recommend_semantic(
+                query=satvik_query,
+                top_k=5,
+                constraint_request=req,
+            )
+            assert not satvik_results.empty, "Expected positive Satvik recommendations for cabbage poriyal"
+            assert len(satvik_results) > 0
+            satvik_rids = satvik_results["recipe_id"].tolist()
+            assert "R00014" not in satvik_rids
+            assert "R00122" in satvik_rids, "Expected R00122 (Muttaikose Poriyal) among Satvik recommendations"
+
+            # Verify every returned recipe satisfies Satvik constraint
+            for rid in satvik_rids:
+                ev = rec.constraint_engine.evaluate_candidate(rid, req)
+                assert ev.passed, f"Recipe {rid} failed Satvik constraint: {ev.hard_failures}"
+                assert ev.dietary_results.get("satvik") == ComplianceStatus.COMPLIANT
+
+            # Positive query via API
+            api_payload = {
+                "query": satvik_query,
+                "top_k": 5,
+                "dietary_constraints": {"satvik": True},
+            }
+            api_res = client.post("/api/v1/recommend/semantic", json=api_payload)
+            assert api_res.status_code == 200
+            api_data = api_res.json()
+            assert api_data["count"] > 0
+            assert len(api_data["recommendations"]) > 0
+            api_rids = [r["recipe_id"] for r in api_data["recommendations"]]
+            assert "R00014" not in api_rids
+            assert "R00122" in api_rids
+            for r in api_data["recommendations"]:
+                ev = app.state.recommender.constraint_engine.evaluate_candidate(r["recipe_id"], req)
+                assert ev.passed
+                assert ev.dietary_results.get("satvik") == ComplianceStatus.COMPLIANT
+        finally:
+            app.state.recommender.config.semantic_retrieval_enabled = orig_sem
+            app.state.recommender.config.semantic_fallback_to_tfidf = orig_fb
+
+
+def test_tfidf_fallback_enforces_indian_only():
+    """Verify only approved Indian cuisine recipes are eligible under TF-IDF fallback."""
+    from src.data.cuisine_policy import is_indian_cuisine
+
+    cfg = RecommendationConfig(
+        semantic_retrieval_enabled=False,
+        semantic_fallback_to_tfidf=True,
+    )
+    rec = KitchenPilotRecommender(config=cfg)
+
+    results = rec.recommend_semantic("pasta noodles soup", top_k=10)
+    for rid in results["recipe_id"]:
+        cuisine = rec._recipe_metadata.get(rid, {}).get("cuisine")
+        assert is_indian_cuisine(cuisine), f"Non-Indian recipe {rid} with cuisine '{cuisine}' recommended!"
+
+
+def test_tfidf_fallback_empty_and_unknown_vocabulary_queries():
+    """Verify empty query and unknown vocabulary queries are handled safely without exceptions."""
+    cfg = RecommendationConfig(
+        semantic_retrieval_enabled=False,
+        semantic_fallback_to_tfidf=True,
+    )
+    rec = KitchenPilotRecommender(config=cfg)
+
+    # Empty query string
+    res_empty = rec.recommend_semantic("", top_k=5)
+    assert res_empty.empty
+
+    res_spaces = rec.recommend_semantic("     ", top_k=5)
+    assert res_spaces.empty
+
+    # Unknown vocabulary (out of vocabulary)
+    res_oov = rec.recommend_semantic("qwertyuiopasdfghjklzxcvbnm987654321", top_k=5)
+    assert res_oov.empty
+
+    # Test via API for unknown vocabulary
+    with TestClient(app) as client:
+        orig_sem = getattr(app.state.recommender.config, "semantic_retrieval_enabled", False)
+        orig_fb = getattr(app.state.recommender.config, "semantic_fallback_to_tfidf", False)
+        app.state.recommender.config.semantic_retrieval_enabled = False
+        app.state.recommender.config.semantic_fallback_to_tfidf = True
+        try:
+            res = client.post(
+                "/api/v1/recommend/semantic",
+                json={"query": "qwertyuiopasdfghjklzxcvbnm987654321", "top_k": 5},
+            )
+            assert res.status_code == 200
+            data = res.json()
+            assert data["count"] == 0
+            assert data["recommendations"] == []
+            assert "No recipes matched" in data["message"]
+        finally:
+            app.state.recommender.config.semantic_retrieval_enabled = orig_sem
+            app.state.recommender.config.semantic_fallback_to_tfidf = orig_fb
+
+
+def test_tfidf_fallback_missing_artifacts_safely_handled():
+    """Verify that if TF-IDF artifacts are missing or unready, clean 503 is returned without leaking paths."""
+    from unittest.mock import PropertyMock
+
+    with TestClient(app) as client:
+        orig_sem = getattr(app.state.recommender.config, "semantic_retrieval_enabled", False)
+        orig_fb = getattr(app.state.recommender.config, "semantic_fallback_to_tfidf", False)
+        app.state.recommender.config.semantic_retrieval_enabled = False
+        app.state.recommender.config.semantic_fallback_to_tfidf = True
+        try:
+            retriever = app.state.recommender._get_tfidf_retriever()
+            with patch.object(type(retriever), "is_ready", new_callable=PropertyMock) as mock_ready:
+                mock_ready.return_value = False
+                res = client.post("/api/v1/recommend/semantic", json={"query": "dosa", "top_k": 5})
+                assert res.status_code == 503
+                detail = res.json().get("detail", "")
+                assert "C:\\" not in detail
+                assert detail == "Semantic recommendation service is temporarily unavailable."
+        finally:
+            app.state.recommender.config.semantic_retrieval_enabled = orig_sem
+            app.state.recommender.config.semantic_fallback_to_tfidf = orig_fb
+
+
+def test_tfidf_fallback_does_not_load_dense_neural_packages():
+    """Verify in an isolated Python process that running the fallback path does not import torch, transformers, or onnxruntime."""
+    import subprocess
+    import sys
+
+    probe_script = (
+        "import sys\n"
+        "from src.recommendation.config import RecommendationConfig\n"
+        "from src.recommendation.recommender import KitchenPilotRecommender\n"
+        "cfg = RecommendationConfig(semantic_retrieval_enabled=False, semantic_fallback_to_tfidf=True)\n"
+        "rec = KitchenPilotRecommender(config=cfg)\n"
+        "res = rec.recommend_semantic('south indian dosa', top_k=5)\n"
+        "assert not res.empty\n"
+        "forbidden = ['torch', 'transformers', 'onnxruntime', 'onnx']\n"
+        "loaded = [pkg for pkg in forbidden if pkg in sys.modules]\n"
+        "assert not loaded, f'Neural packages loaded: {loaded}'\n"
+        "print('ISOLATION_PASSED')\n"
+    )
+
+    proc = subprocess.run(
+        [sys.executable, "-c", probe_script],
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+    assert proc.returncode == 0, f"Isolation probe failed: {proc.stderr}"
+    assert "ISOLATION_PASSED" in proc.stdout

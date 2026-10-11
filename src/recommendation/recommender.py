@@ -85,10 +85,23 @@ class KitchenPilotRecommender:
         if self.config.tfidf_matrix_path.is_file():
             self.tfidf_model.load_artifacts()
 
+        # TF-IDF Retriever Adapter (cached for fallback / hybrid retrieval)
+        self.tfidf_retriever: Optional[Any] = None
+        if self.tfidf_model.tfidf_matrix is not None:
+            from src.retrieval.tfidf import TFIDFRetriever
+            self.tfidf_retriever = TFIDFRetriever(self.tfidf_model)
+
         # Stage D: Semantic Retriever (loaded only if explicitly enabled)
         self.semantic_retriever = semantic_retriever
         if self.semantic_retriever is None and getattr(self.config, "semantic_retrieval_enabled", False):
             self._load_semantic_retriever()
+
+    def _get_tfidf_retriever(self) -> Any:
+        """Get or initialize the TFIDFRetriever adapter."""
+        if self.tfidf_retriever is None:
+            from src.retrieval.tfidf import TFIDFRetriever
+            self.tfidf_retriever = TFIDFRetriever(self.tfidf_model)
+        return self.tfidf_retriever
 
     def _load_semantic_retriever(self) -> None:
         """Initialize and load semantic retriever artifacts."""
@@ -383,17 +396,33 @@ class KitchenPilotRecommender:
         constraint_request: Optional[ConstraintRequest] = None,
         user_context: Optional[UserPersonalizationContext] = None,
     ) -> pd.DataFrame:
-        """Generate top_k recommendations using dense semantic retrieval (BAAI/bge-small-en-v1.5).
+        """Generate top_k recommendations using dense semantic retrieval or TF-IDF fallback.
 
-        Evaluates query semantic embedding against precomputed recipe embeddings, applies
-        hard dietary/constraint filters, scores candidates on the 4 pillars (using semantic similarity),
-        and ranks via the existing HybridRanker.
+        Evaluates query against dense semantic embeddings (BAAI/bge-small-en-v1.5) or
+        TF-IDF vectorizer fallback when semantic retrieval is disabled, applies
+        hard dietary/constraint filters, scores candidates on the 4 pillars,
+        and ranks via the hybrid pipeline.
         """
-        if not getattr(self.config, "semantic_retrieval_enabled", False):
+        semantic_enabled = getattr(self.config, "semantic_retrieval_enabled", False)
+        fallback_enabled = getattr(self.config, "semantic_fallback_to_tfidf", False)
+
+        if not semantic_enabled and not fallback_enabled:
             raise RuntimeError("Semantic retrieval is disabled in configuration.")
 
-        if self.semantic_retriever is None:
-            self._load_semantic_retriever()
+        clean_query = query.strip() if query else ""
+        if not clean_query:
+            return pd.DataFrame(columns=RECOMMENDATION_COLUMNS)
+
+        if semantic_enabled:
+            if self.semantic_retriever is None:
+                self._load_semantic_retriever()
+            retriever = self.semantic_retriever
+            retrieval_mode = "semantic"
+        else:
+            retriever = self._get_tfidf_retriever()
+            if not retriever.is_ready:
+                raise RuntimeError("TF-IDF model artifacts not loaded for query fallback.")
+            retrieval_mode = "tfidf"
 
         prefs = user_preferences or UserPreferences()
         goals = nutrition_goals or NutritionGoals()
@@ -416,16 +445,16 @@ class KitchenPilotRecommender:
                 disliked_ingredients=list(combined_disliked),
             )
 
-        # 1. Semantic retrieval with bounded initial batch (avoiding full-corpus scan unless needed)
-        total_corpus = len(self.semantic_retriever.recipe_ids) if self.semantic_retriever.recipe_ids else candidate_k
+        # 1. Candidate retrieval with bounded initial batch (avoiding full-corpus scan unless needed)
+        total_corpus = len(retriever.recipe_ids) if hasattr(retriever, "recipe_ids") and retriever.recipe_ids else candidate_k
         initial_k = min(total_corpus, max(candidate_k * 2, 100))
-        semantic_results = self.semantic_retriever.retrieve(query=query, top_k=initial_k)
-        if not semantic_results:
+        retrieval_results = retriever.retrieve(query=clean_query, top_k=initial_k)
+        if not retrieval_results:
             return pd.DataFrame(columns=RECOMMENDATION_COLUMNS)
 
         # 2. Hard filter candidates strictly to approved Indian cuisine in descending similarity order
         candidate_map: Dict[str, float] = {}
-        for r in semantic_results:
+        for r in retrieval_results:
             cuisine = self._recipe_metadata.get(r.recipe_id, {}).get("cuisine")
             if is_indian_cuisine(cuisine):
                 candidate_map[r.recipe_id] = r.score
@@ -435,7 +464,7 @@ class KitchenPilotRecommender:
         # Fallback expansion: if the bounded batch yielded fewer than candidate_k approved recipes,
         # expand retrieval across the full corpus to ensure sufficient eligible candidates
         if len(candidate_map) < candidate_k and initial_k < total_corpus:
-            expanded_results = self.semantic_retriever.retrieve(query=query, top_k=total_corpus)
+            expanded_results = retriever.retrieve(query=clean_query, top_k=total_corpus)
             for r in expanded_results[initial_k:]:
                 cuisine = self._recipe_metadata.get(r.recipe_id, {}).get("cuisine")
                 if is_indian_cuisine(cuisine):
@@ -501,13 +530,13 @@ class KitchenPilotRecommender:
             scored_candidates.append(cand)
 
         # 4. Rank via ranking dispatcher (XGBoost when enabled, otherwise HybridRanker)
-        bge_ranks = {cand.recipe_id: idx for idx, cand in enumerate(sorted(scored_candidates, key=lambda c: -c.similarity_score))}
+        ranks_map = {cand.recipe_id: idx for idx, cand in enumerate(sorted(scored_candidates, key=lambda c: -c.similarity_score))}
         pref_ing = []
         if constraint_request and hasattr(constraint_request, "ingredients") and constraint_request.ingredients:
             pref_ing = constraint_request.ingredients.preferred_ingredients or []
 
         ranking_context = RankingContext(
-            query_text=query,
+            query_text=clean_query,
             required_ingredients=prefs.required_ingredients or [],
             preferred_ingredients=pref_ing,
             calorie_target=goals.calorie_target,
@@ -516,8 +545,10 @@ class KitchenPilotRecommender:
             preferred_region=prefs.region if isinstance(prefs.region, str) else None,
             preferred_meal_type=prefs.meal_type if isinstance(prefs.meal_type, str) else None,
             preferred_category=prefs.category if isinstance(prefs.category, str) else None,
-            bge_candidates={c.recipe_id: c.similarity_score for c in scored_candidates},
-            bge_ranks=bge_ranks,
+            bge_candidates={c.recipe_id: c.similarity_score for c in scored_candidates} if retrieval_mode == "semantic" else {},
+            bge_ranks=ranks_map if retrieval_mode == "semantic" else {},
+            tfidf_candidates={c.recipe_id: c.similarity_score for c in scored_candidates} if retrieval_mode == "tfidf" else {},
+            tfidf_ranks=ranks_map if retrieval_mode == "tfidf" else {},
             constraint_evaluations=eval_map,
         )
 

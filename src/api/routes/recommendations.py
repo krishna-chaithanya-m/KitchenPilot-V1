@@ -516,13 +516,16 @@ def recommend_semantic(
             disliked_ingredients=list(user_context.disliked_ingredients or []),
         )
 
-    if not getattr(recommender.config, "semantic_retrieval_enabled", False):
+    semantic_enabled = getattr(recommender.config, "semantic_retrieval_enabled", False)
+    fallback_enabled = getattr(recommender.config, "semantic_fallback_to_tfidf", False)
+
+    if not semantic_enabled and not fallback_enabled:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Semantic recommendation service is currently disabled in configuration.",
         )
 
-    if recommender.semantic_retriever is None:
+    if semantic_enabled and recommender.semantic_retriever is None:
         try:
             recommender._load_semantic_retriever()
         except FileNotFoundError as e:
@@ -562,7 +565,8 @@ def recommend_semantic(
         )
 
     items = _format_recommendations_from_df(results_df)
-    metrics_collector.record_recommendation("dense_semantic" + ("_personalized" if user_context else ""))
+    active_mode = "dense_semantic" if semantic_enabled else "tfidf_fallback"
+    metrics_collector.record_recommendation(active_mode + ("_personalized" if user_context else ""))
 
     cand_count = (
         recommender.last_constraint_diagnostics.get("total_candidates", 6871)
@@ -583,7 +587,7 @@ def recommend_semantic(
         "user_preferences": request.user_preferences.model_dump() if request.user_preferences else {},
         "nutrition_goals": request.nutrition_goals.model_dump() if request.nutrition_goals else {},
         "top_k": request.top_k,
-        "mode": "dense_semantic",
+        "mode": active_mode,
         "user_id": current_user.id if current_user else None,
         "personalization_applied": user_context is not None,
     }

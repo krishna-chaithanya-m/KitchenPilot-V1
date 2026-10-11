@@ -56,6 +56,9 @@ RECIPE_INDEX_PATH = RECOMMENDATION_MODELS_DIR / "recipe_index.csv"
 SEMANTIC_RETRIEVAL_ENABLED: bool = (
     os.getenv("SEMANTIC_RETRIEVAL_ENABLED", "false").lower().strip() in ("true", "1", "yes")
 )
+SEMANTIC_FALLBACK_TO_TFIDF: bool = (
+    os.getenv("SEMANTIC_FALLBACK_TO_TFIDF", "false").lower().strip() in ("true", "1", "yes")
+)
 SEMANTIC_INFERENCE_BACKEND: str = os.getenv("SEMANTIC_INFERENCE_BACKEND", "onnx").lower().strip()
 SEMANTIC_ONNX_MODEL_PATH: Optional[Path] = (
     Path(os.getenv("SEMANTIC_ONNX_MODEL_PATH")) if os.getenv("SEMANTIC_ONNX_MODEL_PATH") else None

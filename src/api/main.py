@@ -21,6 +21,7 @@ from src.api.config import (
     CORS_ALLOW_CREDENTIALS,
     ENVIRONMENT,
     LOG_LEVEL,
+    SEMANTIC_FALLBACK_TO_TFIDF,
     SEMANTIC_INFERENCE_BACKEND,
     SEMANTIC_ONNX_MODEL_PATH,
     SEMANTIC_RETRIEVAL_ENABLED,
@@ -59,6 +60,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         # Load recommendation engine once with configured semantic settings
         rec_config = RecommendationConfig(
             semantic_retrieval_enabled=SEMANTIC_RETRIEVAL_ENABLED,
+            semantic_fallback_to_tfidf=SEMANTIC_FALLBACK_TO_TFIDF,
             semantic_inference_backend=SEMANTIC_INFERENCE_BACKEND,
             semantic_onnx_model_path=SEMANTIC_ONNX_MODEL_PATH,
         )
