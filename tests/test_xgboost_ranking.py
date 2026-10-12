@@ -309,3 +309,29 @@ def test_fallback_when_model_corrupt_or_missing():
     # Verify fallback was triggered
     assert dispatcher.last_ranker_used == "hybrid"
     assert ranked[0].recipe_id == "RECIPE_0002"
+
+
+def test_xgboost_lazy_import_does_not_load_package_on_init():
+    """Verify in an isolated Python process that instantiating XGBoostRanker does not import xgboost."""
+    import subprocess
+    import sys
+
+    probe_script = (
+        "import sys\n"
+        "from src.ranking.xgboost_ranker import XGBoostRanker\n"
+        "ranker = XGBoostRanker()\n"
+        "assert 'xgboost' not in sys.modules, 'xgboost was prematurely imported on ranker init'\n"
+        "from src.ranking.fallback import RankingDispatcher\n"
+        "dispatcher = RankingDispatcher(xgboost_ranker=ranker, enabled=False)\n"
+        "assert 'xgboost' not in sys.modules, 'xgboost was imported when dispatcher is disabled'\n"
+        "print('LAZY_IMPORT_PASSED')\n"
+    )
+
+    proc = subprocess.run(
+        [sys.executable, "-c", probe_script],
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    assert proc.returncode == 0, f"Lazy import probe failed: {proc.stderr}"
+    assert "LAZY_IMPORT_PASSED" in proc.stdout

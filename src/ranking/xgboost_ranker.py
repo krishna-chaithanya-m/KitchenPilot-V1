@@ -16,11 +16,25 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
-import xgboost as xgb
 
 from src.ranking.features import FEATURE_NAMES, FeatureExtractor, RankingContext
 
 logger = logging.getLogger("kitchenpilot.ranking.xgboost")
+
+
+def _get_xgb() -> Any:
+    """Lazy loader for xgboost library.
+
+    Prevents loading the heavy C++ ML library into memory when XGBoost ranking is disabled.
+    """
+    try:
+        import xgboost as xgb
+        return xgb
+    except ImportError as exc:
+        raise ImportError(
+            "xgboost is required for XGBoost ranking. "
+            "Please install it with `pip install xgboost`."
+        ) from exc
 
 DEFAULT_MODEL_PATH = Path("models/ranking/xgboost_ranker.json")
 DEFAULT_SCHEMA_PATH = Path("models/ranking/feature_schema.json")
@@ -42,7 +56,7 @@ class XGBoostRanker:
         self.metadata_path = Path(metadata_path)
         self.feature_extractor = feature_extractor or FeatureExtractor()
 
-        self._model: Optional[xgb.Booster] = None
+        self._model: Optional[Any] = None
         self._feature_names: List[str] = list(FEATURE_NAMES)
         self._metadata: Dict[str, Any] = {}
         self._is_loaded: bool = False
@@ -71,6 +85,7 @@ class XGBoostRanker:
                 self._metadata = json.load(f)
 
         # 3. Load native XGBoost model
+        xgb = _get_xgb()
         booster = xgb.Booster()
         booster.load_model(str(self.model_path))
         self._model = booster
@@ -106,6 +121,7 @@ class XGBoostRanker:
             )
 
         # 3. Predict ranking scores
+        xgb = _get_xgb()
         dmat = xgb.DMatrix(feature_matrix, feature_names=self._feature_names)
         raw_scores = self._model.predict(dmat)
 
